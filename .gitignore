@@ -3,3 +3,13 @@ bgfx
 bx
 bimg
 sfml
+obj
+build
+*.pdb
+*.exp
+*.ilk
+*.vs
+*.vcxproj.filters
+*.vcxproj.user
+
+bin/x64/Debug/Example*

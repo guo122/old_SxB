@@ -1,0 +1,4 @@
+
+bgfx::Init init;
+	LNK2038
+	C/C++ -> Code Generation -> Runtime Library "Multi-threaded Debug (/MTd)"
