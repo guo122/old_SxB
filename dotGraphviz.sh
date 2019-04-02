@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd ./doc/sfml
+#cd ./doc/sfml
 
-dot -Tsvg -o class.svg class.dot
+#dot -Tsvg -o class.svg class.dot

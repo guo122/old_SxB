@@ -3,8 +3,9 @@ bgfx
 bx
 bimg
 sfml
-obj
 build
+bin
+lib
 *.pdb
 *.exp
 *.ilk

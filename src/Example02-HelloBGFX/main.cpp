@@ -16,7 +16,7 @@
 int main(int argc, char *argv[])
  {
      // Create the main window
-     sf::Window window(sf::VideoMode(WNDW_WIDTH, WNDW_HEIGHT), "SFML window");
+     sf::WindowBase window(sf::VideoMode(WNDW_WIDTH, WNDW_HEIGHT), "SFML window");
 
 	 bgfx::PlatformData pd;
 	 pd.nwh = window.getSystemHandle();

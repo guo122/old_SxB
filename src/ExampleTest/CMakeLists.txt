@@ -14,15 +14,12 @@ ELSEIF (APPLE)
     set(INC_DIR ${INC_DIR} ${CMAKE_ROOT_DIR}/bx/include/compat/osx)
 ENDIF()
 			
-set(LINK_DIR ${CMAKE_ROOT_DIR}/lib/x64_Debug)
+set(LINK_DIR ${CMAKE_ROOT_DIR}/lib/x64/Debug)
 
 set(LINK_LIB bgfxDebug 
 			 bimg_decodeDebug
 			 bimgDebug
 			 bxDebug
-			 sfml-audio-d
-			 sfml-graphics-d
-			 sfml-network-d
 			 sfml-system-d
 			 sfml-window-d)
 
