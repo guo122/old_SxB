@@ -1,0 +1,58 @@
+digraph TTSFML_System {
+
+	rankdir = BT
+
+	node [
+		shape = "record"
+	]
+	
+	WindowBase -> Cursor
+	WindowBase -> Vector2
+	WindowBase -> Clock
+	WindowBase -> String
+	
+	WindowBase -> VideoMode
+	WindowBase -> WindowHandle
+	WindowBase -> WindowStyle
+	
+	WindowBase -> WindowImpl
+	WindowBase -> ContextSettings
+	
+	WindowImpl -> Event
+	
+	WindowImpl -> Sleep
+	
+	WindowImpl -> WindowImplWin32
+	
+	Event -> Joystick
+	
+	Joystick -> JoystickImpl
+	Joystick -> JoystickManager
+	
+	Event -> Keyboard
+	Keyboard -> InputImpl
+	
+	Event -> Mouse
+	Mouse -> InputImpl
+	
+	Event -> Sensor
+	Sensor -> SensorImpl
+	Sensor -> Vector3
+	Sensor -> SensorManager
+	
+	Cursor -> CursorImpl
+	
+	CursorImpl -> Err
+	
+	String -> Utf
+	
+	Clock -> Time
+	
+	Clock -> ClockImpl
+	
+	ClockImpl -> Mutex
+	ClockImpl -> Lock
+	
+	Mutex -> MutexImpl
+	
+}
