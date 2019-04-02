@@ -9,8 +9,13 @@ set(DIR_SRCS ${DIR_SRCS}
 set(INC_DIR ${CMAKE_ROOT_DIR}/bgfx/include 
 			${CMAKE_ROOT_DIR}/bx/include 
 			${CMAKE_ROOT_DIR}/bimg/include
-			${CMAKE_ROOT_DIR}/sfml/include
-			${CMAKE_ROOT_DIR}/bx/include/compat/msvc)	
+			${CMAKE_ROOT_DIR}/sfml/include)
+		
+IF (WIN32)
+    set(INC_DIR ${INC_DIR} ${CMAKE_ROOT_DIR}/bx/include/compat/msvc)
+ELSEIF (APPLE)
+    set(INC_DIR ${INC_DIR} ${CMAKE_ROOT_DIR}/bx/include/compat/osx)
+ENDIF()
 			
 set(LINK_DIR ${CMAKE_ROOT_DIR}/lib/x64_Debug)
 

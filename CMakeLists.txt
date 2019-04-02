@@ -1,5 +1,9 @@
 cmake_minimum_required (VERSION 3.7.2)
 
+message(STATUS ---------------)
+message(STATUS ${CMAKE_SYSTEM})
+message(STATUS ---------------)
+
 project(SxB)
 
 set(CMAKE_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
