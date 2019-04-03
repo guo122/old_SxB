@@ -15,4 +15,24 @@ digraph tinybgfx_helloworld {
 	
 	Hello -> ImagePharse
 	ImagePharse -> rng
+	
+	Hello -> bx
+	Hello -> others
+	
+	others -> easing
+	others -> process
+	others -> maputil
+	others -> commandline
+	others -> settings
+	others -> url
+	
+	others -> simd_last
+	simd_last -> simd128_langext
+	simd_last -> simd128_neon
+	simd_last -> simd256_avx
+	
+	others -> crtnone
+	
+	bx -> amalgamated
+	amalgamated -> dtoa
 }

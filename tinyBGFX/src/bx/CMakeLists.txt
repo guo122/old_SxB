@@ -46,6 +46,20 @@ set(DIR_SRCS ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/platform.h
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/timer.cpp
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/pixelformat.h
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/rng.h
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/easing.h
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/easing.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/process.h
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/process.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/maputil.h
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/commandline.h
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/commandline.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/settings.h
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/settings.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/url.h
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/url.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/crtnone.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/amalgamated.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/dtoa.cpp
 			 )	
 			 
 set(INLINE_SRC
@@ -73,6 +87,10 @@ set(INLINE_SRC
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/inline/spscqueue.inl
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/inline/pixelformat.inl
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/inline/rng.inl
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/inline/easing.inl
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/inline/simd128_langext.inl
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/inline/simd128_neon.inl
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/inline/simd256_avx.inl
     )
 source_group("inline" FILES ${INLINE_SRC})
 
