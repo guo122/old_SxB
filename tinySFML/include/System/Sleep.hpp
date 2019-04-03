@@ -6,7 +6,7 @@
 #include <System/Time.hpp>
 
 
-namespace ttsf
+namespace tinySFML
 {
 
 void TTSFML_SYSTEM_API sleep(Time duration);

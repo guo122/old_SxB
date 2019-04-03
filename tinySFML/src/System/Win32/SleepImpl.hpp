@@ -6,7 +6,7 @@
 #include <System/Time.hpp>
 
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {

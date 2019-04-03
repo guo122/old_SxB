@@ -4,7 +4,7 @@
 
 #include <System/Export.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 
 class TTSFML_SYSTEM_API Time

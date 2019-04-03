@@ -1,0 +1,82 @@
+digraph tinybgfx {
+
+	rankdir = BT
+
+	node [
+		shape = "record"
+	]
+	
+	bgfx -> defines
+	bgfx -> platform
+	bgfx -> c99bgfx
+	
+	bgfx -> embedded_shader
+	
+	embedded_shader -> macros
+	
+	macros -> bx
+	bx -> debug
+	bx -> config
+	debug -> string
+	
+	string -> allocator
+	string -> hash
+	string -> readerwriter
+		
+	readerwriter -> endian
+	readerwriter -> error
+	readerwriter -> filepath
+	readerwriter -> uint32_t
+	readerwriter -> math
+	
+	math -> simd_t
+	simd_t -> simd128_swizzle
+	simd_t -> simd128_sse
+	simd_t -> simd128_ref
+	simd_t -> simd256_ref
+	simd_t -> simd_ni
+	
+	filepath -> file
+	filepath -> os
+	
+	bgfx -> cpu
+	bgfx -> float4x4_t
+	bgfx -> handlealloc
+	bgfx -> mutex
+	bgfx -> ringbuffer
+	bgfx -> sort
+	bgfx -> thread
+	bgfx -> timer
+	
+	bgfx -> shader
+	bgfx -> vertexdecl
+	bgfx -> topology
+	bgfx -> vs_fs_bin
+	
+	vs_fs_bin -> vs_debugfont
+	vs_fs_bin -> fs_debugfont
+	vs_fs_bin -> vs_clear
+	vs_fs_bin -> fs_clear0
+	vs_fs_bin -> fs_clear1
+	vs_fs_bin -> fs_clear2
+	vs_fs_bin -> fs_clear3
+	vs_fs_bin -> fs_clear4
+	vs_fs_bin -> fs_clear5
+	vs_fs_bin -> fs_clear6
+	vs_fs_bin -> fs_clear7
+	
+	bgfx -> tinystl
+	bgfx -> charset
+
+	shader -> shader_dxbc
+	shader -> shader_dx9bc
+	shader -> shader_spirv
+	
+	bgfx -> bimg
+	bimg -> image
+	image -> pixelformat
+	
+	thread -> mpscqueue
+	mpscqueue -> spscqueue
+	spscqueue -> semaphore
+}

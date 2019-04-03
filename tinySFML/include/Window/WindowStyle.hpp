@@ -2,7 +2,7 @@
 #ifndef TTSFML_WINDOWSTYLE_HPP
 #define TTSFML_WINDOWSTYLE_HPP
 
-namespace ttsf
+namespace tinySFML
 {
 namespace Style
 {
@@ -18,7 +18,7 @@ namespace Style
     };
 }
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_WINDOWSTYLE_HPP

@@ -5,7 +5,7 @@
 #include <System/Export.hpp>
 #include <System/NonCopyable.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {

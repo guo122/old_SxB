@@ -9,7 +9,7 @@
 #include <Window/Sensor.hpp>
 
 
-namespace ttsf
+namespace tinySFML
 {
 
 class Event
@@ -148,7 +148,7 @@ public:
     };
 };
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_EVENT_HPP

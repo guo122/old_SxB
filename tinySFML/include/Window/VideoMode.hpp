@@ -5,7 +5,7 @@
 #include <Window/Export.hpp>
 #include <vector>
 
-namespace ttsf
+namespace tinySFML
 {
 
 class TTSFML_WINDOW_API VideoMode
@@ -39,7 +39,7 @@ TTSFML_WINDOW_API bool operator <=(const VideoMode& left, const VideoMode& right
 
 TTSFML_WINDOW_API bool operator >=(const VideoMode& left, const VideoMode& right);
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_VIDEOMODE_HPP

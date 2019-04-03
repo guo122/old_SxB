@@ -2,7 +2,7 @@
 #include <Window/Cursor.hpp>
 #include <Window/CursorImpl.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 
 ////////////////////////////////////////////////////////////
@@ -43,5 +43,5 @@ const priv::CursorImpl& Cursor::getImpl() const
     return *m_impl;
 }
 
-} // namespace sf
+} // namespace tinySFML
 

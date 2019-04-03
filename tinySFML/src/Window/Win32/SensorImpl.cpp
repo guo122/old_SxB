@@ -2,7 +2,7 @@
 #include <Window/SensorImpl.hpp>
 
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -59,4 +59,4 @@ void SensorImpl::setEnabled(bool /*enabled*/)
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML

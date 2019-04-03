@@ -8,7 +8,7 @@
 #include <string>
 #include <cstdlib>
 
-namespace ttsf
+namespace tinySFML
 {
 template <unsigned int N>
 class Utf;

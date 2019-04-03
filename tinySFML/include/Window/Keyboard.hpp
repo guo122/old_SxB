@@ -4,7 +4,7 @@
 
 #include <Window/Export.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 
 class TTSFML_WINDOW_API Keyboard
@@ -132,7 +132,7 @@ public:
     static void setVirtualKeyboardVisible(bool visible);
 };
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_KEYBOARD_HPP

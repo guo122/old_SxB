@@ -7,7 +7,7 @@
 #include <System/String.hpp>
 #include <algorithm>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -40,7 +40,7 @@ struct JoystickState
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #if defined(SFML_SYSTEM_WINDOWS)

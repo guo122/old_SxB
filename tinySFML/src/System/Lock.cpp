@@ -2,7 +2,7 @@
 #include <System/Lock.hpp>
 #include <System/Mutex.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 Lock::Lock(Mutex& mutex) :

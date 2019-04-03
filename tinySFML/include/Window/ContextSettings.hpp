@@ -4,7 +4,7 @@
 
 #include <Config.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 
 struct ContextSettings
@@ -37,14 +37,14 @@ struct ContextSettings
     bool         sRgbCapable;       ///< Whether the context framebuffer is sRGB capable
 };
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_CONTEXTSETTINGS_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::ContextSettings
+/// \class tinySFML::ContextSettings
 /// \ingroup window
 ///
 /// ContextSettings allows to define several advanced settings

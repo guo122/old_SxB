@@ -4,7 +4,7 @@
 #include <iterator>
 #include <cstring>
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 const std::size_t String::InvalidPos = std::basic_string<Uint32>::npos;

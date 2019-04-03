@@ -3,7 +3,7 @@
 #include <System/Err.hpp>
 #include <cstring>
 
-namespace sf
+namespace tinySFML
 {
 namespace priv
 {
@@ -158,5 +158,5 @@ void CursorImpl::release()
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 

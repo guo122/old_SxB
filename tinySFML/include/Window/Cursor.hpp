@@ -6,7 +6,7 @@
 #include <System/NonCopyable.hpp>
 #include <System/Vector2.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -54,7 +54,7 @@ private:
     priv::CursorImpl* m_impl; ///< Platform-specific implementation of the cursor
 };
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_CURSOR_HPP

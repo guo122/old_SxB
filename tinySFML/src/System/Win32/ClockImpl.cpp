@@ -20,7 +20,7 @@ namespace
     }
 }
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -38,7 +38,7 @@ Time ClockImpl::getCurrentTime()
 
     if (oldWindows)
     {
-        static ttsf::Mutex oldWindowsMutex;
+        static tinySFML::Mutex oldWindowsMutex;
 
         // Acquire a lock (CRITICAL_SECTION) to prevent travelling back in time
         Lock lock(oldWindowsMutex);
@@ -53,7 +53,7 @@ Time ClockImpl::getCurrentTime()
     }
 
     // Return the current time as microseconds
-    return ttsf::microseconds(1000000 * time.QuadPart / frequency.QuadPart);
+    return tinySFML::microseconds(1000000 * time.QuadPart / frequency.QuadPart);
 }
 
 } // namespace priv

@@ -60,11 +60,11 @@ namespace
     {
         ConnectionCache() : connected(false) {}
         bool connected;
-        ttsf::Clock timer;
+        tinySFML::Clock timer;
     };
-    const ttsf::Time connectionRefreshDelay = ttsf::milliseconds(500);
+    const tinySFML::Time connectionRefreshDelay = tinySFML::milliseconds(500);
 
-    ConnectionCache connectionCache[ttsf::Joystick::Count];
+    ConnectionCache connectionCache[tinySFML::Joystick::Count];
 
     // If true, will only update when WM_DEVICECHANGE message is received
     bool lazyUpdates = false;
@@ -77,16 +77,16 @@ namespace
         if (FormatMessage(FORMAT_MESSAGE_MAX_WIDTH_MASK | FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, error, 0, reinterpret_cast<PTCHAR>(&buffer), 0, NULL) == 0)
             return "Unknown error.";
 
-        ttsf::String message = buffer;
+        tinySFML::String message = buffer;
         LocalFree(buffer);
         return message.toAnsiString();
     }
 
     // Get the joystick's name
-    ttsf::String getDeviceName(unsigned int index, JOYCAPS caps)
+    tinySFML::String getDeviceName(unsigned int index, JOYCAPS caps)
     {
         // Give the joystick a default name
-        ttsf::String joystickDescription = "Unknown Joystick";
+        tinySFML::String joystickDescription = "Unknown Joystick";
 
         LONG result;
         HKEY rootKey;
@@ -109,7 +109,7 @@ namespace
 
             if (result != ERROR_SUCCESS)
             {
-                ttsf::err() << "Unable to open registry for joystick at index " << index << ": " << getErrorString(result) << std::endl;
+                tinySFML::err() << "Unable to open registry for joystick at index " << index << ": " << getErrorString(result) << std::endl;
                 return joystickDescription;
             }
         }
@@ -129,7 +129,7 @@ namespace
 
         if (result != ERROR_SUCCESS)
         {
-            ttsf::err() << "Unable to query registry key for joystick at index " << index << ": " << getErrorString(result) << std::endl;
+            tinySFML::err() << "Unable to query registry key for joystick at index " << index << ": " << getErrorString(result) << std::endl;
             return joystickDescription;
         }
 
@@ -141,7 +141,7 @@ namespace
 
         if (result != ERROR_SUCCESS)
         {
-            ttsf::err() << "Unable to open registry key for joystick at index " << index << ": " << getErrorString(result) << std::endl;
+            tinySFML::err() << "Unable to open registry key for joystick at index " << index << ": " << getErrorString(result) << std::endl;
             return joystickDescription;
         }
 
@@ -152,7 +152,7 @@ namespace
 
         if (result != ERROR_SUCCESS)
         {
-            ttsf::err() << "Unable to query name for joystick at index " << index << ": " << getErrorString(result) << std::endl;
+            tinySFML::err() << "Unable to query name for joystick at index " << index << ": " << getErrorString(result) << std::endl;
             return joystickDescription;
         }
 
@@ -163,7 +163,7 @@ namespace
     }
 }
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -492,7 +492,7 @@ bool JoystickImpl::openDInput(unsigned int index)
                 const DWORD povType    = DIDFT_POV    | DIDFT_OPTIONAL | DIDFT_ANYINSTANCE;
                 const DWORD buttonType = DIDFT_BUTTON | DIDFT_OPTIONAL | DIDFT_ANYINSTANCE;
 
-                static DIOBJECTDATAFORMAT data[8 + 4 + ttsf::Joystick::ButtonCount];
+                static DIOBJECTDATAFORMAT data[8 + 4 + tinySFML::Joystick::ButtonCount];
 
                 data[0].pguid = &guids::GUID_XAxis;
                 data[0].dwOfs = DIJOFS_X;
@@ -532,7 +532,7 @@ bool JoystickImpl::openDInput(unsigned int index)
                     data[8 + i].dwFlags = 0;
                 }
 
-                for (int i = 0; i < ttsf::Joystick::ButtonCount; ++i)
+                for (int i = 0; i < tinySFML::Joystick::ButtonCount; ++i)
                 {
                     data[8 + 4 + i].pguid = NULL;
                     data[8 + 4 + i].dwOfs = static_cast<DWORD>(DIJOFS_BUTTON(i));
@@ -544,7 +544,7 @@ bool JoystickImpl::openDInput(unsigned int index)
                 format.dwObjSize = sizeof(DIOBJECTDATAFORMAT);
                 format.dwFlags = DIDFT_ABSAXIS;
                 format.dwDataSize = sizeof(DIJOYSTATE);
-                format.dwNumObjs = 8 + 4 + ttsf::Joystick::ButtonCount;
+                format.dwNumObjs = 8 + 4 + tinySFML::Joystick::ButtonCount;
                 format.rgodf = data;
 
                 formatInitialized = true;
@@ -796,7 +796,7 @@ BOOL CALLBACK JoystickImpl::deviceEnumerationCallback(const DIDEVICEINSTANCE* de
         }
     }
 
-    JoystickRecord record = { deviceInstance->guidInstance, ttsf::Joystick::Count, true };
+    JoystickRecord record = { deviceInstance->guidInstance, tinySFML::Joystick::Count, true };
     joystickList.push_back(record);
 
     return DIENUM_CONTINUE;
@@ -806,7 +806,7 @@ BOOL CALLBACK JoystickImpl::deviceEnumerationCallback(const DIDEVICEINSTANCE* de
 ////////////////////////////////////////////////////////////
 BOOL CALLBACK JoystickImpl::deviceObjectEnumerationCallback(const DIDEVICEOBJECTINSTANCE* deviceObjectInstance, void* userData)
 {
-    ttsf::priv::JoystickImpl& joystick = *reinterpret_cast<ttsf::priv::JoystickImpl*>(userData);
+    tinySFML::priv::JoystickImpl& joystick = *reinterpret_cast<tinySFML::priv::JoystickImpl*>(userData);
 
     if (DIDFT_GETTYPE(deviceObjectInstance->dwType) & DIDFT_AXIS)
     {
@@ -885,4 +885,4 @@ BOOL CALLBACK JoystickImpl::deviceObjectEnumerationCallback(const DIDEVICEOBJECT
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML

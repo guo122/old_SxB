@@ -6,7 +6,7 @@
 #include <Window/Mouse.hpp>
 
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -38,7 +38,7 @@ public:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_INPUTIMPLWIN32_HPP

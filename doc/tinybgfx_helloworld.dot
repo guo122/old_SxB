@@ -1,0 +1,15 @@
+digraph tinybgfx_helloworld {
+
+	rankdir = BT
+
+	node [
+		shape = "record"
+	]
+	
+	Hello -> Renderer
+	Renderer -> debug_renderdoc
+	Renderer -> glcontext
+	Renderer -> glimports
+	Renderer -> nvapi
+	Renderer -> dxgi
+}

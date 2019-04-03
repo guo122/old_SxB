@@ -10,32 +10,32 @@
 #if defined(SFML_SYSTEM_WINDOWS)
 
     #include <Window/Win32/WindowImplWin32.hpp>
-    typedef ttsf::priv::WindowImplWin32 WindowImplType;
+    typedef tinySFML::priv::WindowImplWin32 WindowImplType;
 
 #elif defined(SFML_SYSTEM_LINUX) || defined(SFML_SYSTEM_FREEBSD) || defined(SFML_SYSTEM_OPENBSD)
 
     #include <Window/Unix/WindowImplX11.hpp>
-    typedef sf::priv::WindowImplX11 WindowImplType;
+    typedef tinySFML::priv::WindowImplX11 WindowImplType;
 
 #elif defined(SFML_SYSTEM_MACOS)
 
     #include <SFML/Window/OSX/WindowImplCocoa.hpp>
-    typedef sf::priv::WindowImplCocoa WindowImplType;
+    typedef tinySFML::priv::WindowImplCocoa WindowImplType;
 
 #elif defined(SFML_SYSTEM_IOS)
 
     #include <SFML/Window/iOS/WindowImplUIKit.hpp>
-    typedef sf::priv::WindowImplUIKit WindowImplType;
+    typedef tinySFML::priv::WindowImplUIKit WindowImplType;
 
 #elif defined(SFML_SYSTEM_ANDROID)
 
     #include <SFML/Window/Android/WindowImplAndroid.hpp>
-    typedef sf::priv::WindowImplAndroid WindowImplType;
+    typedef tinySFML::priv::WindowImplAndroid WindowImplType;
 
 #endif
 
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -237,4 +237,4 @@ void WindowImpl::processSensorEvents()
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML

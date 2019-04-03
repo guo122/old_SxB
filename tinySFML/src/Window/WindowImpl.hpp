@@ -18,7 +18,7 @@
 #include <queue>
 #include <set>
 
-namespace ttsf
+namespace tinySFML
 {
 class WindowListener;
 
@@ -95,7 +95,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_WINDOWIMPL_HPP

@@ -5,7 +5,7 @@
 #include <System/NonCopyable.hpp>
 #include <windows.h>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {

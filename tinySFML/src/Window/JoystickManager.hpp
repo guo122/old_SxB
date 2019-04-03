@@ -6,7 +6,7 @@
 #include <Window/JoystickImpl.hpp>
 #include <System/NonCopyable.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -43,7 +43,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_JOYSTICKMANAGER_HPP

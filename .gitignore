@@ -1,11 +1,15 @@
+
 .DS_Store
+
 bgfx
 bx
 bimg
 sfml
+
 build
 bin
 lib
+
 *.pdb
 *.exp
 *.ilk
@@ -13,4 +17,10 @@ lib
 *.vcxproj.filters
 *.vcxproj.user
 
-bin/x64/Debug/Example*
+!tinyBGFX/include/bgfx
+!tinyBGFX/include/bx
+!tinyBGFX/include/bimg
+
+!tinyBGFX/src/bgfx
+!tinyBGFX/src/bx
+!tinyBGFX/src/bimg

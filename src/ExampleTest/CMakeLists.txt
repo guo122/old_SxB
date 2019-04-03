@@ -20,8 +20,8 @@ set(LINK_LIB bgfxDebug
 			 bimg_decodeDebug
 			 bimgDebug
 			 bxDebug
-			 sfml-system-d
-			 sfml-window-d)
+			 tinySFML_System
+			 tinySFML_Window)
 
 include_directories(${INC_DIR})
 link_directories(${LINK_DIR})

@@ -3,7 +3,7 @@
 #include <System/Err.hpp>
 
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -100,4 +100,4 @@ SensorManager::~SensorManager()
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML

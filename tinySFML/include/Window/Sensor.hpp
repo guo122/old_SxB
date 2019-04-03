@@ -7,7 +7,7 @@
 #include <System/Time.hpp>
 
 
-namespace ttsf
+namespace tinySFML
 {
 
 class TTSFML_WINDOW_API Sensor
@@ -33,7 +33,7 @@ public:
     static Vector3f getValue(Type sensor);
 };
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_SENSOR_HPP

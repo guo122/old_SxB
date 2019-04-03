@@ -7,7 +7,7 @@
     #include <Unix/MutexImpl.hpp>
 #endif
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 Mutex::Mutex()

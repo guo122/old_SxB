@@ -101,8 +101,8 @@
     #if defined(SFML_SYSTEM_WINDOWS)
 
         // Windows compilers need specific (and different) keywords for export and import
-        #define SFML_API_EXPORT __declspec(dllexport)
-        #define SFML_API_IMPORT __declspec(dllimport)
+        #define TTSFML_API_EXPORT __declspec(dllexport)
+        #define TTSFML_API_IMPORT __declspec(dllimport)
 
         // For Visual C++ compilers, we also need to turn off this annoying C4251 warning
         #ifdef _MSC_VER
@@ -117,14 +117,14 @@
 
             // GCC 4 has special keywords for showing/hidding symbols,
             // the same keyword is used for both importing and exporting
-            #define SFML_API_EXPORT __attribute__ ((__visibility__ ("default")))
-            #define SFML_API_IMPORT __attribute__ ((__visibility__ ("default")))
+            #define TTSFML_API_EXPORT __attribute__ ((__visibility__ ("default")))
+            #define TTSFML_API_IMPORT __attribute__ ((__visibility__ ("default")))
 
         #else
 
             // GCC < 4 has no mechanism to explicitely hide symbols, everything's exported
-            #define SFML_API_EXPORT
-            #define SFML_API_IMPORT
+            #define TTSFML_API_EXPORT
+            #define TTSFML_API_IMPORT
 
         #endif
 
@@ -133,8 +133,8 @@
 #else
 
     // Static build doesn't need import/export macros
-    #define SFML_API_EXPORT
-    #define SFML_API_IMPORT
+    #define TTSFML_API_EXPORT
+    #define TTSFML_API_IMPORT
 
 #endif
 
@@ -180,7 +180,7 @@
 ////////////////////////////////////////////////////////////
 // Define portable fixed-size types
 ////////////////////////////////////////////////////////////
-namespace ttsf
+namespace tinySFML
 {
     // All "common" platforms use the same size for char, short and int
     // (basically there are 3 types for 3 sizes, so no other match is possible),
@@ -207,7 +207,7 @@ namespace ttsf
         typedef unsigned long long Uint64;
     #endif
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_CONFIG_HPP

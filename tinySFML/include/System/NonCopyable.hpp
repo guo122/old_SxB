@@ -4,7 +4,7 @@
 
 #include <System/Export.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 
 class TTSFML_SYSTEM_API NonCopyable
@@ -21,7 +21,7 @@ private:
     NonCopyable& operator =(const NonCopyable&);
 };
 
-} // namespace ttsf
+} // namespace tinySFML
 
 
 #endif // TTSFML_NONCOPYABLE_HPP

@@ -3,7 +3,7 @@
 #include <Window/InputImpl.hpp>
 
 
-namespace sf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 bool Keyboard::isKeyPressed(Key key)
@@ -18,4 +18,4 @@ void Keyboard::setVirtualKeyboardVisible(bool visible)
     priv::InputImpl::setVirtualKeyboardVisible(visible);
 }
 
-} // namespace sf
+} // namespace tinySFML

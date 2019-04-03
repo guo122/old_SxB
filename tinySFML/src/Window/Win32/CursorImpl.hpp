@@ -8,7 +8,7 @@
 
 #include <windows.h>
 
-namespace ttsf
+namespace tinySFML
 {
 
 namespace priv
@@ -37,7 +37,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 
 #endif // SFML_CUSROSIMPLWIN32_HPP
 

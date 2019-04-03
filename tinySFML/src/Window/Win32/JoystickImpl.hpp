@@ -19,7 +19,7 @@
 #include <dinput.h>
 
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -81,7 +81,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_JOYSTICKIMPLWIN32_HPP

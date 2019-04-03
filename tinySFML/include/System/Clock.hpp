@@ -5,7 +5,7 @@
 #include <System/Export.hpp>
 #include <System/Time.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 
 class TTSFML_SYSTEM_API Clock

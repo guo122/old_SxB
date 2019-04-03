@@ -6,11 +6,11 @@
 
 namespace
 {
-    const ttsf::WindowBase* fullscreenWindow = NULL;
+    const tinySFML::WindowBase* fullscreenWindow = NULL;
 }
 
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 WindowBase::WindowBase() :
@@ -342,4 +342,4 @@ void WindowBase::setFullscreenWindow(const WindowBase* window)
     fullscreenWindow = window;
 }
 
-} // namespace sf
+} // namespace tinySFML

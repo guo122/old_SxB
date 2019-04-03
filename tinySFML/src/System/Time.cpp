@@ -1,7 +1,7 @@
 
 #include "System/Time.hpp"
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 const Time Time::Zero;

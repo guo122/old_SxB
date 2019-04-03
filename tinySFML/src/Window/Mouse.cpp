@@ -3,7 +3,7 @@
 #include <Window/InputImpl.hpp>
 #include <Window/WindowBase.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 bool Mouse::isButtonPressed(Button button)
@@ -39,4 +39,4 @@ void Mouse::setPosition(const Vector2i& position, const WindowBase& relativeTo)
     priv::InputImpl::setMousePosition(position, relativeTo);
 }
 
-} // namespace sf
+} // namespace tinySFML

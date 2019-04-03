@@ -12,7 +12,7 @@
 #include <windows.h>
 
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -227,4 +227,4 @@ Vector2i InputImpl::getTouchPosition(unsigned int /*finger*/, const WindowBase& 
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML

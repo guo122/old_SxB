@@ -14,7 +14,7 @@
 #include <System/Clock.hpp>
 #include <System/String.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -98,7 +98,7 @@ private:
     Vector2u          m_size;           ///< Current size of the window
 };
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_WINDOWBASE_HPP

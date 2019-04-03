@@ -8,7 +8,7 @@
 #endif
 
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 void sleep(Time duration)

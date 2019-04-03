@@ -9,7 +9,7 @@
     struct HWND__;
 #endif
 
-namespace ttsf
+namespace tinySFML
 {
 #if defined(SFML_SYSTEM_WINDOWS)
 
@@ -43,7 +43,7 @@ namespace ttsf
 
 #endif
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_WINDOWHANDLE_HPP

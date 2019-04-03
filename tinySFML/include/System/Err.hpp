@@ -5,7 +5,7 @@
 #include <System/Export.hpp>
 #include <ostream>
 
-namespace ttsf
+namespace tinySFML
 {
 
 TTSFML_SYSTEM_API std::ostream& err();

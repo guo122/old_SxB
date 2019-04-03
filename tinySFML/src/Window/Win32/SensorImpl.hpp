@@ -3,7 +3,7 @@
 #define TTSFML_SENSORIMPLWIN32_HPP
 
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -29,7 +29,7 @@ public:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_SENSORIMPLWIN32_HPP

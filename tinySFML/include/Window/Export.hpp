@@ -1,9 +1,17 @@
 
-#ifndef TTSFML_EXPORT_HPP
-#define TTSFML_EXPORT_HPP
+#ifndef TTSFML_WINDOW_EXPORT_HPP
+#define TTSFML_WINDOW_EXPORT_HPP
 
 #include "Config.hpp"
 
-#define TTSFML_WINDOW_API
+#if defined(tinySFML_Window_EXPORTS)
 
-#endif // TTSFML_EXPORT_HPP
+#define TTSFML_WINDOW_API TTSFML_API_EXPORT
+
+#else
+
+#define TTSFML_WINDOW_API TTSFML_API_IMPORT
+
+#endif
+
+#endif // TTSFML_WINDOW_EXPORT_HPP

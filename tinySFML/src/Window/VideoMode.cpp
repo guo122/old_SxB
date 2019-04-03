@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <functional>
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 VideoMode::VideoMode() :
@@ -116,4 +116,4 @@ bool operator >=(const VideoMode& left, const VideoMode& right)
     return !(left < right);
 }
 
-} // namespace sf
+} // namespace tinySFML

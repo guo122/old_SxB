@@ -5,7 +5,7 @@
 #include <Window/Export.hpp>
 #include <System/Vector2.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 class WindowBase;
 
@@ -41,7 +41,7 @@ public:
     static void setPosition(const Vector2i& position, const WindowBase& relativeTo);
 };
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_MOUSE_HPP

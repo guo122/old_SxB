@@ -8,6 +8,7 @@
 #define _WIN32_WINDOWS 0x0501
 #define _WIN32_WINNT   0x0501
 #define WINVER         0x0501
+#include <windows.h>
 #include <Window/Win32/WindowImplWin32.hpp>
 #include <Window/WindowStyle.hpp>
 #include <GL/gl.h>
@@ -39,7 +40,7 @@ namespace
     unsigned int               windowCount      = 0; // Windows owned by SFML
     unsigned int               handleCount      = 0; // All window handles
     const wchar_t*             className        = L"SFML_Window";
-    ttsf::priv::WindowImplWin32* fullscreenWindow = NULL;
+    tinySFML::priv::WindowImplWin32* fullscreenWindow = NULL;
 
     const GUID GUID_DEVINTERFACE_HID = {0x4d1e55b2, 0xf16f, 0x11cf, {0x88, 0xcb, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30}};
 
@@ -67,7 +68,7 @@ namespace
                 // and S_OK means the call was successful
                 if (SetProcessDpiAwarenessFunc(ProcessSystemDpiAware) == E_INVALIDARG)
                 {
-                    ttsf::err() << "Failed to set process DPI awareness" << std::endl;
+                    tinySFML::err() << "Failed to set process DPI awareness" << std::endl;
                 }
                 else
                 {
@@ -91,7 +92,7 @@ namespace
             if (SetProcessDPIAwareFunc)
             {
                 if (!SetProcessDPIAwareFunc())
-                    ttsf::err() << "Failed to set process DPI awareness" << std::endl;
+                    tinySFML::err() << "Failed to set process DPI awareness" << std::endl;
             }
 
             FreeLibrary(user32Dll);
@@ -99,7 +100,7 @@ namespace
     }
 }
 
-namespace sf
+namespace tinySFML
 {
 namespace priv
 {
@@ -685,7 +686,7 @@ void WindowImplWin32::processEvent(UINT message, WPARAM wParam, LPARAM lParam)
                     {
                         // Convert the UTF-16 surrogate pair to a single UTF-32 value
                         Uint16 utf16[] = {m_surrogate, static_cast<Uint16>(character)};
-                        ttsf::Utf16::toUtf32(utf16, utf16 + 2, &character);
+                        tinySFML::Utf16::toUtf32(utf16, utf16 + 2, &character);
                         m_surrogate = 0;
                     }
 
@@ -1136,5 +1137,5 @@ LRESULT CALLBACK WindowImplWin32::globalOnEvent(HWND handle, UINT message, WPARA
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
 

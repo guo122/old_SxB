@@ -2,7 +2,7 @@
 #include <Window/Sensor.hpp>
 #include <Window/SensorManager.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 
 ////////////////////////////////////////////////////////////
@@ -23,4 +23,4 @@ Vector3f Sensor::getValue(Type sensor)
     return priv::SensorManager::getInstance().getValue(sensor);
 }
 
-} // namespace sf
+} // namespace tinySFML

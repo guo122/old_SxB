@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <algorithm>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -18,7 +18,7 @@ std::vector<VideoMode> VideoModeImpl::getFullscreenModes()
     win32Mode.dmDriverExtra = 0;
     for (int count = 0; EnumDisplaySettings(NULL, count, &win32Mode); ++count)
     {
-        // Convert to sf::VideoMode
+        // Convert to tinySFML::VideoMode
         VideoMode mode(win32Mode.dmPelsWidth, win32Mode.dmPelsHeight, win32Mode.dmBitsPerPel);
 
         // Add it only if it is not already in the array
@@ -43,4 +43,4 @@ VideoMode VideoModeImpl::getDesktopMode()
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML

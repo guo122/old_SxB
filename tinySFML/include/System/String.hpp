@@ -8,7 +8,7 @@
 #include <locale>
 #include <string>
 
-namespace ttsf
+namespace tinySFML
 {
 
 class TTSFML_SYSTEM_API String

@@ -3,7 +3,7 @@
 #define TTSFML_VECTOR3_HPP
 
 
-namespace ttsf
+namespace tinySFML
 {
 
 template <typename T>

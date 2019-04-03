@@ -2,7 +2,7 @@
 #include <Window/Joystick.hpp>
 #include <Window/JoystickManager.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 bool Joystick::isConnected(unsigned int joystick)
@@ -62,4 +62,4 @@ productId(0)
 
 }
 
-} // namespace sf
+} // namespace tinySFML

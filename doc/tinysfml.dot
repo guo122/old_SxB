@@ -1,4 +1,4 @@
-digraph TTSFML_System {
+digraph tinysfml {
 
 	rankdir = BT
 

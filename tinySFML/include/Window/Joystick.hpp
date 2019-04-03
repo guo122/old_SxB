@@ -5,7 +5,7 @@
 #include <Window/Export.hpp>
 #include <System/String.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 class TTSFML_WINDOW_API Joystick
 {
@@ -54,7 +54,7 @@ public:
     static void update();
 };
 
-} // namespace sf
+} // namespace tinySFML
 
 
 #endif // SFML_JOYSTICK_HPP

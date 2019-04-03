@@ -1,7 +1,7 @@
 
 #include <System/Win32/MutexImpl.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {

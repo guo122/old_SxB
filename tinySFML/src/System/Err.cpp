@@ -68,7 +68,7 @@ private:
 };
 }
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 std::ostream& err()

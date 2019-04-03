@@ -2,7 +2,7 @@
 #ifndef TTSFML_VECTOR2_HPP
 #define TTSFML_VECTOR2_HPP
 
-namespace ttsf
+namespace tinySFML
 {
 template <typename T>
 class Vector2

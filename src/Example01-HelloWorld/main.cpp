@@ -1,7 +1,7 @@
 
-#include <SFML/Config.hpp>
-#include <SFML/Window/Window.hpp>
-#include <SFML/Window/Event.hpp>
+#include <Config.hpp>
+#include <Window/WindowBase.hpp>
+#include <Window/Event.hpp>
 
 #include <bgfx/bgfx.h>
 #include <bgfx/platform.h>
@@ -15,7 +15,7 @@
 int main(int argc, char *argv[])
  {
      // Create the main window
-     sf::WindowBase window(sf::VideoMode(WNDW_WIDTH, WNDW_HEIGHT), "SFML window");
+     tinySFML::WindowBase window(tinySFML::VideoMode(WNDW_WIDTH, WNDW_HEIGHT), "SFML window");
 
 	 bgfx::PlatformData pd;
 	 pd.nwh = window.getSystemHandle();
@@ -37,11 +37,11 @@ int main(int argc, char *argv[])
      while (window.isOpen())
      {
          // Process events
-         sf::Event event;
+		 tinySFML::Event event;
          while (window.pollEvent(event))
          {
              // Close window: exit
-             if (event.type == sf::Event::Closed)
+             if (event.type == tinySFML::Event::Closed)
                  window.close();
          }
 

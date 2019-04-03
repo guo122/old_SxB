@@ -7,7 +7,7 @@
     #include <System/Unix/ClockImpl.hpp>
 #endif
 
-namespace ttsf
+namespace tinySFML
 {
 ////////////////////////////////////////////////////////////
 Clock::Clock() :

@@ -1,7 +1,7 @@
 
 #include <Window/JoystickManager.hpp>
 
-namespace ttsf
+namespace tinySFML
 {
 namespace priv
 {
@@ -93,4 +93,4 @@ JoystickManager::~JoystickManager()
 
 } // namespace priv
 
-} // namespace sf
+} // namespace tinySFML
