@@ -3,9 +3,9 @@
  * License: https://github.com/bkaradzic/bx#license-bsd-2-clause
  */
 
-#ifndef BX_STRING_H_HEADER_GUARD
-#	error "Must be included from bx/string.h!"
-#endif // BX_STRING_H_HEADER_GUARD
+#ifndef BX_BXSTRING_H_HEADER_GUARD
+#	error "Must be included from bx/bxstring.h!"
+#endif // BX_BXSTRING_H_HEADER_GUARD
 
 #if BX_CRT_MSVC && !defined(va_copy)
 #	define va_copy(_a, _b) (_a) = (_b)

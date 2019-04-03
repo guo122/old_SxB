@@ -3,25 +3,25 @@ set(PROJECT_NAME ExampleTest)
 
 aux_source_directory(. DIR_SRCS)
 
-set(INC_DIR ${CMAKE_ROOT_DIR}/bgfx/include 
-			${CMAKE_ROOT_DIR}/bx/include 
-			${CMAKE_ROOT_DIR}/bimg/include
-			${CMAKE_ROOT_DIR}/sfml/include)
+set(INC_DIR ${CMAKE_ROOT_DIR}/tinyBGFX/include 
+			${CMAKE_ROOT_DIR}/tinySFML/include
+			)
 
 IF (WIN32)
-    set(INC_DIR ${INC_DIR} ${CMAKE_ROOT_DIR}/bx/include/compat/msvc)
+	set(INC_DIR ${INC_DIR} ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/compat/msvc)
 ELSEIF (APPLE)
-    set(INC_DIR ${INC_DIR} ${CMAKE_ROOT_DIR}/bx/include/compat/osx)
+	set(INC_DIR ${INC_DIR} ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/compat/osx)
 ENDIF()
 			
 set(LINK_DIR ${CMAKE_ROOT_DIR}/lib/x64/Debug)
 
-set(LINK_LIB bgfxDebug 
-			 bimg_decodeDebug
-			 bimgDebug
-			 bxDebug
-			 tinySFML_System
-			 tinySFML_Window)
+set(LINK_LIB 
+		tinyBGFX_bgfx
+		tinyBGFX_bx 
+		tinyBGFX_bimg
+		tinySFML_System
+		tinySFML_Window
+	)
 
 include_directories(${INC_DIR})
 link_directories(${LINK_DIR})

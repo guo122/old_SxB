@@ -3,8 +3,8 @@
  * License: https://github.com/bkaradzic/bx#license-bsd-2-clause
  */
 
-#ifndef BX_STRING_H_HEADER_GUARD
-#define BX_STRING_H_HEADER_GUARD
+#ifndef BX_BXSTRING_H_HEADER_GUARD
+#define BX_BXSTRING_H_HEADER_GUARD
 
 #include "allocator.h"
 
@@ -358,4 +358,4 @@ namespace bx
 
 #include "inline/bxstring.inl"
 
-#endif // BX_STRING_H_HEADER_GUARD
+#endif // BX_BXSTRING_H_HEADER_GUARD

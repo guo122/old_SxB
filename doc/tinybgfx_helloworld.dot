@@ -12,4 +12,7 @@ digraph tinybgfx_helloworld {
 	Renderer -> glimports
 	Renderer -> nvapi
 	Renderer -> dxgi
+	
+	Hello -> ImagePharse
+	ImagePharse -> rng
 }
