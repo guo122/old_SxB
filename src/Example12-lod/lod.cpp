@@ -31,8 +31,8 @@ bool lod::init(void* nwh_)
 		.add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
 		.end();
 
-	bgfx::VertexBufferHandle vbh = bgfx::createVertexBuffer(bgfx::makeRef(cubeVertices, sizeof(cubeVertices)), pcvDecl);
-	bgfx::IndexBufferHandle ibh = bgfx::createIndexBuffer(bgfx::makeRef(cubeTriList, sizeof(cubeTriList)));
+	m_vbh = bgfx::createVertexBuffer(bgfx::makeRef(cubeVertices, sizeof(cubeVertices)), pcvDecl);
+	m_ibh = bgfx::createIndexBuffer(bgfx::makeRef(cubeTriList, sizeof(cubeTriList)));
 
 	unsigned int counter = 0;
 
@@ -49,24 +49,13 @@ bool lod::init(void* nwh_)
 
 void lod::update(const uint64_t & frame_)
 {
-	bgfx::touch(0);
+	if (m_ready)
+	{
 
-	const bx::Vec3 at = { 0.0f, 0.0f,  0.0f };
-	const bx::Vec3 eye = { 0.0f, 0.0f, -5.0f };
-	float view[16];
-	bx::mtxLookAt(view, eye, at);
-	float proj[16];
-	bx::mtxProj(proj, 60.0f, float(WNDW_WIDTH) / float(WNDW_HEIGHT), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
-	bgfx::setViewTransform(0, view, proj);
+		bgfx::setVertexBuffer(0, m_vbh);
+		bgfx::setIndexBuffer(m_ibh);
 
-	bgfx::setVertexBuffer(0, vbh);
-	bgfx::setIndexBuffer(ibh);
+		bgfx::submit(0, m_program);
 
-	float mtx[16];
-	bx::mtxRotateXY(mtx, counter * 0.01f, counter * 0.01f);
-	bgfx::setTransform(mtx);
-
-	bgfx::submit(0, program);
-	bgfx::frame();
-	counter++;
+	}
 }

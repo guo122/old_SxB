@@ -58,7 +58,6 @@ set(DIR_SRCS ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/platform.h
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/url.h
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/url.cpp
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/crtnone.cpp
-			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/amalgamated.cpp
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bx/dtoa.cpp
 			 )	
 			 

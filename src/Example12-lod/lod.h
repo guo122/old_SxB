@@ -69,9 +69,11 @@ public:
 
 	void update(const uint64_t & frame_ = 0);
 
-private:
+public:
 	bool m_ready;
 	bgfx::ProgramHandle m_program;
+	bgfx::VertexBufferHandle m_vbh;
+	bgfx::IndexBufferHandle m_ibh;
 };
 
 #endif // LOD_H_DC8C8E2F5FF1CD11F91286184C879E21
