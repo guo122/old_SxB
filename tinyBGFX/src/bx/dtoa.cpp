@@ -104,13 +104,13 @@ namespace bx
 		DiyFp NormalizeBoundary() const
 		{
 			uint32_t index = uint64_cntlz(f);
-			return DiyFp (f << index, e - index);
+			return DiyFp(f << index, e - index);
 		}
 
 		void NormalizedBoundaries(DiyFp* minus, DiyFp* plus) const
 		{
-			DiyFp pl = DiyFp( (f << 1) + 1, e - 1).NormalizeBoundary();
-			DiyFp mi = (f == kDpHiddenBit) ? DiyFp( (f << 2) - 1, e - 2) : DiyFp( (f << 1) - 1, e - 1);
+			DiyFp pl = DiyFp((f << 1) + 1, e - 1).NormalizeBoundary();
+			DiyFp mi = (f == kDpHiddenBit) ? DiyFp((f << 2) - 1, e - 2) : DiyFp((f << 1) - 1, e - 1);
 			mi.f <<= mi.e - pl.e;
 			mi.e = pl.e;
 			*plus = pl;
@@ -120,12 +120,12 @@ namespace bx
 #define UINT64_C2(h, l) ( (static_cast<uint64_t>(h) << 32) | static_cast<uint64_t>(l) )
 
 		static const int32_t  kDiySignificandSize = 64;
-		static const int32_t  kDpSignificandSize  = 52;
-		static const int32_t  kDpExponentBias     = 0x3FF + kDpSignificandSize;
-		static const int32_t  kDpMinExponent      = -kDpExponentBias;
-		static const uint64_t kDpExponentMask     = UINT64_C2(0x7FF00000, 0x00000000);
-		static const uint64_t kDpSignificandMask  = UINT64_C2(0x000FFFFF, 0xFFFFFFFF);
-		static const uint64_t kDpHiddenBit        = UINT64_C2(0x00100000, 0x00000000);
+		static const int32_t  kDpSignificandSize = 52;
+		static const int32_t  kDpExponentBias = 0x3FF + kDpSignificandSize;
+		static const int32_t  kDpMinExponent = -kDpExponentBias;
+		static const uint64_t kDpExponentMask = UINT64_C2(0x7FF00000, 0x00000000);
+		static const uint64_t kDpSignificandMask = UINT64_C2(0x000FFFFF, 0xFFFFFFFF);
+		static const uint64_t kDpHiddenBit = UINT64_C2(0x00100000, 0x00000000);
 
 		uint64_t f;
 		int32_t e;
@@ -221,8 +221,8 @@ namespace bx
 			k++;
 		}
 
-		uint32_t index = static_cast<uint32_t>( (k >> 3) + 1);
-		*K = -(-348 + static_cast<int32_t>(index << 3) );	// decimal exponent no need lookup table
+		uint32_t index = static_cast<uint32_t>((k >> 3) + 1);
+		*K = -(-348 + static_cast<int32_t>(index << 3));	// decimal exponent no need lookup table
 
 		BX_CHECK(index < sizeof(s_kCachedPowers_F) / sizeof(s_kCachedPowers_F[0]), "");
 		return DiyFp(s_kCachedPowers_F[index], s_kCachedPowers_E[index]);
@@ -232,7 +232,7 @@ namespace bx
 	{
 		while (rest < wp_w
 			&& delta - rest >= ten_kappa
-			&& (rest + ten_kappa < wp_w || wp_w - rest > rest + ten_kappa - wp_w) )
+			&& (rest + ten_kappa < wp_w || wp_w - rest > rest + ten_kappa - wp_w))
 		{
 			buffer[len - 1]--;
 			rest += ten_kappa;
@@ -260,7 +260,7 @@ namespace bx
 		const DiyFp wp_w = Mp - W;
 		uint32_t p1 = static_cast<uint32_t>(Mp.f >> -one.e);
 		uint64_t p2 = Mp.f & (one.f - 1);
-		int32_t kappa = static_cast<int32_t>(CountDecimalDigit32(p1) );
+		int32_t kappa = static_cast<int32_t>(CountDecimalDigit32(p1));
 		*len = 0;
 
 		while (kappa > 0)
@@ -268,19 +268,19 @@ namespace bx
 			uint32_t d;
 			switch (kappa)
 			{
-				case 10: d = p1 / 1000000000; p1 %= 1000000000; break;
-				case  9: d = p1 /  100000000; p1 %=  100000000; break;
-				case  8: d = p1 /   10000000; p1 %=   10000000; break;
-				case  7: d = p1 /    1000000; p1 %=    1000000; break;
-				case  6: d = p1 /     100000; p1 %=     100000; break;
-				case  5: d = p1 /      10000; p1 %=      10000; break;
-				case  4: d = p1 /       1000; p1 %=       1000; break;
-				case  3: d = p1 /        100; p1 %=        100; break;
-				case  2: d = p1 /         10; p1 %=         10; break;
-				case  1: d = p1;              p1  =          0; break;
-				default:
-					d = 0;
-					break;
+			case 10: d = p1 / 1000000000; p1 %= 1000000000; break;
+			case  9: d = p1 / 100000000; p1 %= 100000000; break;
+			case  8: d = p1 / 10000000; p1 %= 10000000; break;
+			case  7: d = p1 / 1000000; p1 %= 1000000; break;
+			case  6: d = p1 / 100000; p1 %= 100000; break;
+			case  5: d = p1 / 10000; p1 %= 10000; break;
+			case  4: d = p1 / 1000; p1 %= 1000; break;
+			case  3: d = p1 / 100; p1 %= 100; break;
+			case  2: d = p1 / 10; p1 %= 10; break;
+			case  1: d = p1;              p1 = 0; break;
+			default:
+				d = 0;
+				break;
 			}
 
 			if (d || *len)
@@ -431,7 +431,7 @@ namespace bx
 
 	int32_t toString(char* _dst, int32_t _max, double _value)
 	{
-		int32_t sign = 0 != (doubleToBits(_value) & (UINT64_C(1)<<63) ) ? 1 : 0;
+		int32_t sign = 0 != (doubleToBits(_value) & (UINT64_C(1) << 63)) ? 1 : 0;
 		if (1 == sign)
 		{
 			*_dst++ = '-';
@@ -439,11 +439,11 @@ namespace bx
 			_value = -_value;
 		}
 
-		if (isNan(_value) )
+		if (isNan(_value))
 		{
 			return (int32_t)strCopy(_dst, _max, "nan") + sign;
 		}
-		else if (isInfinite(_value) )
+		else if (isInfinite(_value))
 		{
 			return (int32_t)strCopy(_dst, _max, "inf") + sign;
 		}
@@ -475,7 +475,7 @@ namespace bx
 	int32_t toStringSigned(char* _dst, int32_t _max, Ty _value, uint32_t _base, char _separator)
 	{
 		if (_base == 10
-		&&  _value < 0)
+			&& _value < 0)
 		{
 			if (_max < 1)
 			{
@@ -487,7 +487,7 @@ namespace bx
 				, typename std::make_unsigned<Ty>::type(-_value)
 				, _base
 				, _separator
-				);
+			);
 			if (_max == 0)
 			{
 				return 0;
@@ -502,7 +502,7 @@ namespace bx
 			, typename std::make_unsigned<Ty>::type(_value)
 			, _base
 			, _separator
-			);
+		);
 	}
 
 	int32_t toString(char* _dst, int32_t _max, int32_t _value, uint32_t _base, char _separator)
@@ -522,7 +522,7 @@ namespace bx
 		int32_t len = 0;
 
 		if (_base > 16
-		||  _base < 2)
+			|| _base < 2)
 		{
 			return 0;
 		}
@@ -543,15 +543,14 @@ namespace bx
 			}
 
 			if ('\0' != _separator
-			&&  0 == count%3
-			&&  0 != _value)
+				&& 0 == count % 3
+				&& 0 != _value)
 			{
 				data[len++] = _separator;
 			}
 
 			++count;
-		}
-		while (0 != _value);
+		} while (0 != _value);
 
 		if (_max < len + 1)
 		{
@@ -601,15 +600,15 @@ namespace bx
 	 * SOFTWARE.
 	 */
 
-	/*
-	 * IMPORTANT
-	 *
-	 * The code works in "round towards zero" mode. This is different from
-	 * GCC standard library strtod(), which uses "round half to even" rule.
-	 * Therefore it cannot be used as a direct drop-in replacement, as in
-	 * some cases results will be different on the least significant bit of
-	 * mantissa. Read more in the README.md file.
-	 */
+	 /*
+	  * IMPORTANT
+	  *
+	  * The code works in "round towards zero" mode. This is different from
+	  * GCC standard library strtod(), which uses "round half to even" rule.
+	  * Therefore it cannot be used as a direct drop-in replacement, as in
+	  * some cases results will be different on the least significant bit of
+	  * mantissa. Read more in the README.md file.
+	  */
 
 #define DIGITS 18
 
@@ -689,7 +688,7 @@ namespace bx
 
 #endif   /* USE_64BIT_FOR_ADDSUB_MACROS */
 
-	/* parser state machine states */
+	 /* parser state machine states */
 
 #define FSM_A    0
 #define FSM_B    1
@@ -740,7 +739,7 @@ namespace bx
 			switch (state)
 			{
 			case FSM_A:
-				if (isSpace(c) )
+				if (isSpace(c))
 				{
 					c = next(_s, _term);
 				}
@@ -762,7 +761,7 @@ namespace bx
 					_pn->negative = 1;
 					c = next(_s, _term);
 				}
-				else if (isNumeric(c) )
+				else if (isNumeric(c))
 				{
 				}
 				else if (c == '.')
@@ -803,7 +802,7 @@ namespace bx
 				break;
 
 			case FSM_E:
-				if (isNumeric(c) )
+				if (isNumeric(c))
 				{
 					if (digx < DIGITS)
 					{
@@ -830,7 +829,7 @@ namespace bx
 				break;
 
 			case FSM_F:
-				if (isNumeric(c) )
+				if (isNumeric(c))
 				{
 					if (digx < DIGITS)
 					{
@@ -842,7 +841,7 @@ namespace bx
 
 					c = next(_s, _term);
 				}
-				else if ('e' == toLower(c) )
+				else if ('e' == toLower(c))
 				{
 					c = next(_s, _term);
 					state = FSM_G;
@@ -879,7 +878,7 @@ namespace bx
 				break;
 
 			case FSM_I:
-				if (isNumeric(c) )
+				if (isNumeric(c))
 				{
 					if (expexp < 214748364)
 					{
@@ -977,7 +976,7 @@ namespace bx
 
 		while (_pn->exponent < 0)
 		{
-			while (!(s2 & (1 << 31) ) )
+			while (!(s2 & (1 << 31)))
 			{
 				lsl96(s2, s1, s0, q2, q1, q0);
 				binexp--;
@@ -991,10 +990,10 @@ namespace bx
 			r2 = (s1 >> 8) | (r1 << 24);
 			q1 = r2 / 10;
 			r1 = r2 % 10;
-			r2 = ( (s1 & 0xFF) << 16) | (s0 >> 16) | (r1 << 24);
+			r2 = ((s1 & 0xFF) << 16) | (s0 >> 16) | (r1 << 24);
 			r0 = r2 / 10;
 			r1 = r2 % 10;
-			q1 = (q1 << 8) | ( (r0 & 0x00FF0000) >> 16);
+			q1 = (q1 << 8) | ((r0 & 0x00FF0000) >> 16);
 			q0 = r0 << 16;
 			r2 = (s0 & UINT16_MAX) | (r1 << 16);
 			q0 |= r2 / 10;
@@ -1007,7 +1006,7 @@ namespace bx
 
 		if (s2 || s1 || s0)
 		{
-			while (!(s2 & mask28) )
+			while (!(s2 & mask28))
 			{
 				lsl96(s2, s1, s0, q2, q1, q0);
 				binexp--;
@@ -1043,8 +1042,8 @@ namespace bx
 			uint64_t binexs2 = (uint64_t)binexp;
 
 			binexs2 <<= 52;
-			q =   ( (uint64_t)(s2 & ~mask28) << 24)
-			  | ( ( (uint64_t)s1 + 128) >> 8) | binexs2;
+			q = ((uint64_t)(s2 & ~mask28) << 24)
+				| (((uint64_t)s1 + 128) >> 8) | binexs2;
 
 			if (_pn->negative)
 			{
@@ -1067,7 +1066,7 @@ namespace bx
 	bool fromString(bool* _out, const StringView& _str)
 	{
 		char ch = toLower(_str.getPtr()[0]);
-		*_out = ch == 't' ||  ch == '1';
+		*_out = ch == 't' || ch == '1';
 		return 0 != _str.getLength();
 	}
 
@@ -1089,7 +1088,7 @@ namespace bx
 		HexDouble hd;
 		hd.u = DOUBLE_PLUS_ZERO;
 
-		switch (parser(_str.getPtr(), _str.getTerm(), &pn) )
+		switch (parser(_str.getPtr(), _str.getTerm(), &pn))
 		{
 		case PARSER_OK:
 			*_out = converter(&pn);
@@ -1122,7 +1121,7 @@ namespace bx
 	{
 		StringView str = bx::strLTrimSpace(_str);
 
-		const char* ptr  = str.getPtr();
+		const char* ptr = str.getPtr();
 		const char* term = str.getTerm();
 
 		char ch = *ptr++;
@@ -1142,7 +1141,7 @@ namespace bx
 
 		for (ch = *ptr++; isNumeric(ch) && ptr <= term; ch = *ptr++)
 		{
-			result = 10*result - (ch - '0');
+			result = 10 * result - (ch - '0');
 		}
 
 		*_out = neg ? result : -result;
@@ -1152,7 +1151,7 @@ namespace bx
 
 	bool fromString(uint32_t* _out, const StringView& _str)
 	{
-		fromString( (int32_t*)_out, _str);
+		fromString((int32_t*)_out, _str);
 		return true;
 	}
 

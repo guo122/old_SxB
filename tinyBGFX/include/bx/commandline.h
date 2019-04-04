@@ -6,7 +6,7 @@
 #ifndef BX_COMMANDLINE_H_HEADER_GUARD
 #define BX_COMMANDLINE_H_HEADER_GUARD
 
-#include "string.h"
+#include "bxstring.h"
 
 namespace bx
 {

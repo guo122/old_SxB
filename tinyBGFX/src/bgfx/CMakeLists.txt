@@ -78,6 +78,9 @@ set(DIR_SRCS ${CMAKE_ROOT_DIR}/tinyBGFX/include/bgfx/bgfx.h
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bgfx/nvapi.cpp
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bgfx/dxgi.h
 			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bgfx/dxgi.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bgfx/varying.def.sc
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bgfx/amalgamated.cpp
+			 ${CMAKE_ROOT_DIR}/tinyBGFX/src/bgfx/amalgamated.mm
 			 )	
 
 set(C99_SRCS
@@ -88,9 +91,9 @@ source_group("c99" FILES ${C99_SRCS})
 set(DIR_SRCS ${DIR_SRCS} ${C99_SRCS})			 
 
 set(INC_DIR ${CMAKE_ROOT_DIR}/tinyBGFX/include
-			${CMAKE_ROOT_DIR}/bgfx/3rdparty
-			${CMAKE_ROOT_DIR}/bgfx/3rdparty/dxsdk/include
-			${CMAKE_ROOT_DIR}/bgfx/3rdparty/khronos
+			${CMAKE_ROOT_DIR}/tinyBGFX/3rdparty
+			${CMAKE_ROOT_DIR}/tinyBGFX/3rdparty/dxsdk/include
+			${CMAKE_ROOT_DIR}/tinyBGFX/3rdparty/khronos
 			)
 
 IF (WIN32)
@@ -126,5 +129,5 @@ add_library(${PROJECT_NAME} STATIC ${DIR_SRCS})
 #INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_ROOT_DIR}/bin/x64/Debug)
 #INSTALL(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_ROOT_DIR}/bin/x64)
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "tinyBGFX")
+set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "libs")
 

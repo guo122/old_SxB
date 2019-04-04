@@ -1,11 +1,6 @@
 
 .DS_Store
 
-bgfx
-bx
-bimg
-sfml
-
 build
 bin
 lib
@@ -16,11 +11,3 @@ lib
 *.vs
 *.vcxproj.filters
 *.vcxproj.user
-
-!tinyBGFX/include/bgfx
-!tinyBGFX/include/bx
-!tinyBGFX/include/bimg
-
-!tinyBGFX/src/bgfx
-!tinyBGFX/src/bx
-!tinyBGFX/src/bimg
