@@ -43,7 +43,6 @@ static const uint16_t cubeTriList[] =
 	2, 3, 6,
 	6, 3, 7,
 };
-
 struct KnightPos
 {
 	int32_t m_x;
@@ -69,7 +68,7 @@ public:
 
 	void update(const uint64_t & frame_ = 0);
 
-public:
+private:
 	bool m_ready;
 	bgfx::ProgramHandle m_program;
 	bgfx::VertexBufferHandle m_vbh;

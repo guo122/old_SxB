@@ -3,6 +3,7 @@ set(PROJECT_NAME Example00-HelloBGFX)
 
 set(DIR_SRCS ${CMAKE_ROOT_DIR}/src/Example00-HelloBGFX/main.cpp
 			 ${CMAKE_ROOT_DIR}/src/Example00-HelloBGFX/cube.h
+			 ${CMAKE_ROOT_DIR}/src/Example00-HelloBGFX/cube.cpp
 			)
 
 set(INC_DIR ${CMAKE_ROOT_DIR}/include 

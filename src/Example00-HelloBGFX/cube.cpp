@@ -5,9 +5,9 @@
 
 #include <sxbCommon/utils.h>
 
-#include "lod.h"
+#include "cube.h"
 
-bool lod::init(void* nwh_)
+bool Cube::init(void* nwh_)
 {
 	bgfx::PlatformData pd;
 	pd.nwh = nwh_;
@@ -44,7 +44,7 @@ bool lod::init(void* nwh_)
 	return m_ready;
 }
 
-void lod::update(const uint64_t & frame_)
+void Cube::update(const uint64_t & frame_)
 {
 	if (m_ready)
 	{
