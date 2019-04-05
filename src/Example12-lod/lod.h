@@ -5,44 +5,11 @@
 #include <stdint.h>  // int32_t
 
 #include <bgfx/bgfx.h>
+#include <bgfx/bgfx_utils.h>
 
 #include <sxbTop/defines.h>
+#include <sxbCommon/Mesh.h>
 
-struct PosColorVertex
-{
-	float x;
-	float y;
-	float z;
-	uint32_t abgr;
-};
-
-static PosColorVertex cubeVertices[] =
-{
-	{-1.0f,  1.0f,  1.0f, 0xff000000 },
-	{ 1.0f,  1.0f,  1.0f, 0xff0000ff },
-	{-1.0f, -1.0f,  1.0f, 0xff00ff00 },
-	{ 1.0f, -1.0f,  1.0f, 0xff00ffff },
-	{-1.0f,  1.0f, -1.0f, 0xffff0000 },
-	{ 1.0f,  1.0f, -1.0f, 0xffff00ff },
-	{-1.0f, -1.0f, -1.0f, 0xffffff00 },
-	{ 1.0f, -1.0f, -1.0f, 0xffffffff },
-};
-
-static const uint16_t cubeTriList[] =
-{
-	0, 1, 2,
-	1, 3, 2,
-	4, 6, 5,
-	5, 6, 7,
-	0, 2, 4,
-	4, 2, 6,
-	1, 5, 3,
-	5, 7, 3,
-	0, 4, 1,
-	4, 5, 1,
-	2, 3, 6,
-	6, 3, 7,
-};
 struct KnightPos
 {
 	int32_t m_x;
@@ -61,7 +28,22 @@ class lod
 {
 public:
 	lod(): m_ready(false) {};
-	~lod() {};
+	~lod() 
+	{
+		// Cleanup.
+		//bgfx::destroy(m_program);
+
+		bgfx::destroy(s_texColor);
+		bgfx::destroy(s_texStipple);
+		bgfx::destroy(u_stipple);
+
+		bgfx::destroy(m_textureStipple);
+		bgfx::destroy(m_textureLeafs);
+		bgfx::destroy(m_textureBark);
+
+		// Shutdown bgfx.
+		bgfx::shutdown();
+	};
 
 public:
 	bool init(void* nwh_);
@@ -70,9 +52,30 @@ public:
 
 private:
 	bool m_ready;
+
+	uint32_t m_width;
+	uint32_t m_height;
+	uint32_t m_debug;
+	uint32_t m_reset;
+
+	sxb::Mesh* m_meshTop[3];
+	sxb::Mesh* m_meshTrunk[3];
+
 	bgfx::ProgramHandle m_program;
-	bgfx::VertexBufferHandle m_vbh;
-	bgfx::IndexBufferHandle m_ibh;
+	bgfx::UniformHandle s_texColor;
+	bgfx::UniformHandle s_texStipple;
+	bgfx::UniformHandle u_stipple;
+
+	bgfx::TextureHandle m_textureStipple;
+	bgfx::TextureHandle m_textureLeafs;
+	bgfx::TextureHandle m_textureBark;
+
+	int32_t m_scrollArea;
+	int32_t m_transitionFrame;
+	int32_t m_currLod;
+	int32_t m_targetLod;
+	bool    m_transitions;
+	float m_distance;
 };
 
 #endif // LOD_H_DC8C8E2F5FF1CD11F91286184C879E21

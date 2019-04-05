@@ -56,7 +56,7 @@ set(DIR_SRCS ${DIR_SRCS} ${ASTC_DECODE_SRC} ${ASTC_BASE_SRC})
 set(INC_DIR ${CMAKE_ROOT_DIR}/tinyBGFX/include
 			${CMAKE_ROOT_DIR}/tinyBGFX/include/bimg
 			${CMAKE_ROOT_DIR}/tinyBGFX/src/bimg
-			${CMAKE_ROOT_DIR}/tinyBGFX/3rdparty
+			${CMAKE_ROOT_DIR}/3rdparty
 			)
 
 IF (WIN32)

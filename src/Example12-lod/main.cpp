@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
  {
      // Create the main window
      tinySFML::WindowBase window(tinySFML::VideoMode(WNDW_WIDTH, WNDW_HEIGHT), "SFML window");
-	 lod *exampleLod = new lod;
-	 exampleLod->init(window.getSystemHandle());
+	 lod exampleLod;
+	 exampleLod.init(window.getSystemHandle());
 
 	 uint64_t count = 0;
 
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
                  window.close();
          }
 
-		 exampleLod->update(count);
+		 exampleLod.update(count);
 		 count++;
      }
 

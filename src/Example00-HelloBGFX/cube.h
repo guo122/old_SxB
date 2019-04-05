@@ -47,7 +47,15 @@ class Cube
 {
 public:
 	Cube() : m_ready(false) {};
-	~Cube() {};
+	~Cube() 
+	{
+		bgfx::destroy(m_program);
+
+		bgfx::destroy(m_vbh);
+		bgfx::destroy(m_ibh);
+
+		bgfx::shutdown();
+	};
 
 public:
 	bool init(void* nwh_);
