@@ -1,8 +1,6 @@
 cmake_minimum_required (VERSION 3.7.2)
 
-message(STATUS ---------------)
-message(STATUS ${CMAKE_SYSTEM})
-message(STATUS ---------------)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/Config.cmake)
 
 project(SxB)
 
