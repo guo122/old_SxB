@@ -1,8 +1,8 @@
-cmake_minimum_required (VERSION 3.7.2)
-
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/Config.cmake)
+cmake_minimum_required (VERSION 3.0.2)
 
 project(SxB)
+
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/Config.cmake)
 
 set(CMAKE_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 
