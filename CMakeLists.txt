@@ -2,9 +2,10 @@ cmake_minimum_required (VERSION 3.0.2)
 
 project(SxB)
 
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/Config.cmake)
-
 set(CMAKE_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
+
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/Config.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/Macros.cmake)
 
 # enable project folders
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)

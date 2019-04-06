@@ -12,7 +12,8 @@ set(INC_DIR
 )
 include_directories(${INC_DIR})
 
-SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_ROOT_DIR}/bin/x64)
-add_executable(${PROJECT_NAME} ${DIR_SRCS})
-set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "test")
-
+sxb_add_executable(
+				${PROJECT_NAME} 
+				FOLDER "test" 
+				SOURCES ${DIR_SRCS}
+)

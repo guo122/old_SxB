@@ -34,13 +34,12 @@ ELSEIF (APPLE)
 	set(INC_DIR ${INC_DIR} ${CMAKE_ROOT_DIR}/tinyBGFX/include/bx/compat/osx)
 ENDIF()
 			
-
 include_directories(${INC_DIR})
 
 Add_Definitions(-D_HAS_ITERATOR_DEBUGGING=0)
 
-SET(LIBRARY_OUTPUT_PATH ${CMAKE_ROOT_DIR}/lib/x64)
-add_library(${PROJECT_NAME} STATIC ${DIR_SRCS})
-set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "libs")
-
-
+sxb_add_library(
+				${PROJECT_NAME} 
+				FOLDER "libs" 
+				SOURCES ${DIR_SRCS}
+)

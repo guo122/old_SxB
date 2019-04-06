@@ -153,13 +153,12 @@ set(INC_DIR
 )
 include_directories(${INC_DIR})
 
-if(SXB_OS_WINDOWS)
-	SET(LIBRARY_OUTPUT_PATH ${CMAKE_ROOT_DIR}/lib/win64)
-else()
-	SET(LIBRARY_OUTPUT_PATH ${CMAKE_ROOT_DIR}/lib/x64)
-endif()
-
-add_library(${PROJECT_NAME} SHARED ${DIR_SRCS} ${PLATFORM_SRC})
+sxb_add_library(
+				${PROJECT_NAME} 
+				SHARED INSTALL 
+				FOLDER "libs" 
+				SOURCES ${DIR_SRCS} ${PLATFORM_SRC}
+)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC tinySFML_System)
 if(SXB_OS_WINDOWS)
@@ -167,12 +166,4 @@ if(SXB_OS_WINDOWS)
 elseif(SXB_OS_MACOS)
 	target_link_libraries(${PROJECT_NAME} PRIVATE "-framework Foundation" "-framework AppKit" "-framework IOKit" "-framework Carbon")
 endif()
-
-if(SXB_OS_WINDOWS)
-	INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_ROOT_DIR}/bin/win64/Debug)
-else()
-	INSTALL(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_ROOT_DIR}/bin/x64/Debug)
-endif()
-
-set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "libs")
 

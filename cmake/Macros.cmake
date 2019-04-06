@@ -1,0 +1,58 @@
+include(CMakeParseArguments)
+MESSAGE(STATUS "is build" ${CMAKE_BUILD_TYPE})
+#if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+	#set(OUTPATH_SUFFIX "/Debug")
+#else()
+	#set(OUTPATH_SUFFIX "/Release")
+#endif()
+set(OUTPATH_SUFFIX "/Debug")
+
+if(SXB_OS_WINDOWS)
+	set(BIN_PATH ${CMAKE_ROOT_DIR}/bin/win64)
+	set(LIB_PATH ${CMAKE_ROOT_DIR}/lib/win64)
+elseif(SXB_OS_MACOS)
+	set(BIN_PATH ${CMAKE_ROOT_DIR}/bin/macos${OUTPATH_SUFFIX})
+	set(LIB_PATH ${CMAKE_ROOT_DIR}/lib/macos${OUTPATH_SUFFIX})
+elseif(SXB_OS_IOS)
+	set(BIN_PATH ${CMAKE_ROOT_DIR}/bin/ios${OUTPATH_SUFFIX})
+	set(LIB_PATH ${CMAKE_ROOT_DIR}/lib/ios${OUTPATH_SUFFIX})
+else()
+	set(BIN_PATH ${CMAKE_ROOT_DIR}/bin/unkown${OUTPATH_SUFFIX})
+	set(LIB_PATH ${CMAKE_ROOT_DIR}/lib/unkown${OUTPATH_SUFFIX})
+endif()
+
+macro(sxb_add_library target)
+    cmake_parse_arguments(THIS "SHARED;INSTALL" "" "FOLDER;SOURCES" ${ARGN})
+	
+	SET(LIBRARY_OUTPUT_PATH ${LIB_PATH})
+
+    if (THIS_SHARED)
+        add_library(${target} SHARED ${THIS_SOURCES})
+    else()
+        add_library(${target} ${THIS_SOURCES})
+    endif()
+
+	if (THIS_FOLDER)
+		set_target_properties(${target} PROPERTIES FOLDER ${THIS_FOLDER})
+	endif()
+	
+	if (THIS_INSTALL)
+		if(SXB_OS_WINDOWS)
+			INSTALL(TARGETS ${target} RUNTIME DESTINATION ${BIN_PATH}${OUTPATH_SUFFIX})
+		else()
+			INSTALL(TARGETS ${target} LIBRARY DESTINATION ${BIN_PATH})
+		endif()
+	endif()
+endmacro()
+
+macro(sxb_add_executable target)
+    cmake_parse_arguments(THIS "" "" "FOLDER;SOURCES" ${ARGN})
+	
+	SET(EXECUTABLE_OUTPUT_PATH ${BIN_PATH})
+	
+	add_executable(${target} ${THIS_SOURCES})
+
+	if (THIS_FOLDER)
+		set_target_properties(${target} PROPERTIES FOLDER ${THIS_FOLDER})
+	endif()
+endmacro()
