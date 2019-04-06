@@ -23,3 +23,8 @@ add_subdirectory("tinyBGFX/src/bx")
 add_subdirectory("tinyBGFX/src/bimg")
 
 add_subdirectory("src/sxbCommon")
+
+add_subdirectory("test/test_platform")
+add_subdirectory("test/test_sfml")
+
+

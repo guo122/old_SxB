@@ -119,8 +119,8 @@ elseif(SXB_OS_MACOS)
 	source_group("mac" FILES ${PLATFORM_SRC})
 elseif(SXB_OS_IOS)
 	set(PLATFORM_SRC
-        ${SRCROOT}/iOS/CurosrImpl.hpp
-        ${SRCROOT}/iOS/CurosrImpl.cpp
+        ${SRCROOT}/iOS/CursorImpl.hpp
+        ${SRCROOT}/iOS/CursorImpl.cpp
         ${SRCROOT}/iOS/VideoModeImpl.mm
         ${SRCROOT}/iOS/JoystickImpl.hpp
         ${SRCROOT}/iOS/JoystickImpl.mm
@@ -132,8 +132,8 @@ elseif(SXB_OS_IOS)
     source_group("ios" FILES ${PLATFORM_SRC})
 elseif(SXB_OS_ANDROID)
 	set(PLATFORM_SRC
-        ${SRCROOT}/Android/CurosrImpl.hpp
-        ${SRCROOT}/Android/CurosrImpl.cpp
+        ${SRCROOT}/Android/CursorImpl.hpp
+        ${SRCROOT}/Android/CursorImpl.cpp
         ${SRCROOT}/Android/VideoModeImpl.cpp
         ${SRCROOT}/Android/JoystickImpl.hpp
         ${SRCROOT}/Android/JoystickImpl.cpp
