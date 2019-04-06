@@ -14,7 +14,7 @@
 
 #elif defined(SFML_SYSTEM_MACOS)
 
-    #include <SFML/Window/OSX/CursorImpl.hpp>
+    #include <Window/OSX/CursorImpl.hpp>
 
 #elif defined(SFML_SYSTEM_IOS)
 

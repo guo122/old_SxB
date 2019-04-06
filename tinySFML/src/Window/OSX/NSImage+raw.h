@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2019 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2019 Marco Antognini (antognini.marco@gmail.com),
+//                         Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -25,45 +26,27 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#include <Config.hpp>
 
-
-namespace tinySFML
-{
-namespace priv
-{
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
-}
-
+#import <AppKit/AppKit.h>
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
+/// Extends NSImage with a convenience method to load images
+/// from raw data.
+///
+////////////////////////////////////////////////////////////
 
+@interface NSImage (raw)
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
-
-
+/// \brief Load an image from raw RGBA pixels
+///
+/// \param pixels array of 4 * `size` bytes representing the image
+/// \param size size of the image
+///
+/// \return an instance of NSImage that needs to be released by the caller
+///
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
++(NSImage*)imageWithRawData:(const tinySFML::Uint8*)pixels andSize:(NSSize)size;
 
-} // namespace priv
-
-} // namespace sf
+@end

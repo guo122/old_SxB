@@ -22,48 +22,38 @@
 //
 ////////////////////////////////////////////////////////////
 
+#ifndef SFML_SFVIEW_HPP
+#define SFML_SFVIEW_HPP
+
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
-
-
-namespace tinySFML
-{
-namespace priv
-{
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
-}
+#include <SFML/Window/iOS/EaglContext.hpp>
+#include <UIKit/UIKit.h>
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
-
+/// \brief Our custom implementation of the window's view
+///        (supports OpenGL and reports events)
+///
+////////////////////////////////////////////////////////////
+@interface SFView : UIView<UIKeyInput>
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
-
+/// \brief Construct the view with its initial size
+///
+/// \param frame Dimensions of the view
+///
+/// \return Id of the view
+///
+////////////////////////////////////////////////////////////
+- (id)initWithFrame:(CGRect)frame andContentScaleFactor:(CGFloat)factor;
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
+// Member data
+////////////////////////////////////////////////////////////
+@property (nonatomic) sf::priv::EaglContext* context; ///< The attached EAGL context
 
-} // namespace priv
+@end
 
-} // namespace sf
+#endif // SFML_SFVIEW_HPP

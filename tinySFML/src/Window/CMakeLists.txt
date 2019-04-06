@@ -54,7 +54,8 @@ if(SXB_OS_WINDOWS)
         ${SRCROOT}/Win32/WindowImplWin32.cpp
 	)
     source_group("windows" FILES ${PLATFORM_SRC})
-else()
+	Add_Definitions(-DUNICODE -D_UNICODE)
+elseif(SXB_OS_LINUX)
     set(PLATFORM_SRC
         ${SRCROOT}/Unix/CursorImpl.hpp
         ${SRCROOT}/Unix/CursorImpl.cpp
@@ -69,6 +70,81 @@ else()
         ${SRCROOT}/Unix/WindowImplX11.cpp
 	)
     source_group("unix" FILES ${PLATFORM_SRC})
+elseif(SXB_OS_MACOS)
+	set(PLATFORM_SRC
+		${SRCROOT}/OSX/AutoreleasePoolWrapper.h
+		${SRCROOT}/OSX/AutoreleasePoolWrapper.mm
+		${SRCROOT}/OSX/cpp_objc_conversion.h
+		${SRCROOT}/OSX/cpp_objc_conversion.mm
+		${SRCROOT}/OSX/cg_sf_conversion.hpp
+		${SRCROOT}/OSX/cg_sf_conversion.mm
+		${SRCROOT}/OSX/CursorImpl.hpp
+		${SRCROOT}/OSX/CursorImpl.mm
+		${SRCROOT}/OSX/VideoModeImpl.cpp
+		${SRCROOT}/OSX/JoystickImpl.hpp
+		${SRCROOT}/OSX/JoystickImpl.cpp
+		${SRCROOT}/OSX/InputImpl.hpp
+		${SRCROOT}/OSX/InputImpl.mm
+		${SRCROOT}/OSX/HIDInputManager.hpp
+		${SRCROOT}/OSX/HIDInputManager.mm
+		${SRCROOT}/OSX/HIDJoystickManager.hpp
+		${SRCROOT}/OSX/HIDJoystickManager.cpp
+		${SRCROOT}/OSX/NSImage+raw.h
+		${SRCROOT}/OSX/NSImage+raw.mm
+		${SRCROOT}/OSX/Scaling.h
+		${SRCROOT}/OSX/SensorImpl.hpp
+		${SRCROOT}/OSX/SensorImpl.cpp
+		${SRCROOT}/OSX/SFApplication.h
+        ${SRCROOT}/OSX/SFApplication.m
+		${SRCROOT}/OSX/SFApplicationDelegate.h
+		${SRCROOT}/OSX/SFApplicationDelegate.m
+		${SRCROOT}/OSX/SFKeyboardModifiersHelper.h
+		${SRCROOT}/OSX/SFKeyboardModifiersHelper.mm
+		${SRCROOT}/OSX/SFOpenGLView.h
+        ${SRCROOT}/OSX/SFOpenGLView.mm
+		${SRCROOT}/OSX/SFOpenGLView+mouse.mm
+        ${SRCROOT}/OSX/SFOpenGLView+mouse_priv.h
+        ${SRCROOT}/OSX/SFSilentResponder.h
+        ${SRCROOT}/OSX/SFSilentResponder.m
+		${SRCROOT}/OSX/SFWindowController.h
+		${SRCROOT}/OSX/SFWindowController.mm
+		${SRCROOT}/OSX/SFViewController.h
+		${SRCROOT}/OSX/SFViewController.mm
+		${SRCROOT}/OSX/SFWindow.h
+		${SRCROOT}/OSX/SFWindow.m
+		${SRCROOT}/OSX/WindowImplCocoa.hpp
+		${SRCROOT}/OSX/WindowImplCocoa.mm
+		${SRCROOT}/OSX/WindowImplDelegateProtocol.h
+	)
+	source_group("mac" FILES ${PLATFORM_SRC})
+elseif(SXB_OS_IOS)
+	set(PLATFORM_SRC
+        ${SRCROOT}/iOS/CurosrImpl.hpp
+        ${SRCROOT}/iOS/CurosrImpl.cpp
+        ${SRCROOT}/iOS/VideoModeImpl.mm
+        ${SRCROOT}/iOS/JoystickImpl.hpp
+        ${SRCROOT}/iOS/JoystickImpl.mm
+        ${SRCROOT}/iOS/SensorImpl.hpp
+        ${SRCROOT}/iOS/SensorImpl.mm
+        ${SRCROOT}/iOS/WindowImplUIKit.hpp
+        ${SRCROOT}/iOS/WindowImplUIKit.mm
+    )
+    source_group("ios" FILES ${PLATFORM_SRC})
+elseif(SXB_OS_ANDROID)
+	set(PLATFORM_SRC
+        ${SRCROOT}/Android/CurosrImpl.hpp
+        ${SRCROOT}/Android/CurosrImpl.cpp
+        ${SRCROOT}/Android/VideoModeImpl.cpp
+        ${SRCROOT}/Android/JoystickImpl.hpp
+        ${SRCROOT}/Android/JoystickImpl.cpp
+        ${SRCROOT}/Android/InputImpl.hpp
+        ${SRCROOT}/Android/InputImpl.cpp
+        ${SRCROOT}/Android/SensorImpl.hpp
+        ${SRCROOT}/Android/SensorImpl.cpp
+        ${SRCROOT}/Android/WindowImplAndroid.hpp
+        ${SRCROOT}/Android/WindowImplAndroid.cpp
+    )
+    source_group("android" FILES ${PLATFORM_SRC})
 endif()
 
 set(INC_DIR 
@@ -76,9 +152,6 @@ set(INC_DIR
 	${CMAKE_ROOT_DIR}/tinySFML/src
 )
 include_directories(${INC_DIR})
-
-#_UNICODE
-Add_Definitions(-DUNICODE -D_UNICODE)
 
 if(SXB_OS_WINDOWS)
 	SET(LIBRARY_OUTPUT_PATH ${CMAKE_ROOT_DIR}/lib/win64)
@@ -91,6 +164,8 @@ add_library(${PROJECT_NAME} SHARED ${DIR_SRCS} ${PLATFORM_SRC})
 target_link_libraries(${PROJECT_NAME} PUBLIC tinySFML_System)
 if(SXB_OS_WINDOWS)
 	target_link_libraries(${PROJECT_NAME} PRIVATE winmm gdi32)
+elseif(SXB_OS_MACOS)
+	target_link_libraries(${PROJECT_NAME} PRIVATE "-framework Foundation" "-framework AppKit" "-framework IOKit" "-framework Carbon")
 endif()
 
 if(SXB_OS_WINDOWS)

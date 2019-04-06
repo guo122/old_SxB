@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2019 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2019 Marco Antognini (antognini.marco@gmail.com),
+//                         Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -25,45 +26,45 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#import <AppKit/AppKit.h>
 
-
-namespace tinySFML
-{
-namespace priv
-{
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
+namespace tinySFML {
+    namespace priv {
+        class WindowImplCocoa;
+    }
 }
+
+////////////////////////////////////////////////////////////
+/// Keyboard Modifiers Helper
+///
+/// Handle left & right modifiers (cmd, ctrl, alt, shift)
+/// events and send them back to the requester.
+///
+////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
+/// \brief Initialize the global state (only if needed)
+///
+/// It needs to be called before any event, e.g. in the window constructor.
+///
+////////////////////////////////////////////////////////////
+void initialiseKeyboardHelper(void);
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
+/// \brief Set up a SFML key event based on the given modifiers flags and key code
+///
+////////////////////////////////////////////////////////////
+tinySFML::Event::KeyEvent keyEventWithModifiers(NSUInteger modifiers, tinySFML::Keyboard::Key key);
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
+/// \brief Handle the state of modifiers keys
+///
+/// Send key released & pressed events to the requester.
+///
+////////////////////////////////////////////////////////////
+void handleModifiersChanged(NSUInteger modifiers, tinySFML::priv::WindowImplCocoa& requester);
 
-} // namespace priv
 
-} // namespace sf

@@ -25,45 +25,44 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#include <SFML/Window/iOS/CursorImpl.hpp>
 
-
-namespace tinySFML
+namespace sf
 {
 namespace priv
 {
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
 
-    pthread_mutex_init(&m_mutex, &attributes);
+////////////////////////////////////////////////////////////
+CursorImpl::CursorImpl()
+{
+    // Nothing.
 }
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
+CursorImpl::~CursorImpl()
 {
-    pthread_mutex_destroy(&m_mutex);
+    // Nothing.
 }
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
+bool CursorImpl::loadFromPixels(const Uint8* pixels, Vector2u size, Vector2u hotspot)
 {
-    pthread_mutex_lock(&m_mutex);
+    // Not supported
+    return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
+bool CursorImpl::loadFromSystem(Cursor::Type type)
 {
-    pthread_mutex_unlock(&m_mutex);
+    // Not supported
+    return false;
 }
+
 
 } // namespace priv
 
 } // namespace sf
+

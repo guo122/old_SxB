@@ -25,7 +25,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#include <Window/SensorImpl.hpp>
 
 
 namespace tinySFML
@@ -33,35 +33,54 @@ namespace tinySFML
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
+void SensorImpl::initialize()
 {
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
+    // To be implemented
 }
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
+void SensorImpl::cleanup()
 {
-    pthread_mutex_destroy(&m_mutex);
+    // To be implemented
 }
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
+bool SensorImpl::isAvailable(Sensor::Type /*sensor*/)
 {
-    pthread_mutex_lock(&m_mutex);
+    // To be implemented
+    return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
+bool SensorImpl::open(Sensor::Type /*sensor*/)
 {
-    pthread_mutex_unlock(&m_mutex);
+    // To be implemented
+    return false;
+}
+
+
+////////////////////////////////////////////////////////////
+void SensorImpl::close()
+{
+    // To be implemented
+}
+
+
+////////////////////////////////////////////////////////////
+Vector3f SensorImpl::update()
+{
+    // To be implemented
+    return Vector3f(0, 0, 0);
+}
+
+
+////////////////////////////////////////////////////////////
+void SensorImpl::setEnabled(bool /*enabled*/)
+{
+    // To be implemented
 }
 
 } // namespace priv

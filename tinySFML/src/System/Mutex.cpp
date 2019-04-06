@@ -4,7 +4,7 @@
 #if defined(SFML_SYSTEM_WINDOWS)
     #include <System/Win32/MutexImpl.hpp>
 #else
-    #include <Unix/MutexImpl.hpp>
+    #include <System/Unix/MutexImpl.hpp>
 #endif
 
 namespace tinySFML

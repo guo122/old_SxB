@@ -25,45 +25,48 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#include <SFML/Window/iOS/ClipboardImpl.hpp>
 
+#import <UIKit/UIKit.h>
 
-namespace tinySFML
+namespace sf
 {
 namespace priv
 {
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
 
-    pthread_mutex_init(&m_mutex, &attributes);
+////////////////////////////////////////////////////////////
+String ClipboardImpl::getString()
+{
+    UIPasteboard* pboard = [UIPasteboard generalPasteboard];
+    if (pboard.hasStrings)
+    {
+        NSString* data = pboard.string;
+
+        char const* utf8 = [data cStringUsingEncoding:NSUTF8StringEncoding];
+        NSUInteger length = [data lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+
+        return String::fromUtf8(utf8, utf8 + length);
+    }
+    else
+    {
+        return String();
+    }
 }
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
+void ClipboardImpl::setString(const String& text)
 {
-    pthread_mutex_destroy(&m_mutex);
-}
+    std::basic_string<Uint8> utf8 = text.toUtf8();
+    NSString* data = [[NSString alloc] initWithBytes:utf8.data()
+                                              length:utf8.length()
+                                            encoding:NSUTF8StringEncoding];
 
-
-////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
-
-
-////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
+    UIPasteboard* pboard = [UIPasteboard generalPasteboard];
+    pboard.string = data;
 }
 
 } // namespace priv
 
 } // namespace sf
+

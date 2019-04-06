@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2019 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2019 Marco Antognini (antognini.marco@gmail.com),
+//                         Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -22,62 +23,87 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_MUTEXIMPL_HPP
-#define SFML_MUTEXIMPL_HPP
+#ifndef SFML_CURSORIMPLOSX_HPP
+#define SFML_CURSORIMPLOSX_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
+#include <Window/Cursor.hpp>
 #include <System/NonCopyable.hpp>
-#include <pthread.h>
+#include <System/Vector2.hpp>
 
+////////////////////////////////////////////////////////////
+// Predefine OBJ-C classes
+////////////////////////////////////////////////////////////
+#ifdef __OBJC__
+
+@class NSCursor;
+typedef NSCursor* NSCursorRef;
+
+#else // If C++
+
+typedef void* NSCursorRef;
+
+#endif
 
 namespace tinySFML
 {
+
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-/// \brief Unix implementation of mutexes
+/// \brief Mac OS X implementation of Cursor
+///
 ////////////////////////////////////////////////////////////
-class MutexImpl : NonCopyable
+class CursorImpl : NonCopyable
 {
 public:
 
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
+    /// Refer to sf::Cursor::Cursor().
+    ///
     ////////////////////////////////////////////////////////////
-    MutexImpl();
+    CursorImpl();
 
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
     ///
-    ////////////////////////////////////////////////////////////
-    ~MutexImpl();
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Lock the mutex
+    /// Refer to sf::Cursor::~Cursor().
     ///
     ////////////////////////////////////////////////////////////
-    void lock();
+    ~CursorImpl();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Unlock the mutex
+    /// \brief Create a cursor with the provided image
+    ///
+    /// Refer to sf::Cursor::loadFromPixels().
     ///
     ////////////////////////////////////////////////////////////
-    void unlock();
+    bool loadFromPixels(const Uint8* pixels, Vector2u size, Vector2u hotspot);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Create a native system cursor
+    ///
+    /// Refer to sf::Cursor::loadFromSystem().
+    ///
+    ////////////////////////////////////////////////////////////
+    bool loadFromSystem(Cursor::Type type);
 
 private:
+
+    friend class WindowImplCocoa;
 
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    pthread_mutex_t m_mutex; ///< pthread handle of the mutex
+    NSCursorRef m_cursor; ///< System cursor handle
 };
 
 } // namespace priv
 
 } // namespace sf
 
-
-#endif // SFML_MUTEXIMPL_HPP
+#endif // SFML_CURSORIMPLOSX_HPP

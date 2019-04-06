@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2019 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2019 Marco Antognini (antognini.marco@gmail.com),
+//                         Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -25,45 +26,33 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
-
-
-namespace tinySFML
-{
-namespace priv
-{
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
-}
-
+#import <Window/OSX/WindowImplDelegateProtocol.h>
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
-
+/// Predefine some classes
+////////////////////////////////////////////////////////////
+@class SFOpenGLView;
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
+/// \brief Implementation of WindowImplDelegateProtocol for view management
+///
+////////////////////////////////////////////////////////////
 
+@interface SFViewController : NSObject <WindowImplDelegateProtocol>
+{
+    NSView*                     m_view;         ///< Underlying Cocoa view
+    SFOpenGLView*               m_oglView;      ///< OpenGL view
+    tinySFML::priv::WindowImplCocoa*  m_requester;    ///< View's requester
+}
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
+/// \brief Initialize the view controller
+///
+/// \param view view to be controlled
+///
+/// \return an initialized view controller
+///
+////////////////////////////////////////////////////////////
+-(id)initWithView:(NSView*)view;
 
-} // namespace priv
-
-} // namespace sf
+@end

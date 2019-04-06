@@ -22,14 +22,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_MUTEXIMPL_HPP
-#define SFML_MUTEXIMPL_HPP
-
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
-#include <System/NonCopyable.hpp>
-#include <pthread.h>
+#ifndef SFML_SENSORIMPLOSX_HPP
+#define SFML_SENSORIMPLOSX_HPP
 
 
 namespace tinySFML
@@ -37,42 +31,66 @@ namespace tinySFML
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-/// \brief Unix implementation of mutexes
+/// \brief Mac OS X implementation of sensors
+///
 ////////////////////////////////////////////////////////////
-class MutexImpl : NonCopyable
+class SensorImpl
 {
 public:
 
     ////////////////////////////////////////////////////////////
-    /// \brief Default constructor
+    /// \brief Perform the global initialization of the sensor module
     ///
     ////////////////////////////////////////////////////////////
-    MutexImpl();
+    static void initialize();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Destructor
+    /// \brief Perform the global cleanup of the sensor module
     ///
     ////////////////////////////////////////////////////////////
-    ~MutexImpl();
+    static void cleanup();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Lock the mutex
+    /// \brief Check if a sensor is available
+    ///
+    /// \param sensor Sensor to check
+    ///
+    /// \return True if the sensor is available, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    void lock();
+    static bool isAvailable(Sensor::Type sensor);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Unlock the mutex
+    /// \brief Open the sensor
+    ///
+    /// \param sensor Type of the sensor
+    ///
+    /// \return True on success, false on failure
     ///
     ////////////////////////////////////////////////////////////
-    void unlock();
-
-private:
+    bool open(Sensor::Type sensor);
 
     ////////////////////////////////////////////////////////////
-    // Member data
+    /// \brief Close the sensor
+    ///
     ////////////////////////////////////////////////////////////
-    pthread_mutex_t m_mutex; ///< pthread handle of the mutex
+    void close();
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Update the sensor and get its new value
+    ///
+    /// \return Sensor value
+    ///
+    ////////////////////////////////////////////////////////////
+    Vector3f update();
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Enable or disable the sensor
+    ///
+    /// \param enabled True to enable, false to disable
+    ///
+    ////////////////////////////////////////////////////////////
+    void setEnabled(bool enabled);
 };
 
 } // namespace priv
@@ -80,4 +98,4 @@ private:
 } // namespace sf
 
 
-#endif // SFML_MUTEXIMPL_HPP
+#endif // SFML_SENSORIMPLOSX_HPP

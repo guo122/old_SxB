@@ -22,48 +22,16 @@
 //
 ////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#ifndef SFML_OBJCTYPE_HPP
+#define SFML_OBJCTYPE_HPP
 
 
-namespace tinySFML
-{
-namespace priv
-{
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
-}
+// Forward declare an Objective-C class
+#ifdef __OBJC__
+    #define SFML_DECLARE_OBJC_CLASS(c) @class c
+#else
+    #define SFML_DECLARE_OBJC_CLASS(c) typedef struct objc_object c
+#endif
 
 
-////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
-
-
-////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
-
-
-////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
-
-} // namespace priv
-
-} // namespace sf
+#endif // SFML_OBJCTYPE_HPP

@@ -49,7 +49,7 @@ struct JoystickState
 
 #elif defined(SFML_SYSTEM_LINUX)
 
-    #include <SFML/Window/Unix/JoystickImpl.hpp>
+    #include <Window/Unix/JoystickImpl.hpp>
 
 #elif defined(SFML_SYSTEM_FREEBSD)
 
@@ -61,15 +61,15 @@ struct JoystickState
 
 #elif defined(SFML_SYSTEM_MACOS)
 
-    #include <SFML/Window/OSX/JoystickImpl.hpp>
+    #include <Window/OSX/JoystickImpl.hpp>
 
 #elif defined(SFML_SYSTEM_IOS)
 
-    #include <SFML/Window/iOS/JoystickImpl.hpp>
+    #include <Window/iOS/JoystickImpl.hpp>
 
 #elif defined(SFML_SYSTEM_ANDROID)
 
-    #include <SFML/Window/Android/JoystickImpl.hpp>
+    #include <Window/Android/JoystickImpl.hpp>
 
 #endif
 

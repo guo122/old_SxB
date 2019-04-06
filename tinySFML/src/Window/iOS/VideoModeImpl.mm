@@ -25,43 +25,33 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#include <SFML/Window/VideoModeImpl.hpp>
+#include <SFML/Window/iOS/SFAppDelegate.hpp>
+#include <UIKit/UIKit.h>
 
-
-namespace tinySFML
+namespace sf
 {
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
+std::vector<VideoMode> VideoModeImpl::getFullscreenModes()
 {
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
+    VideoMode desktop = getDesktopMode();
 
-    pthread_mutex_init(&m_mutex, &attributes);
+    // Return both portrait and landscape resolutions
+    std::vector<VideoMode> modes;
+    modes.push_back(desktop);
+    modes.push_back(VideoMode(desktop.height, desktop.width, desktop.bitsPerPixel));
+    return modes;
 }
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
+VideoMode VideoModeImpl::getDesktopMode()
 {
-    pthread_mutex_destroy(&m_mutex);
-}
-
-
-////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
-
-
-////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    float backingScale = [SFAppDelegate getInstance].backingScaleFactor;
+    return VideoMode(bounds.size.width * backingScale, bounds.size.height * backingScale);
 }
 
 } // namespace priv

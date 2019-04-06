@@ -22,57 +22,88 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_MUTEXIMPL_HPP
-#define SFML_MUTEXIMPL_HPP
+#ifndef SFML_JOYSTICKIMPLIOS_HPP
+#define SFML_JOYSTICKIMPLIOS_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/NonCopyable.hpp>
-#include <pthread.h>
+#include <SFML/Window/JoystickImpl.hpp>
 
 
-namespace tinySFML
+namespace sf
 {
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-/// \brief Unix implementation of mutexes
+/// \brief iOS implementation of joysticks
+///
 ////////////////////////////////////////////////////////////
-class MutexImpl : NonCopyable
+class JoystickImpl
 {
 public:
 
     ////////////////////////////////////////////////////////////
-    /// \brief Default constructor
+    /// \brief Perform the global initialization of the joystick module
     ///
     ////////////////////////////////////////////////////////////
-    MutexImpl();
+    static void initialize();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Destructor
+    /// \brief Perform the global cleanup of the joystick module
     ///
     ////////////////////////////////////////////////////////////
-    ~MutexImpl();
+    static void cleanup();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Lock the mutex
+    /// \brief Check if a joystick is currently connected
+    ///
+    /// \param index Index of the joystick to check
+    ///
+    /// \return True if the joystick is connected, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    void lock();
+    static bool isConnected(unsigned int index);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Unlock the mutex
+    /// \brief Open the joystick
+    ///
+    /// \param index Index assigned to the joystick
+    ///
+    /// \return True on success, false on failure
     ///
     ////////////////////////////////////////////////////////////
-    void unlock();
-
-private:
+    bool open(unsigned int index);
 
     ////////////////////////////////////////////////////////////
-    // Member data
+    /// \brief Close the joystick
+    ///
     ////////////////////////////////////////////////////////////
-    pthread_mutex_t m_mutex; ///< pthread handle of the mutex
+    void close();
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the joystick capabilities
+    ///
+    /// \return Joystick capabilities
+    ///
+    ////////////////////////////////////////////////////////////
+    JoystickCaps getCapabilities() const;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the joystick identification
+    ///
+    /// \return Joystick identification
+    ///
+    ////////////////////////////////////////////////////////////
+    Joystick::Identification getIdentification() const;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Update the joystick and get its new state
+    ///
+    /// \return Joystick state
+    ///
+    ////////////////////////////////////////////////////////////
+    JoystickState update();
 };
 
 } // namespace priv
@@ -80,4 +111,4 @@ private:
 } // namespace sf
 
 
-#endif // SFML_MUTEXIMPL_HPP
+#endif // SFML_JOYSTICKIMPLIOS_HPP

@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2019 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2019 Marco Antognini (antognini.marco@gmail.com),
+//                         Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -25,45 +26,38 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#import <AppKit/AppKit.h>
+#import <Foundation/Foundation.h>
 
-
-namespace tinySFML
-{
-namespace priv
-{
 ////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
-}
+/// \brief Event processing & Menu bar initialization
+///
+////////////////////////////////////////////////////////////
+@interface SFApplication : NSApplication
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
+/// \brief Event processing
+///
+////////////////////////////////////////////////////////////
++(void)processEvent;
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
+/// \brief Set up the menu bar and its items
+///
+////////////////////////////////////////////////////////////
++(void)setUpMenuBar;
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
+/// \brief Dispatch events
+///
+/// This overload of -[NSApplication sendEvent:] is used to
+/// fix KeyRelease events when the command key is down.
+///
+////////////////////////////////////////////////////////////
+-(void)sendEvent:(NSEvent*)anEvent;
 
-} // namespace priv
 
-} // namespace sf
+@end

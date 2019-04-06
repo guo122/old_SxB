@@ -25,12 +25,12 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Unix/SleepImpl.hpp>
+#include <System/Unix/SleepImpl.hpp>
 #include <errno.h>
 #include <time.h>
 
 
-namespace sf
+namespace tinySFML
 {
 namespace priv
 {

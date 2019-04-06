@@ -28,11 +28,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Config.hpp>
-#include <SFML/System/Time.hpp>
+#include <Config.hpp>
+#include <System/Time.hpp>
 
 
-namespace sf
+namespace tinySFML
 {
 namespace priv
 {

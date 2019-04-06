@@ -19,17 +19,17 @@
 
 #elif defined(SFML_SYSTEM_MACOS)
 
-    #include <SFML/Window/OSX/WindowImplCocoa.hpp>
+    #include <Window/OSX/WindowImplCocoa.hpp>
     typedef tinySFML::priv::WindowImplCocoa WindowImplType;
 
 #elif defined(SFML_SYSTEM_IOS)
 
-    #include <SFML/Window/iOS/WindowImplUIKit.hpp>
+    #include <Window/iOS/WindowImplUIKit.hpp>
     typedef tinySFML::priv::WindowImplUIKit WindowImplType;
 
 #elif defined(SFML_SYSTEM_ANDROID)
 
-    #include <SFML/Window/Android/WindowImplAndroid.hpp>
+    #include <Window/Android/WindowImplAndroid.hpp>
     typedef tinySFML::priv::WindowImplAndroid WindowImplType;
 
 #endif

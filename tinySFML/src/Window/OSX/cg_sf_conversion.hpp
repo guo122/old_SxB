@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2019 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2019 Marco Antognini (antognini.marco@gmail.com),
+//                         Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -22,48 +23,50 @@
 //
 ////////////////////////////////////////////////////////////
 
+#ifndef SFML_CG_SF_CONVERSION_HPP
+#define SFML_CG_SF_CONVERSION_HPP
+
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
-
+#include <Window/VideoMode.hpp>
+#include <ApplicationServices/ApplicationServices.h>
 
 namespace tinySFML
 {
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
-}
-
+/// \brief Get bpp of a video mode for OS 10.6 or later
+///
+/// With OS 10.6 and later, Quartz doesn't use dictionaries any more
+/// to represent video mode. Instead it uses a CGDisplayMode opaque type.
+///
+////////////////////////////////////////////////////////////
+size_t modeBitsPerPixel(CGDisplayModeRef mode);
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
-
+/// \brief Get bpp for all OS X version
+///
+/// This function use only non-deprecated way to get the
+/// display bits per pixel information for a given display id.
+///
+////////////////////////////////////////////////////////////
+size_t displayBitsPerPixel(CGDirectDisplayID displayId);
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
-
+/// \brief Convert a Quartz video mode into a sf::VideoMode object
+///
+////////////////////////////////////////////////////////////
+VideoMode convertCGModeToSFMode(CGDisplayModeRef cgmode);
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
+/// \brief Convert a sf::VideoMode object into a Quartz video mode
+///
+////////////////////////////////////////////////////////////
+CGDisplayModeRef convertSFModeToCGMode(VideoMode sfmode);
 
 } // namespace priv
-
 } // namespace sf
+
+#endif

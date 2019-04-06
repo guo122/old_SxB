@@ -25,7 +25,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Unix/ClockImpl.hpp>
+#include <System/Unix/ClockImpl.hpp>
 #if defined(SFML_SYSTEM_MACOS) || defined(SFML_SYSTEM_IOS)
     #include <mach/mach_time.h>
 #else
@@ -33,7 +33,7 @@
 #endif
 
 
-namespace sf
+namespace tinySFML
 {
 namespace priv
 {
@@ -47,7 +47,7 @@ Time ClockImpl::getCurrentTime()
     if (frequency.denom == 0)
         mach_timebase_info(&frequency);
     Uint64 nanoseconds = mach_absolute_time() * frequency.numer / frequency.denom;
-    return sf::microseconds(nanoseconds / 1000);
+    return tinySFML::microseconds(nanoseconds / 1000);
 
 #else
 

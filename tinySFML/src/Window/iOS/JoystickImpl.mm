@@ -25,43 +25,71 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#include <SFML/Window/JoystickImpl.hpp>
 
 
-namespace tinySFML
+namespace sf
 {
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
+void JoystickImpl::initialize()
 {
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
+    // Not implemented
 }
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
+void JoystickImpl::cleanup()
 {
-    pthread_mutex_destroy(&m_mutex);
+    // Not implemented
 }
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
+bool JoystickImpl::isConnected(unsigned int index)
 {
-    pthread_mutex_lock(&m_mutex);
+    // Not implemented
+    return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
+bool JoystickImpl::open(unsigned int index)
 {
-    pthread_mutex_unlock(&m_mutex);
+    // Not implemented
+    return false;
+}
+
+
+////////////////////////////////////////////////////////////
+void JoystickImpl::close()
+{
+    // Not implemented
+}
+
+
+////////////////////////////////////////////////////////////
+JoystickCaps JoystickImpl::getCapabilities() const
+{
+    // Not implemented
+    return JoystickCaps();
+}
+
+
+////////////////////////////////////////////////////////////
+Joystick::Identification JoystickImpl::getIdentification() const
+{
+    // Not implemented
+    return Joystick::Identification();
+}
+
+
+////////////////////////////////////////////////////////////
+JoystickState JoystickImpl::update()
+{
+    // Not implemented
+    return JoystickState();
 }
 
 } // namespace priv

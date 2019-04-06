@@ -25,45 +25,25 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#include <SFML/Window/iOS/SFViewController.hpp>
 
 
-namespace tinySFML
-{
-namespace priv
-{
+@implementation SFViewController
+
+@synthesize orientationCanChange;
+
+
 ////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
+    return self.orientationCanChange;
 }
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
+- (BOOL)shouldAutorotate
 {
-    pthread_mutex_destroy(&m_mutex);
+    return self.orientationCanChange;
 }
 
-
-////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
-
-
-////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
-
-} // namespace priv
-
-} // namespace sf
+@end

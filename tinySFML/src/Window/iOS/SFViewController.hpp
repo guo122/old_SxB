@@ -22,48 +22,44 @@
 //
 ////////////////////////////////////////////////////////////
 
+#ifndef SFML_SFVIEWCONTROLLER_HPP
+#define SFML_SFVIEWCONTROLLER_HPP
+
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
-
-
-namespace tinySFML
-{
-namespace priv
-{
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
-}
+#include <UIKit/UIKit.h>
 
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
-
+/// \brief The view controller handles the view's orientation
+///
+////////////////////////////////////////////////////////////
+@interface SFViewController : UIViewController
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
-{
-    pthread_mutex_lock(&m_mutex);
-}
-
+/// \brief Tells if the controller supports auto-rotation (iOS < 6)
+///
+/// \param interfaceOrientation Orientation to check
+///
+/// \return True if auto-rotation is supported, false otherwise
+///
+////////////////////////////////////////////////////////////
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 ////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
+/// \brief Tells if the controller supports auto-rotation (iOS >= 6)
+///
+/// \return True if auto-rotation is supported, false otherwise
+///
+////////////////////////////////////////////////////////////
+- (BOOL)shouldAutorotate;
 
-} // namespace priv
+////////////////////////////////////////////////////////////
+// Member data
+////////////////////////////////////////////////////////////
+@property (nonatomic) bool orientationCanChange; ///< Tells whether the controller's view can rotate or not
 
-} // namespace sf
+@end
+
+#endif // SFML_SFVIEWCONTROLLER_HPP

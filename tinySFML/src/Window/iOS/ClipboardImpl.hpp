@@ -22,48 +22,57 @@
 //
 ////////////////////////////////////////////////////////////
 
+#ifndef SFML_CLIPBOARDIMPLIOS_HPP
+#define SFML_CLIPBOARDIMPLIOS_HPP
+
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <System/Unix/MutexImpl.hpp>
+#include <SFML/System/String.hpp>
 
 
-namespace tinySFML
+namespace sf
 {
 namespace priv
 {
-////////////////////////////////////////////////////////////
-MutexImpl::MutexImpl()
-{
-    // Make it recursive to follow the expected behavior
-    pthread_mutexattr_t attributes;
-    pthread_mutexattr_init(&attributes);
-    pthread_mutexattr_settype(&attributes, PTHREAD_MUTEX_RECURSIVE);
-
-    pthread_mutex_init(&m_mutex, &attributes);
-}
-
 
 ////////////////////////////////////////////////////////////
-MutexImpl::~MutexImpl()
-{
-    pthread_mutex_destroy(&m_mutex);
-}
-
-
+/// \brief Give access to the system clipboard
+///
 ////////////////////////////////////////////////////////////
-void MutexImpl::lock()
+class ClipboardImpl
 {
-    pthread_mutex_lock(&m_mutex);
-}
+public:
 
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the content of the clipboard as string data
+    ///
+    /// This function returns the content of the clipboard
+    /// as a string. If the clipboard does not contain string
+    /// it returns an empty sf::String object.
+    ///
+    /// \return Current content of the clipboard
+    ///
+    ////////////////////////////////////////////////////////////
+    static String getString();
 
-////////////////////////////////////////////////////////////
-void MutexImpl::unlock()
-{
-    pthread_mutex_unlock(&m_mutex);
-}
+    ////////////////////////////////////////////////////////////
+    /// \brief Set the content of the clipboard as string data
+    ///
+    /// This function sets the content of the clipboard as a
+    /// string.
+    ///
+    /// \param text sf::String object containing the data to be sent
+    /// to the clipboard
+    ///
+    ////////////////////////////////////////////////////////////
+    static void setString(const String& text);
+};
 
 } // namespace priv
 
 } // namespace sf
+
+
+#endif // SFML_CLIPBOARDIMPLIOS_HPP
+

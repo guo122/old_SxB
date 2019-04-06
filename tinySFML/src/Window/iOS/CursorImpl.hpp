@@ -22,31 +22,67 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_SLEEPIMPLUNIX_HPP
-#define SFML_SLEEPIMPLUNIX_HPP
+#ifndef SFML_CURSORIMPLIOS_HPP
+#define SFML_CURSORIMPLIOS_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <Config.hpp>
-#include <System/Time.hpp>
+#include <SFML/Window/Cursor.hpp>
+#include <SFML/System/NonCopyable.hpp>
+#include <SFML/System/Vector2.hpp>
 
 
-namespace tinySFML
+namespace sf
 {
+
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-/// \brief Unix implementation of sf::Sleep
+/// \brief iOS implementation of Cursor
 ///
-/// \param time Time to sleep
+/// This is a typical "not supported" implementation.
 ///
 ////////////////////////////////////////////////////////////
-void sleepImpl(Time time);
+class CursorImpl : NonCopyable
+{
+public:
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Default constructor
+    ///
+    /// Refer to sf::Cursor::Cursor().
+    ///
+    ////////////////////////////////////////////////////////////
+    CursorImpl();
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Destructor
+    ///
+    /// Refer to sf::Cursor::~Cursor().
+    ///
+    ////////////////////////////////////////////////////////////
+    ~CursorImpl();
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Create a cursor with the provided image
+    ///
+    /// Returns false.
+    ///
+    ////////////////////////////////////////////////////////////
+    bool loadFromPixels(const Uint8* pixels, Vector2u size, Vector2u hotspot);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Create a native system cursor
+    ///
+    /// Returns false.
+    ///
+    ////////////////////////////////////////////////////////////
+    bool loadFromSystem(Cursor::Type type);
+};
 
 } // namespace priv
 
 } // namespace sf
 
-
-#endif // SFML_SLEEPIMPLUNIX_HPP
+#endif // SFML_CURSORIMPLIOS_HPP
