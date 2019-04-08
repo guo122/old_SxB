@@ -31,6 +31,10 @@ macro(sxb_add_library target)
     else()
         add_library(${target} ${THIS_SOURCES})
     endif()
+	
+	string(REPLACE "-" "_" NAME_UPPER "${target}")
+    string(TOUPPER "${NAME_UPPER}" NAME_UPPER)
+    set_target_properties(${target} PROPERTIES DEFINE_SYMBOL ${NAME_UPPER}_EXPORTS)
 
 	if (THIS_FOLDER)
 		set_target_properties(${target} PROPERTIES FOLDER ${THIS_FOLDER})
