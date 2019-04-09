@@ -113,7 +113,7 @@ set(TINYSTL_SRC
 source_group("tinystl" FILES ${TINYSTL_SRC})
 
 # add platform specific sources
-if(WIN32)
+if(SXB_OS_WINDOWS)
     set(PLATFORM_SRC
         ${INCROOT}/compat/msvc/alloca.h
         ${INCROOT}/compat/msvc/dirent.h
@@ -122,12 +122,19 @@ if(WIN32)
         ${INCROOT}/compat/msvc/pre1600/stdint.h
     )
     source_group("msvc" FILES ${PLATFORM_SRC})
+elseif(SXB_OS_IOS)
+	set(PLATFORM_SRC
+		${INCROOT}/compat/ios/malloc.h
+	)
+	source_group("ios" FILES ${PLATFORM_SRC})
 endif()		 
 
 IF (SXB_OS_WINDOWS)
 	set(INC_DIR ${CMAKE_ROOT_DIR}/include/bx/compat/msvc)
 ELSEIF (SXB_OS_MACOS)
 	set(INC_DIR ${CMAKE_ROOT_DIR}/include/bx/compat/osx)
+ELSEIF (SXB_OS_IOS)
+	set(INC_DIR ${CMAKE_ROOT_DIR}/include/bx/compat/ios)
 ENDIF()
 		
 include_directories(${INC_DIR})

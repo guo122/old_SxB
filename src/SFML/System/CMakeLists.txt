@@ -28,6 +28,10 @@ set(DIR_SRCS
 			${SRCROOT}/Err.cpp
 			${INCROOT}/Sleep.hpp
 			${SRCROOT}/Sleep.cpp
+			${INCROOT}/ThreadLocal.hpp
+			${SRCROOT}/ThreadLocal.cpp
+			${INCROOT}/ThreadLocalPtr.hpp
+			${INCROOT}/ThreadLocalPtr.inl
 )
 
 # add platform specific sources
@@ -49,6 +53,8 @@ else()
         ${SRCROOT}/Unix/MutexImpl.cpp
         ${SRCROOT}/Unix/SleepImpl.hpp
         ${SRCROOT}/Unix/SleepImpl.cpp
+        ${SRCROOT}/Unix/ThreadLocalImpl.hpp
+        ${SRCROOT}/Unix/ThreadLocalImpl.cpp
     )
 	
 	if(SXB_OS_ANDROID)

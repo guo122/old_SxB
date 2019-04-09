@@ -1,1 +1,1 @@
-cmake -E make_directory "build" && cmake -E chdir "build" cmake -G "Xcode" ../
+cmake -E make_directory "build-macos" && cmake -E chdir "build-macos" cmake -G "Xcode" ../

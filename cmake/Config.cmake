@@ -2,7 +2,7 @@
 MESSAGE(STATUS "operation system is " ${CMAKE_SYSTEM})
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 	set(SXB_OS_WINDOWS 1)
-elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" OR ${CMAKE_SYSTEM_NAME} STREQUAL "iOS")
     if(IOS)
         set(SXB_OS_IOS 1)
 	else()

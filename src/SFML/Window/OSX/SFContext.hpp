@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2019 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2019 Marco Antognini (antognini.marco@gmail.com),
+//                         Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -22,43 +23,55 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_EAGLCONTEXT_HPP
-#define SFML_EAGLCONTEXT_HPP
+#ifndef SFML_SFCONTEXT_HPP
+#define SFML_SFCONTEXT_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-//#include <SFML/Window/GlContext.hpp>
-#include <SFML/Window/iOS/ObjCType.hpp>
-#include <SFML/System/Vector2.hpp>
-#include <SFML/System/Clock.hpp>
-#include <OpenGLES/ES1/gl.h>
+#include <SFML/Window/GlContext.hpp>
 
+////////////////////////////////////////////////////////////
+/// Predefine OBJC classes
+////////////////////////////////////////////////////////////
+#ifdef __OBJC__
 
-SFML_DECLARE_OBJC_CLASS(EAGLContext);
-SFML_DECLARE_OBJC_CLASS(SFView);
+@class NSOpenGLContext;
+typedef NSOpenGLContext* NSOpenGLContextRef;
+
+@class NSOpenGLView;
+typedef NSOpenGLView* NSOpenGLViewRef;
+
+@class NSWindow;
+typedef NSWindow* NSWindowRef;
+
+#else // If C++
+
+typedef void* NSOpenGLContextRef;
+typedef void* NSOpenGLViewRef;
+typedef void* NSWindowRef;
+
+#endif
+
 
 namespace sf
 {
 namespace priv
 {
-class WindowImplUIKit;
-
 ////////////////////////////////////////////////////////////
-/// \brief iOS (EAGL) implementation of OpenGL contexts
+/// \brief OSX (Cocoa) implementation of OpenGL contexts
 ///
 ////////////////////////////////////////////////////////////
-class EaglContext : public GlContext
+class SFContext : public GlContext
 {
 public:
-
     ////////////////////////////////////////////////////////////
     /// \brief Create a new context, not associated to a window
     ///
     /// \param shared Context to share the new one with (can be NULL)
     ///
     ////////////////////////////////////////////////////////////
-    EaglContext(EaglContext* shared);
+    SFContext(SFContext* shared);
 
     ////////////////////////////////////////////////////////////
     /// \brief Create a new context attached to a window
@@ -69,8 +82,8 @@ public:
     /// \param bitsPerPixel Pixel depth, in bits per pixel
     ///
     ////////////////////////////////////////////////////////////
-    EaglContext(EaglContext* shared, const ContextSettings& settings,
-                const WindowImpl* owner, unsigned int bitsPerPixel);
+    SFContext(SFContext* shared, const ContextSettings& settings,
+              const WindowImpl* owner, unsigned int bitsPerPixel);
 
     ////////////////////////////////////////////////////////////
     /// \brief Create a new context that embeds its own rendering target
@@ -81,25 +94,24 @@ public:
     /// \param height   Back buffer height, in pixels
     ///
     ////////////////////////////////////////////////////////////
-    EaglContext(EaglContext* shared, const ContextSettings& settings,
-                unsigned int width, unsigned int height);
+    SFContext(SFContext* shared, const ContextSettings& settings,
+              unsigned int width, unsigned int height);
 
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
     ///
     ////////////////////////////////////////////////////////////
-    ~EaglContext();
+    ~SFContext();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Recreate the render buffers of the context
+    /// \brief Get the address of an OpenGL function
     ///
-    /// This function must be called whenever the containing view
-    /// changes (typically after an orientation change)
+    /// \param name Name of the function to get the address of
     ///
-    /// \param glView: Container of the context
+    /// \return Address of the OpenGL function, 0 on failure
     ///
     ////////////////////////////////////////////////////////////
-    void recreateRenderBuffers(SFView* glView);
+    static GlFunctionPointer getFunction(const char* name);
 
     ////////////////////////////////////////////////////////////
     /// \brief Display what has been rendered to the context so far
@@ -115,13 +127,12 @@ public:
     /// This can avoid some visual artifacts, and limit the framerate
     /// to a good value (but not constant across different computers).
     ///
-    /// \param enabled: True to enable v-sync, false to deactivate
+    /// \param enabled True to enable v-sync, false to deactivate
     ///
     ////////////////////////////////////////////////////////////
     virtual void setVerticalSyncEnabled(bool enabled);
 
 protected:
-
     ////////////////////////////////////////////////////////////
     /// \brief Activate the context as the current target
     ///        for rendering
@@ -134,34 +145,29 @@ protected:
     virtual bool makeCurrent(bool current);
 
 private:
-
     ////////////////////////////////////////////////////////////
     /// \brief Create the context
+    /// \note Must only be called from Ctor.
     ///
     /// \param shared       Context to share the new one with (can be NULL)
-    /// \param window       Window to attach the context to (can be NULL)
-    /// \param bitsPerPixel Pixel depth, in bits per pixel
+    /// \param bitsPerPixel bpp
     /// \param settings     Creation parameters
     ///
     ////////////////////////////////////////////////////////////
-    void createContext(EaglContext* shared,
-                       const WindowImplUIKit* window,
+    void createContext(SFContext* shared,
                        unsigned int bitsPerPixel,
                        const ContextSettings& settings);
 
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    EAGLContext* m_context; ///< The internal context
-    GLuint m_framebuffer;   ///< Frame buffer associated to the context
-    GLuint m_colorbuffer;   ///< Color render buffer
-    GLuint m_depthbuffer;   ///< Depth render buffer
-    bool m_vsyncEnabled;    ///< Vertical sync activation flag
-    Clock m_clock;          ///< Measures the elapsed time for the fake v-sync implementation
+    NSOpenGLContextRef    m_context;       ///< OpenGL context.
+    NSOpenGLViewRef       m_view;          ///< Only for offscreen context.
+    NSWindowRef           m_window;        ///< Only for offscreen context.
 };
 
 } // namespace priv
 
 } // namespace sf
 
-#endif // SFML_EAGLCONTEXT_HPP
+#endif // SFML_SFCONTEXT_HPP

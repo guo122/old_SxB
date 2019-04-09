@@ -2,6 +2,9 @@
 .DS_Store
 
 build
+build-ios
+build-macos
+build-windows
 bin
 lib
 pack

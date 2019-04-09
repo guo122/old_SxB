@@ -35,6 +35,12 @@ set(DIR_SRCS
 			${SRCROOT}/SensorImpl.hpp
 			${SRCROOT}/SensorManager.hpp
 			${SRCROOT}/SensorManager.cpp
+			${SRCROOT}/GlContext.hpp
+			${SRCROOT}/GlContext.cpp
+			${INCROOT}/Context.hpp
+			${SRCROOT}/Context.cpp
+			${INCROOT}/GlResource.hpp
+			${SRCROOT}/GlResource.cpp
 )
 			 
 # add platform specific sources
@@ -97,6 +103,8 @@ elseif(SXB_OS_MACOS)
         ${SRCROOT}/OSX/SFApplication.m
 		${SRCROOT}/OSX/SFApplicationDelegate.h
 		${SRCROOT}/OSX/SFApplicationDelegate.m
+		${SRCROOT}/OSX/SFContext.hpp
+		${SRCROOT}/OSX/SFContext.mm
 		${SRCROOT}/OSX/SFKeyboardModifiersHelper.h
 		${SRCROOT}/OSX/SFKeyboardModifiersHelper.mm
 		${SRCROOT}/OSX/SFOpenGLView.h
@@ -125,6 +133,10 @@ elseif(SXB_OS_IOS)
         ${SRCROOT}/iOS/JoystickImpl.mm
         ${SRCROOT}/iOS/SensorImpl.hpp
         ${SRCROOT}/iOS/SensorImpl.mm
+		${SRCROOT}/iOS/SFView.hpp
+		${SRCROOT}/iOS/SFView.mm
+		${SRCROOT}/iOS/EaglContext.hpp
+		${SRCROOT}/iOS/EaglContext.mm
         ${SRCROOT}/iOS/WindowImplUIKit.hpp
         ${SRCROOT}/iOS/WindowImplUIKit.mm
     )
