@@ -28,17 +28,21 @@ int main(int argc, char *argv[])
 			 switch (event.type)
 			 {
 			 case sf::Event::MouseButtonPressed: {
-
+				 cube.mousePressed();
 			 } break;
 			 case sf::Event::MouseButtonReleased: {
+				 cube.mouseRelease();
 			 } break;
 			 case sf::Event::MouseMoved: {
+				 cube.setMouse(event.mouseMove.x, event.mouseMove.y);
+			 } break;
+			 case sf::Event::KeyPressed: {
+					cube.setKey(event.key.code);
 			 } break;
 			 case sf::Event::Closed: window.close(); break;
 			 default:break;
 			 }
 		 }
-
 		 cube.update(count);
 		 count++;
      }

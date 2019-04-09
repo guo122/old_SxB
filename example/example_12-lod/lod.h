@@ -58,8 +58,8 @@ private:
 	uint32_t m_debug;
 	uint32_t m_reset;
 
-	sxb::Mesh* m_meshTop[3];
-	sxb::Mesh* m_meshTrunk[3];
+	sxb::Mesh m_meshTop[3];
+	sxb::Mesh m_meshTrunk[3];
 
 	bgfx::ProgramHandle m_program;
 	bgfx::UniformHandle s_texColor;

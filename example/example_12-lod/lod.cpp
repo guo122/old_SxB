@@ -58,13 +58,13 @@ bool lod::init(void* nwh_)
 		, stippleTex
 	);
 
-	m_meshTop[0] = sxb::meshLoad("meshes/tree1b_lod0_1.bin");
-	m_meshTop[1] = sxb::meshLoad("meshes/tree1b_lod1_1.bin");
-	m_meshTop[2] = sxb::meshLoad("meshes/tree1b_lod2_1.bin");
+	m_meshTop[0].load("meshes/tree1b_lod0_1.bin");
+	m_meshTop[1].load("meshes/tree1b_lod1_1.bin");
+	m_meshTop[2].load("meshes/tree1b_lod2_1.bin");
 
-	m_meshTrunk[0] = sxb::meshLoad("meshes/tree1b_lod0_2.bin");
-	m_meshTrunk[1] = sxb::meshLoad("meshes/tree1b_lod1_2.bin");
-	m_meshTrunk[2] = sxb::meshLoad("meshes/tree1b_lod2_2.bin");
+	m_meshTrunk[0].load("meshes/tree1b_lod0_2.bin");
+	m_meshTrunk[1].load("meshes/tree1b_lod1_2.bin");
+	m_meshTrunk[2].load("meshes/tree1b_lod2_2.bin");
 
 	m_scrollArea = 0;
 	m_transitions = true;
@@ -127,12 +127,12 @@ void lod::update(const uint64_t & frame_)
 		bgfx::setTexture(0, s_texColor, m_textureBark);
 		bgfx::setTexture(1, s_texStipple, m_textureStipple);
 		bgfx::setUniform(u_stipple, stipple);
-		meshSubmit(m_meshTrunk[mainLOD], 0, m_program, mtx, stateOpaque);
+		m_meshTrunk[mainLOD].submit(0, m_program, mtx, stateOpaque);
 
 		bgfx::setTexture(0, s_texColor, m_textureLeafs);
 		bgfx::setTexture(1, s_texStipple, m_textureStipple);
 		bgfx::setUniform(u_stipple, stipple);
-		meshSubmit(m_meshTop[mainLOD], 0, m_program, mtx, stateTransparent);
+		m_meshTop[mainLOD].submit(0, m_program, mtx, stateTransparent);
 
 		if (m_transitions
 			&& (m_transitionFrame != 0))
@@ -140,12 +140,12 @@ void lod::update(const uint64_t & frame_)
 			bgfx::setTexture(0, s_texColor, m_textureBark);
 			bgfx::setTexture(1, s_texStipple, m_textureStipple);
 			bgfx::setUniform(u_stipple, stippleInv);
-			meshSubmit(m_meshTrunk[m_targetLod], 0, m_program, mtx, stateOpaque);
+			m_meshTrunk[m_targetLod].submit(0, m_program, mtx, stateOpaque);
 
 			bgfx::setTexture(0, s_texColor, m_textureLeafs);
 			bgfx::setTexture(1, s_texStipple, m_textureStipple);
 			bgfx::setUniform(u_stipple, stippleInv);
-			meshSubmit(m_meshTop[m_targetLod], 0, m_program, mtx, stateTransparent);
+			m_meshTop[m_targetLod].submit(0, m_program, mtx, stateTransparent);
 		}
 
 		int lod = 0;

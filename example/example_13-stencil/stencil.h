@@ -33,7 +33,7 @@ private:
 	uint32_t m_debug;
 	uint32_t m_reset;
 
-	sxb::Mesh* m_bunnyMesh;
+	sxb::Mesh m_bunnyMesh;
 
 	bgfx::ProgramHandle m_program;
 };

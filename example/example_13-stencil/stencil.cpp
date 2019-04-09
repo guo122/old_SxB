@@ -37,7 +37,7 @@ bool stencil::init(void* nwh_)
 
 	m_ready = sxb::Utils::loadProgram("vs_stencil_color_lighting.bin", "fs_stencil_color_lighting.bin", m_program);
 
-	m_bunnyMesh = sxb::meshLoad("meshes/bunny.bin");
+	m_bunnyMesh.load("meshes/bunny.bin");
 
 	return m_ready;
 }
@@ -73,7 +73,7 @@ void stencil::update(const uint64_t & frame_)
 			bgfx::setViewTransform(0, view, proj);
 		}
 
-		sxb::meshSubmit(m_bunnyMesh, 0, m_program, bunnyMtx, BGFX_STATE_DEFAULT);
+		m_bunnyMesh.submit(0, m_program, bunnyMtx, BGFX_STATE_DEFAULT);
 
 		bgfx::frame();
 	}
