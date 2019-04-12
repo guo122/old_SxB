@@ -1,10 +1,11 @@
 
 .DS_Store
+*.swp
 
 build
 build-ios
 build-macos
-build-windows
+build-win
 bin
 lib
 pack

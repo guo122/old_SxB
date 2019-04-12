@@ -5,6 +5,15 @@ set(INCROOT ${CMAKE_ROOT_DIR}/include/SFML/System)
 set(SRCROOT ${CMAKE_ROOT_DIR}/src/SFML/System)
 
 set(DIR_SRCS 
+			${INCROOT}/FileInputStream.hpp
+			${INCROOT}/InputStream.hpp
+			${INCROOT}/MemoryInputStream.hpp
+			${INCROOT}/NativeActivity.hpp
+			${INCROOT}/Thread.hpp
+			${INCROOT}/Thread.inl
+			${SRCROOT}/FileInputStream.cpp
+			${SRCROOT}/MemoryInputStream.cpp
+			${SRCROOT}/Thread.cpp
 			${INCROOT}/Export.hpp
 			${INCROOT}/NonCopyable.hpp
 			${INCROOT}/Vector2.hpp
@@ -43,10 +52,16 @@ if(SXB_OS_WINDOWS)
         ${SRCROOT}/Win32/MutexImpl.cpp
         ${SRCROOT}/Win32/SleepImpl.hpp
         ${SRCROOT}/Win32/SleepImpl.cpp
+		${SRCROOT}/Win32/ThreadImpl.cpp
+		${SRCROOT}/Win32/ThreadImpl.hpp
+		${SRCROOT}/Win32/ThreadLocalImpl.cpp
+		${SRCROOT}/Win32/ThreadLocalImpl.hpp
     )
     source_group("windows" FILES ${PLATFORM_SRC})
 else()
     set(PLATFORM_SRC
+		${SRCROOT}/Unix/ThreadImpl.cpp
+		${SRCROOT}/Unix/ThreadImpl.hpp
         ${SRCROOT}/Unix/ClockImpl.hpp
         ${SRCROOT}/Unix/ClockImpl.cpp
         ${SRCROOT}/Unix/MutexImpl.hpp
@@ -75,12 +90,20 @@ set(INC_DIR
 
 include_directories(${INC_DIR})
 
+if(SXB_OS_WINDOWS)
 sxb_add_library(
 				${PROJECT_NAME} 
-				SHARED INSTALL 
+				SHARED INSTALL
 				FOLDER "libs" 
 				SOURCES ${DIR_SRCS} ${PLATFORM_SRC}
 )
+else()
+sxb_add_library(
+				${PROJECT_NAME} 
+				FOLDER "libs" 
+				SOURCES ${DIR_SRCS} ${PLATFORM_SRC}
+)
+endif()
 
 if(SXB_OS_WINDOWS)
 	target_link_libraries(${PROJECT_NAME} PRIVATE winmm)

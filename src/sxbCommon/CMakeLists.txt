@@ -1,6 +1,9 @@
 
 set(PROJECT_NAME sxbCommon)
 
+set(CMAKE_C_COMPILER g++)
+add_compile_options(-std=c++1y -fno-objc-arc)
+
 set(INCROOT ${CMAKE_ROOT_DIR}/include/sxbCommon)
 set(SRCROOT ${CMAKE_ROOT_DIR}/src/sxbCommon)
 
@@ -26,13 +29,12 @@ source_group("ib-compress" FILES ${ID_COMPRESS_SRCS})
 		
 IF (SXB_OS_WINDOWS)
 	set(INC_DIR ${CMAKE_ROOT_DIR}/include/bx/compat/msvc)
+	Add_Definitions(-D_HAS_ITERATOR_DEBUGGING=0)
 ELSEIF (SXB_OS_MACOS)
 	set(INC_DIR ${CMAKE_ROOT_DIR}/include/bx/compat/osx)
 ENDIF()
 			
 include_directories(${INC_DIR})
-
-Add_Definitions(-D_HAS_ITERATOR_DEBUGGING=0)
 
 sxb_add_library(
 				${PROJECT_NAME} 

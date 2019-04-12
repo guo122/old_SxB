@@ -40,7 +40,7 @@
 #include <SFML/Window/SensorImpl.hpp>
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/WindowHandle.hpp>
-#include <SFML/Window/WindowBase.hpp>
+#include <SFML/Window/Window.hpp>
 #include <queue>
 #include <set>
 

@@ -163,7 +163,7 @@ bool Cube::init(void* nwh_)
 
 	bgfx::setViewClear(0
 		, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
-		, 0x000000FF
+		, 0x585858FF
 		, 1.0f
 		, 0
 	);
@@ -301,7 +301,7 @@ void Cube::update(const uint64_t & frame_)
 		//m_floorMesh.submit(0, m_program_TextureLighting, floorMtx, BGFX_STATE_DEFAULT);
 		sxb::MeshState ss[1];
 		ss[0] = floorState;
-		m_floorMesh.submit(ss, (uint8_t)1, floorMtx, 1);
+		//m_floorMesh.submit(ss, (uint8_t)1, floorMtx, 1);
 		
 		m_coordMesh.submit(0, m_program_cube, NULL, BGFX_STATE_DEFAULT | BGFX_STATE_PT_LINES);
 		//sxb::Submit(0, m_program_cube, m_vbh[1], m_ibh[3], BGFX_STATE_DEFAULT | BGFX_STATE_PT_LINES);

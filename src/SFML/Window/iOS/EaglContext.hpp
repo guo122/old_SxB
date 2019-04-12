@@ -28,7 +28,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-//#include <SFML/Window/GlContext.hpp>
+#include <SFML/Window/GlContext.hpp>
 #include <SFML/Window/iOS/ObjCType.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/System/Clock.hpp>

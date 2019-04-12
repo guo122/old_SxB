@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 		 }
 		 cube.update(count);
 		 count++;
+         //printf("%d\n", bgfx::getRendererType());
      }
 
      return EXIT_SUCCESS;

@@ -3,6 +3,7 @@
 
 #include <bx/macros.h>
 //#include <bx/allocator.h>
+//#include <bx/compat/ios/malloc.h>
 #include <bx/uint32_t.h>
 
 #include <bimg/decode.h>
@@ -18,8 +19,7 @@ extern bx::AllocatorI* getDefaultAllocator();
 bx::AllocatorI* g_allocator = getDefaultAllocator();
 
 typedef bx::StringT<&g_allocator> String;
-
-static String s_currentDir = RUNTIME_DIR;
+static String s_currentDir;
 
 class FileReader : public bx::FileReader
 {
@@ -28,6 +28,7 @@ class FileReader : public bx::FileReader
 public:
 	virtual bool open(const bx::FilePath& _filePath, bx::Error* _err) override
 	{
+        s_currentDir.set(RUNTIME_DIR);
 		String filePath(s_currentDir);
 		filePath.append(_filePath);
 		return super::open(filePath.getPtr(), _err);
@@ -41,6 +42,7 @@ class FileWriter : public bx::FileWriter
 public:
 	virtual bool open(const bx::FilePath& _filePath, bool _append, bx::Error* _err) override
 	{
+        s_currentDir.set(RUNTIME_DIR);
 		String filePath(s_currentDir);
 		filePath.append(_filePath);
 		return super::open(filePath.getPtr(), _append, _err);
@@ -233,7 +235,7 @@ bool Utils::load(const char *prefix_, const char* filePath_, void *& data_, uint
 	all_path = prefix_ + all_path;
 
 	FILE *file = fopen(all_path.c_str(), "rb");
-	char * mesg = strerror(errno);
+	//char * mesg = strerror(errno);
 
 	if (file)
 	{
@@ -257,7 +259,7 @@ const bgfx::Memory* Utils::loadMem(const char *prefix_, const char* filePath_)
 	all_path = prefix_ + all_path;
 
 	FILE *file = fopen(all_path.c_str(), "rb");
-	char * mesg = strerror(errno);
+	//char * mesg = strerror(errno);
 
 	if (file)
 	{

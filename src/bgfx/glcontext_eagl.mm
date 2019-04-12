@@ -165,7 +165,7 @@ namespace bgfx { namespace gl
 		BX_CHECK(NULL != s_opengles, "OpenGLES dynamic library is not found!");
 
 		BX_UNUSED(_width, _height);
-		CAEAGLLayer* layer = (CAEAGLLayer*)g_platformData.nwh;
+		CAEAGLLayer* layer = (__bridge CAEAGLLayer*)g_platformData.nwh;
 		layer.opaque = [layer.style valueForKey:@"opaque"] == nil ? true : [[layer.style valueForKey:@"opaque"] boolValue];
 
 		layer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys
@@ -176,7 +176,7 @@ namespace bgfx { namespace gl
 			, nil
 			];
 
-		EAGLContext* context = (EAGLContext*)g_platformData.context;
+		EAGLContext* context = (__bridge EAGLContext*)g_platformData.context;
 		if (NULL == context)
 		{
 			context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
@@ -187,7 +187,7 @@ namespace bgfx { namespace gl
 		}
 		BX_CHECK(NULL != context, "No valid OpenGLES context.");
 
-		m_context = (void*)context;
+		m_context = (__bridge void*)context;
 		[EAGLContext setCurrentContext:context];
 		[CATransaction flush];
 
@@ -249,7 +249,7 @@ namespace bgfx { namespace gl
 			m_depthStencilRbo = 0;
 		}
 
-		EAGLContext* context = (EAGLContext*)m_context;
+		EAGLContext* context = (__bridge EAGLContext*)m_context;
 		[context release];
 
 		bx::dlclose(s_opengles);

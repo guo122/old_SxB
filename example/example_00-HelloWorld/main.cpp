@@ -9,16 +9,19 @@
 
 #include <sxbTop/defines.h>
 
+#include <SFML/Main.hpp>
+
 #include "logo.h"
 
+// Please set platform data window to a CAMetalLayer
 int main(int argc, char *argv[])
  {
      // Create the main window
      sf::WindowBase window(sf::VideoMode(WNDW_WIDTH, WNDW_HEIGHT), "SFML window");
 
-	 bgfx::PlatformData pd;
-	 pd.nwh = window.getSystemHandle();
-	 bgfx::setPlatformData(pd);
+     bgfx::PlatformData pd;
+     pd.nwh = window.getSystemHandle();
+     bgfx::setPlatformData(pd);
 
 	 bgfx::Init bgfxInit;
 	 bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
