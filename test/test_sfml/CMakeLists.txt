@@ -7,7 +7,13 @@ add_compile_options(-std=c++1y)
 set(SRCROOT ${CMAKE_ROOT_DIR}/test/test_sfml)
 
 set(DIR_SRCS 
-	${SRCROOT}/main.cpp
+	${SRCROOT}/main.mm
+	${SRCROOT}/AppDelegate.h
+	${SRCROOT}/AppDelegate.mm
+	${SRCROOT}/ViewController.h
+	${SRCROOT}/ViewController.mm
+	${SRCROOT}/CppInterface.h
+	${SRCROOT}/CppInterface.mm
 )
 
 set(INC_DIR
@@ -35,26 +41,7 @@ endif()
 link_libraries(${LINK_LIBS})
 
 Add_Definitions(
--D_HAS_ITERATOR_DEBUGGING=0
 -DHAS_METAL_SDK
-    -D__STDC_LIMIT_MACROS
-    -D__STDC_FORMAT_MACROS
-    -D__STDC_CONSTANT_MACROS
-    -D_HAS_EXCEPTIONS=0
-    -D_ITERATOR_DEBUG_LEVEL=0
-    -D_SCL_SECURE=0
-    -D_SECURE_SCL=0
-    -D_SCL_SECURE_NO_WARNINGS
-    -D_CRT_SECURE_NO_WARNINGS
-    -D_CRT_SECURE_NO_DEPRECATE
-    -DBGFX_CONFIG_DEBUG=1
-	        -D__STDC_LIMIT_MACROS
-        -D__STDC_FORMAT_MACROS
-        -D__STDC_CONSTANT_MACROS
-        -D_DEBUG
-        -DBGFX_CONFIG_DEBUG=1
-        -D_HAS_ITERATOR_DEBUGGING=0
-        -DHAS_METAL_SDK
 )
 #set(APP_NAME "test_sfml")
 #set(APP_BUNDLE_IDENTIFIER "quku.test_sfml")
@@ -75,7 +62,7 @@ if(SXB_OS_WINDOWS)
 elseif(SXB_OS_MACOS)
 	target_link_libraries(${PROJECT_NAME} PRIVATE "-framework Foundation" "-framework AppKit" "-framework IOKit" "-framework Carbon" "-framework Metal" "-framework QuartzCore")
 elseif(SXB_OS_IOS)
-	target_link_libraries(${PROJECT_NAME} PRIVATE "-framework Foundation" "-framework UIKit" "-framework CoreGraphics" "-framework QuartzCore" "-framework CoreMotion" "-framework Metal")
+	target_link_libraries(${PROJECT_NAME} PRIVATE "-framework Foundation" "-framework UIKit" "-framework CoreGraphics" "-framework QuartzCore" "-framework CoreMotion" "-framework Metal""-framework OpenGLES")
 elseif(SXB_OS_ANDROID)
     target_link_libraries(${PROJECT_NAME} PRIVATE android)
 endif()

@@ -36,7 +36,7 @@
 SFML_DECLARE_OBJC_CLASS(UIWindow);
 SFML_DECLARE_OBJC_CLASS(SFView);
 SFML_DECLARE_OBJC_CLASS(SFViewController);
-
+SFML_DECLARE_OBJC_CLASS(CAMetalLayer);
 
 namespace sf
 {
@@ -232,6 +232,7 @@ private:
     SFViewController* m_viewController; ///< Controller attached to the view
     bool              m_hasFocus;       ///< Current focus state of the window
     float             m_backingScale;   ///< Converts from points to pixels and vice versa
+    CAMetalLayer    * m_metalLayer;
 };
 
 } // namespace priv

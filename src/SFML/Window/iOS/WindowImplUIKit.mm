@@ -33,6 +33,10 @@
 #include <SFML/System/Err.hpp>
 #include <UIKit/UIKit.h>
 
+#import <QuartzCore/CAMetalLayer.h>
+#import <Metal/Metal.h>
+#import <MetalKit/MetalKit.h>
+
 namespace sf
 {
 namespace priv
@@ -88,6 +92,19 @@ WindowImplUIKit::WindowImplUIKit(VideoMode mode,
 
     // Make it the current window
     [m_window makeKeyAndVisible];
+    
+    m_metalLayer = [CAMetalLayer new];
+
+    m_metalLayer.frame = m_window.layer.frame;
+    
+    CGSize drawableSize = m_window.bounds.size;
+    
+    drawableSize.width *= m_window.contentScaleFactor;
+    drawableSize.height *= m_window.contentScaleFactor;
+    m_metalLayer.drawableSize = drawableSize;
+    
+    [m_window.layer addSublayer:m_metalLayer];
+
 }
 
 
@@ -108,7 +125,7 @@ void WindowImplUIKit::processEvents()
 ////////////////////////////////////////////////////////////
 WindowHandle WindowImplUIKit::getSystemHandle() const
 {
-    return (__bridge WindowHandle)m_window;
+    return (__bridge WindowHandle)m_metalLayer;
 }
 
 

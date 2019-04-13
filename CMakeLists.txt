@@ -24,6 +24,8 @@ macro(sfml_set_option var default type docstring)
     set(${var} ${${var}} CACHE ${type} ${docstring} FORCE)
 endmacro()
 
+sfml_set_option(SXB_TEST FALSE BOOL "Add Test proj")
+
 if(SXB_OS_MACOS)
 	    sfml_set_option(SFML_BUILD_FRAMEWORKS FALSE BOOL "TRUE to build SFML as frameworks libraries (release only), FALSE to build according to BUILD_SHARED_LIBS")
 
@@ -44,8 +46,11 @@ endif()
 #############
 
 add_subdirectory("src")
-add_subdirectory("test")
 add_subdirectory("example")
+
+if(SXB_TEST)
+	add_subdirectory("test")
+endif()
 
 set(CPACK_PACKAGE_DIRECTORY ${CMAKE_ROOT_DIR}/pack)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_ROOT_DIR}/LICENSE")
