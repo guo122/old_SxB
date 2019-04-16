@@ -125,10 +125,14 @@ void WindowImplUIKit::processEvents()
 ////////////////////////////////////////////////////////////
 WindowHandle WindowImplUIKit::getSystemHandle() const
 {
-    return (__bridge WindowHandle)m_metalLayer;
+    return (__bridge WindowHandle)m_window;
 }
 
-
+WindowHandle WindowImplUIKit::getMetalHandle() const
+{
+    return (__bridge WindowHandle)m_metalLayer;
+}
+    
 ////////////////////////////////////////////////////////////
 Vector2i WindowImplUIKit::getPosition() const
 {

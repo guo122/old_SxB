@@ -5,7 +5,7 @@ set(INCROOT ${CMAKE_ROOT_DIR}/include/SFML/Window)
 set(SRCROOT ${CMAKE_ROOT_DIR}/src/SFML/Window)
 
 set(DIR_SRCS 
-	    ${INCROOT}/Clipboard.hpp
+	${INCROOT}/Clipboard.hpp
     ${SRCROOT}/Clipboard.cpp
     ${SRCROOT}/ClipboardImpl.hpp
     ${SRCROOT}/Context.cpp

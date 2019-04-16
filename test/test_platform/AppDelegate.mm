@@ -6,9 +6,21 @@
 //  Copyright © 2019 quku. All rights reserved.
 //
 
-#include "bgfx/bgfx.h"
-#include "bgfx/platform.h"
-#include "bx/bx.h"
+//#define VERTICAL_SCREEN_HEIGHT MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)
+//
+//#define VERTICAL_SCREEN_WIDTH  MIN([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)
+//
+//#define IS_IPHONE_5     (IS_IPHONE && (VERTICAL_SCREEN_HEIGHT == 568.f))
+//#define IS_IPHONE_6     (IS_IPHONE && (VERTICAL_SCREEN_HEIGHT == 568.f))
+//#define IS_IPHONE_7     (IS_IPHONE && (VERTICAL_SCREEN_HEIGHT == 568.f))
+//#define IS_IPHONE_8     (IS_IPHONE && (VERTICAL_SCREEN_HEIGHT == 568.f))
+//
+//#define IS_IPHONE_4     (IS_IPHONE && (VERTICAL_SCREEN_HEIGHT == 480.f))
+//
+
+//#include "bgfx/bgfx.h"
+//#include "bgfx/platform.h"
+//#include "bx/bx.h"
 
 #import "AppDelegate.h"
 
@@ -27,13 +39,16 @@
     
     self.metalLayer.device = self.device;
 
-    self.window = [[UIWindow alloc] initWithFrame:
-                   [[UIScreen mainScreen] bounds]];
+//    self.window = [[UIWindow alloc] initWithFrame:
+//                   [[UIScreen mainScreen] bounds]];
+    self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
+    //CGRect tmpR = [[UIScreen mainScreen]bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.vc = [[ViewController alloc]init];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:self.vc];
     [self.window setRootViewController:nav];
     
+    [self.window makeKeyAndVisible];
     
     self.metalLayer.frame = self.window.layer.frame;
     
@@ -47,25 +62,24 @@
     
     [self.window.layer addSublayer:self.metalLayer];
 
-    bgfx::PlatformData pd;
-    pd.nwh = (__bridge void *)self.metalLayer;
-    bgfx::setPlatformData(pd);
-
-    bgfx::Init bgfxInit;
-    bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
-    bgfxInit.resolution.width = 1280;
-    bgfxInit.resolution.height = 720;
-    bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
-    bgfx::init(bgfxInit);
-    bgfx::setDebug(BGFX_DEBUG_TEXT);
-    
-    bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
-    bgfx::setViewRect(0, 0, 0, 1280, 720);
-    
-    [self.window makeKeyAndVisible];
-    
-    bgfx::touch(0);
-    bgfx::frame();
+//    bgfx::PlatformData pd;
+//    pd.nwh = (__bridge void *)self.metalLayer;
+//    bgfx::setPlatformData(pd);
+//
+//    bgfx::Init bgfxInit;
+//    bgfxInit.type = bgfx::RendererType::Count; // Automatically choose a renderer.
+//    bgfxInit.resolution.width = 1280;
+//    bgfxInit.resolution.height = 720;
+//    bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
+//    bgfx::init(bgfxInit);
+//    bgfx::setDebug(BGFX_DEBUG_TEXT);
+//
+//    bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
+//    bgfx::setViewRect(0, 0, 0, 1280, 720);
+//
+//
+//    bgfx::touch(0);
+//    bgfx::frame();
     
     return YES;
 }

@@ -36,6 +36,8 @@
 ////////////////////////////////////////////////////////////
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+//    return (interfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+//            interfaceOrientation == UIDeviceOrientationLandscapeRight);
     return self.orientationCanChange;
 }
 

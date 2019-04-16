@@ -306,8 +306,12 @@ WindowHandle WindowBase::getSystemHandle() const
 {
     return m_impl ? m_impl->getSystemHandle() : 0;
 }
-
-
+    
+WindowHandle WindowBase::getMetalHandle() const
+{
+    return m_impl ? m_impl->getMetalHandle() : 0;
+}
+    
 ////////////////////////////////////////////////////////////
 void WindowBase::onCreate()
 {

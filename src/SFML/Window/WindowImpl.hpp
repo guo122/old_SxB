@@ -121,6 +121,8 @@ public:
     ///
     ////////////////////////////////////////////////////////////
     virtual WindowHandle getSystemHandle() const = 0;
+    
+    virtual WindowHandle getMetalHandle() const = 0;
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the position of the window

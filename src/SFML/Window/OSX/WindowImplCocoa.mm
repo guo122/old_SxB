@@ -406,7 +406,11 @@ WindowHandle WindowImplCocoa::getSystemHandle() const
 {
     return [m_delegate getSystemHandle];
 }
-
+    
+WindowHandle WindowImplCocoa::getMetalHandle() const
+{
+    return [m_delegate getSystemHandle];
+}
 
 ////////////////////////////////////////////////////////////
 Vector2i WindowImplCocoa::getPosition() const
