@@ -11,6 +11,141 @@ namespace stl = tinystl;
 
 SXB_NAMESPACE_BEGIN
 
+
+#define RENDER_VIEWID_RANGE1_PASS_0  1
+#define RENDER_VIEWID_RANGE1_PASS_1  2
+#define RENDER_VIEWID_RANGE1_PASS_2  3
+#define RENDER_VIEWID_RANGE1_PASS_3  4
+#define RENDER_VIEWID_RANGE1_PASS_4  5
+#define RENDER_VIEWID_RANGE1_PASS_5  6
+#define RENDER_VIEWID_RANGE5_PASS_6  7
+#define RENDER_VIEWID_RANGE1_PASS_7 13
+
+#define MAX_NUM_LIGHTS 5
+
+struct Uniforms
+{
+    void init()
+    {
+        m_params.m_ambientPass   = 1.0f;
+        m_params.m_lightingPass  = 1.0f;
+        m_params.m_lightCount    = 4.0f;
+        m_params.m_lightIndex    = 4.0f;
+        
+        m_ambient[0] = 0.02f;
+        m_ambient[1] = 0.02f;
+        m_ambient[2] = 0.02f;
+        m_ambient[3] = 0.0f; //unused
+        
+        m_diffuse[0] = 0.2f;
+        m_diffuse[1] = 0.2f;
+        m_diffuse[2] = 0.2f;
+        m_diffuse[3] = 0.0f; //unused
+        
+        m_specular_shininess[0] = 1.0f;
+        m_specular_shininess[1] = 1.0f;
+        m_specular_shininess[2] = 1.0f;
+        m_specular_shininess[3] = 10.0f; //shininess
+        
+        m_color[0] = 1.0f;
+        m_color[1] = 1.0f;
+        m_color[2] = 1.0f;
+        m_color[3] = 1.0f;
+        
+        m_time = 0.0f;
+        
+        for (uint8_t ii = 0; ii < MAX_NUM_LIGHTS; ++ii)
+        {
+            m_lightPosRadius[ii][0] = 0.0f;
+            m_lightPosRadius[ii][1] = 0.0f;
+            m_lightPosRadius[ii][2] = 0.0f;
+            m_lightPosRadius[ii][3] = 1.0f;
+            
+            m_lightRgbInnerR[ii][0] = 1.0f;
+            m_lightRgbInnerR[ii][1] = 1.0f;
+            m_lightRgbInnerR[ii][2] = 1.0f;
+            m_lightRgbInnerR[ii][3] = 1.0f;
+        }
+        
+        u_params             = bgfx::createUniform("u_params",              bgfx::UniformType::Vec4);
+        u_ambient            = bgfx::createUniform("u_ambient",             bgfx::UniformType::Vec4);
+        u_diffuse            = bgfx::createUniform("u_diffuse",             bgfx::UniformType::Vec4);
+        u_specular_shininess = bgfx::createUniform("u_specular_shininess",  bgfx::UniformType::Vec4);
+        u_color              = bgfx::createUniform("u_color",               bgfx::UniformType::Vec4);
+        u_lightPosRadius     = bgfx::createUniform("u_lightPosRadius",      bgfx::UniformType::Vec4, MAX_NUM_LIGHTS);
+        u_lightRgbInnerR     = bgfx::createUniform("u_lightRgbInnerR",      bgfx::UniformType::Vec4, MAX_NUM_LIGHTS);
+    }
+    
+    //call this once at initialization
+    void submitConstUniforms()
+    {
+        bgfx::setUniform(u_ambient,            &m_ambient);
+        bgfx::setUniform(u_diffuse,            &m_diffuse);
+        bgfx::setUniform(u_specular_shininess, &m_specular_shininess);
+    }
+    
+    //call this before each draw call
+    void submitPerDrawUniforms()
+    {
+        bgfx::setUniform(u_params,         &m_params);
+        bgfx::setUniform(u_color,          &m_color);
+        bgfx::setUniform(u_lightPosRadius, &m_lightPosRadius, MAX_NUM_LIGHTS);
+        bgfx::setUniform(u_lightRgbInnerR, &m_lightRgbInnerR, MAX_NUM_LIGHTS);
+    }
+    
+    void destroy()
+    {
+        bgfx::destroy(u_params);
+        bgfx::destroy(u_ambient);
+        bgfx::destroy(u_diffuse);
+        bgfx::destroy(u_specular_shininess);
+        bgfx::destroy(u_color);
+        bgfx::destroy(u_lightPosRadius);
+        bgfx::destroy(u_lightRgbInnerR);
+    }
+    
+    struct Params
+    {
+        float m_ambientPass;
+        float m_lightingPass;
+        float m_lightCount;
+        float m_lightIndex;
+    };
+    
+    struct SvParams
+    {
+        float m_useStencilTex;
+        float m_dfail;
+        float m_unused0;
+        float m_unused1;
+    };
+    
+    
+    Params m_params;
+    SvParams m_svparams;
+    float m_ambient[4];
+    float m_diffuse[4];
+    float m_specular_shininess[4];
+    float m_color[4];
+    float m_time;
+    float m_lightPosRadius[MAX_NUM_LIGHTS][4];
+    float m_lightRgbInnerR[MAX_NUM_LIGHTS][4];
+    
+    /**
+     * u_params.x - u_ambientPass
+     * u_params.y - u_lightingPass
+     * u_params.z - u_lightCount
+     * u_params.w - u_lightIndex
+     */
+    bgfx::UniformHandle u_params;
+    bgfx::UniformHandle u_ambient;
+    bgfx::UniformHandle u_diffuse;
+    bgfx::UniformHandle u_specular_shininess;
+    bgfx::UniformHandle u_color;
+    bgfx::UniformHandle u_lightPosRadius;
+    bgfx::UniformHandle u_lightRgbInnerR;
+};
+
 struct RenderState
 {
     enum Enum
@@ -246,9 +381,9 @@ public:
 
 	void submit(MeshState _state[], uint8_t _numPasses, const float* _mtx, uint16_t _numMatrices) const;
     
-    void submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::UniformHandle _uniform) const;
+    void submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::UniformHandle _uniform, Uniforms &uxu_) const;
     
-    void submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::TextureHandle _texture, const bgfx::UniformHandle &_uniform) const;
+    void submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::TextureHandle _texture, const bgfx::UniformHandle &_uniform, Uniforms &uxu_) const;
 
 private:
 	bool loadImpl(bx::ReaderSeekerI* _reader);

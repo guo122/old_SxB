@@ -14,7 +14,14 @@
 class stencil
 {
 public:
-	stencil(): m_ready(false) {}
+	stencil()
+    : m_ready(false)
+    , m_cursorX(0)
+    , m_cursorY(0)
+    , m_deltaX(0)
+    , m_deltaY(0)
+    {}
+    
 	~stencil()
 	{
 		bgfx::shutdown();
@@ -24,6 +31,13 @@ public:
 	bool init(void* nwh_);
 
 	void update(const uint64_t & frame_ = 0);
+    
+    void setCursor(const int &x_, const int &y_)
+    {
+        m_deltaX += x_ - m_cursorX;
+        m_deltaY += y_ - m_cursorY;
+        m_cursorX = x_, m_cursorY = y_;
+    }
 
 private:
 	bool m_ready;
@@ -53,6 +67,21 @@ private:
     double m_virtualMem;
     
     bgfx::UniformHandle m_texColor;
+    float m_lightRgbInnerR[MAX_NUM_LIGHTS][4];
+    
+//    Scene m_scene;
+    int32_t m_numLights;
+    float   m_reflectionValue;
+    bool    m_updateLights;
+    bool    m_updateScene;
+    
+    int     m_cursorX;
+    int     m_cursorY;
+    
+    int     m_deltaX;
+    int     m_deltaY;
+    
+    sxb::Uniforms m_uniforms;
 //    ClearValues m_clearValues;
 };
 

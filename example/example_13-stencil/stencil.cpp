@@ -27,7 +27,21 @@ struct PosNormalTexcoordVertex
     uint32_t m_normal;
     float    m_u;
     float    m_v;
+    
+    static void init()
+    {
+        ms_decl
+        .begin()
+        .add(bgfx::Attrib::Position,  3, bgfx::AttribType::Float)
+        .add(bgfx::Attrib::Normal,    4, bgfx::AttribType::Uint8, true, true)
+        .add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float)
+        .end();
+    }
+    
+    static bgfx::VertexDecl ms_decl;
 };
+
+bgfx::VertexDecl PosNormalTexcoordVertex::ms_decl;
 
 static const float s_texcoord = 5.0f;
 static PosNormalTexcoordVertex s_hplaneVertices[] =
@@ -217,130 +231,6 @@ void mtxBillboard(float* _result, const float* _view, const float* _pos, const f
     _result[15] = 1.0f;
 }
 
-struct Uniforms
-{
-    void init()
-    {
-        m_params.m_ambientPass   = 1.0f;
-        m_params.m_lightingPass  = 1.0f;
-        m_params.m_lightCount    = 4.0f;
-        m_params.m_lightIndex    = 4.0f;
-        
-        m_ambient[0] = 0.02f;
-        m_ambient[1] = 0.02f;
-        m_ambient[2] = 0.02f;
-        m_ambient[3] = 0.0f; //unused
-        
-        m_diffuse[0] = 0.2f;
-        m_diffuse[1] = 0.2f;
-        m_diffuse[2] = 0.2f;
-        m_diffuse[3] = 0.0f; //unused
-        
-        m_specular_shininess[0] = 1.0f;
-        m_specular_shininess[1] = 1.0f;
-        m_specular_shininess[2] = 1.0f;
-        m_specular_shininess[3] = 10.0f; //shininess
-        
-        m_color[0] = 1.0f;
-        m_color[1] = 1.0f;
-        m_color[2] = 1.0f;
-        m_color[3] = 1.0f;
-        
-        m_time = 0.0f;
-        
-        for (uint8_t ii = 0; ii < MAX_NUM_LIGHTS; ++ii)
-        {
-            m_lightPosRadius[ii][0] = 0.0f;
-            m_lightPosRadius[ii][1] = 0.0f;
-            m_lightPosRadius[ii][2] = 0.0f;
-            m_lightPosRadius[ii][3] = 1.0f;
-            
-            m_lightRgbInnerR[ii][0] = 1.0f;
-            m_lightRgbInnerR[ii][1] = 1.0f;
-            m_lightRgbInnerR[ii][2] = 1.0f;
-            m_lightRgbInnerR[ii][3] = 1.0f;
-        }
-        
-        u_params             = bgfx::createUniform("u_params",              bgfx::UniformType::Vec4);
-        u_ambient            = bgfx::createUniform("u_ambient",             bgfx::UniformType::Vec4);
-        u_diffuse            = bgfx::createUniform("u_diffuse",             bgfx::UniformType::Vec4);
-        u_specular_shininess = bgfx::createUniform("u_specular_shininess",  bgfx::UniformType::Vec4);
-        u_color              = bgfx::createUniform("u_color",               bgfx::UniformType::Vec4);
-        u_lightPosRadius     = bgfx::createUniform("u_lightPosRadius",      bgfx::UniformType::Vec4, MAX_NUM_LIGHTS);
-        u_lightRgbInnerR     = bgfx::createUniform("u_lightRgbInnerR",      bgfx::UniformType::Vec4, MAX_NUM_LIGHTS);
-    }
-    
-    //call this once at initialization
-    void submitConstUniforms()
-    {
-        bgfx::setUniform(u_ambient,            &m_ambient);
-        bgfx::setUniform(u_diffuse,            &m_diffuse);
-        bgfx::setUniform(u_specular_shininess, &m_specular_shininess);
-    }
-    
-    //call this before each draw call
-    void submitPerDrawUniforms()
-    {
-        bgfx::setUniform(u_params,         &m_params);
-        bgfx::setUniform(u_color,          &m_color);
-        bgfx::setUniform(u_lightPosRadius, &m_lightPosRadius, MAX_NUM_LIGHTS);
-        bgfx::setUniform(u_lightRgbInnerR, &m_lightRgbInnerR, MAX_NUM_LIGHTS);
-    }
-    
-    void destroy()
-    {
-        bgfx::destroy(u_params);
-        bgfx::destroy(u_ambient);
-        bgfx::destroy(u_diffuse);
-        bgfx::destroy(u_specular_shininess);
-        bgfx::destroy(u_color);
-        bgfx::destroy(u_lightPosRadius);
-        bgfx::destroy(u_lightRgbInnerR);
-    }
-    
-    struct Params
-    {
-        float m_ambientPass;
-        float m_lightingPass;
-        float m_lightCount;
-        float m_lightIndex;
-    };
-    
-    struct SvParams
-    {
-        float m_useStencilTex;
-        float m_dfail;
-        float m_unused0;
-        float m_unused1;
-    };
-    
-    
-    Params m_params;
-    SvParams m_svparams;
-    float m_ambient[4];
-    float m_diffuse[4];
-    float m_specular_shininess[4];
-    float m_color[4];
-    float m_time;
-    float m_lightPosRadius[MAX_NUM_LIGHTS][4];
-    float m_lightRgbInnerR[MAX_NUM_LIGHTS][4];
-    
-    /**
-     * u_params.x - u_ambientPass
-     * u_params.y - u_lightingPass
-     * u_params.z - u_lightCount
-     * u_params.w - u_lightIndex
-     */
-    bgfx::UniformHandle u_params;
-    bgfx::UniformHandle u_ambient;
-    bgfx::UniformHandle u_diffuse;
-    bgfx::UniformHandle u_specular_shininess;
-    bgfx::UniformHandle u_color;
-    bgfx::UniformHandle u_lightPosRadius;
-    bgfx::UniformHandle u_lightRgbInnerR;
-};
-static Uniforms s_uniforms;
-
 struct ViewState
 {
     ViewState(uint32_t _width = 0, uint32_t _height = 0)
@@ -398,8 +288,6 @@ void clearViewMask(uint32_t _viewMask, uint8_t _flags, const ClearValues& _clear
     s_clearMask |= _viewMask;
 }
 
-
-
 bool stencil::init(void* nwh_)
 {
     m_ready = true;
@@ -431,14 +319,8 @@ bool stencil::init(void* nwh_)
 	bgfx::setViewRect(0, 0, 0, uint16_t(m_width), uint16_t(m_height));
     
 //    m_clearValues = ClearValues(0x30303000, 1.0f, 0);
-    
-    bgfx::VertexDecl pcvDecl;
-    pcvDecl
-    .begin()
-    .add(bgfx::Attrib::Position,  3, bgfx::AttribType::Float)
-    .add(bgfx::Attrib::Normal,    4, bgfx::AttribType::Uint8, true, true)
-    .add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float)
-    .end();
+    m_uniforms.init();
+    PosNormalTexcoordVertex::init();
     
     m_texColor = bgfx::createUniform("s_texColor", bgfx::UniformType::Sampler);
 
@@ -454,10 +336,30 @@ bool stencil::init(void* nwh_)
 
     m_bunnyMesh.load("meshes/bunny.bin");
     m_columnMesh.load("meshes/column.bin");
-    m_cubeMesh.load(s_cubeVertices, BX_COUNTOF(s_cubeVertices), pcvDecl, s_cubeIndices, BX_COUNTOF(s_cubeIndices) );
-    m_hplaneMesh.load(s_hplaneVertices, BX_COUNTOF(s_hplaneVertices), pcvDecl, s_planeIndices, BX_COUNTOF(s_planeIndices) );
-    m_vplaneMesh.load(s_vplaneVertices, BX_COUNTOF(s_vplaneVertices), pcvDecl, s_planeIndices, BX_COUNTOF(s_planeIndices) );
+    m_cubeMesh.load(s_cubeVertices, BX_COUNTOF(s_cubeVertices), PosNormalTexcoordVertex::ms_decl, s_cubeIndices, BX_COUNTOF(s_cubeIndices) );
+    m_hplaneMesh.load(s_hplaneVertices, BX_COUNTOF(s_hplaneVertices), PosNormalTexcoordVertex::ms_decl, s_planeIndices, BX_COUNTOF(s_planeIndices) );
+    m_vplaneMesh.load(s_vplaneVertices, BX_COUNTOF(s_vplaneVertices), PosNormalTexcoordVertex::ms_decl, s_planeIndices, BX_COUNTOF(s_planeIndices) );
 
+    // Setup lights.
+    const float rgbInnerR[][4] =
+    {
+        { 1.0f, 0.7f, 0.2f, 0.0f }, //yellow
+        { 0.7f, 0.2f, 1.0f, 0.0f }, //purple
+        { 0.2f, 1.0f, 0.7f, 0.0f }, //cyan
+        { 1.0f, 0.4f, 0.2f, 0.0f }, //orange
+        { 0.7f, 0.7f, 0.7f, 0.0f }, //white
+    };
+    
+    for (uint8_t ii = 0, jj = 0; ii < MAX_NUM_LIGHTS; ++ii, ++jj)
+    {
+        const uint8_t index = jj%BX_COUNTOF(rgbInnerR);
+        m_lightRgbInnerR[ii][0] = rgbInnerR[index][0];
+        m_lightRgbInnerR[ii][1] = rgbInnerR[index][1];
+        m_lightRgbInnerR[ii][2] = rgbInnerR[index][2];
+        m_lightRgbInnerR[ii][3] = rgbInnerR[index][3];
+    }
+    bx::memCopy(m_uniforms.m_lightRgbInnerR, m_lightRgbInnerR, MAX_NUM_LIGHTS * 4*sizeof(float) );
+    
 	return m_ready;
 }
 
@@ -548,7 +450,7 @@ void stencil::update(const uint64_t & frame_)
         bgfx::dbgTextPrintf(0, 7, 0x0f, "mem(resident,virtual): (%.3fm, %.3fm)", m_residentMem, m_virtualMem);
 
 		const bx::Vec3 at = { 0.0f,  0.0f,  0.0f };
-		const bx::Vec3 eye = { 10.0f,  10.0f,  -30.0f };
+		const bx::Vec3 eye = { 10.0f,  10.0f + ( (float)m_deltaY / (float)10.0) ,  -30.0f + ( (float)m_deltaX / (float)10.0) };
 
 		{
 			float view[16];
@@ -559,15 +461,29 @@ void stencil::update(const uint64_t & frame_)
 			bgfx::setViewTransform(0, view, proj);
 		}
         
+        m_uniforms.submitConstUniforms();
+        
+        // Update settings.
+        uint8_t numLights = (uint8_t)m_numLights;
+        m_uniforms.m_params.m_ambientPass  = 1.0f;
+        m_uniforms.m_params.m_lightingPass = 1.0f;
+        m_uniforms.m_params.m_lightCount   = float(m_numLights);
+        m_uniforms.m_params.m_lightIndex   = 0.0f;
+        m_uniforms.m_color[3]              = m_reflectionValue;
+        
         // Floor.
 //        m_hplaneMesh.submit(0
 //                            , m_programColorBlack
 //                            , floorMtx
 //                            , sxb::s_renderStates[sxb::RenderState::StencilReflection_BlendPlane]
 //                            , m_texColor
+//                            , m_uniforms
 //                            );
         
-
+        // Bunny and columns color.
+        m_uniforms.m_color[0] = 0.70f;
+        m_uniforms.m_color[1] = 0.65f;
+        m_uniforms.m_color[2] = 0.60f;
         
         // Compute reflected matrix.
         float reflectMtx[16];
@@ -581,6 +497,7 @@ void stencil::update(const uint64_t & frame_)
                            , mtxReflectedBunny
                            , sxb::s_renderStates[sxb::RenderState::StencilReflection_DrawReflected]
                            , m_texColor
+                           , m_uniforms
                            );
         
         // Reflect and submit columns.
@@ -591,11 +508,19 @@ void stencil::update(const uint64_t & frame_)
             m_columnMesh.submit(0
                                 , m_programColorLighting
                                 , mtxReflectedColumn
-                                , BGFX_STATE_DEFAULT
+                                , sxb::s_renderStates[sxb::RenderState::StencilReflection_DrawReflected]
+                                , m_texColor
+                                , m_uniforms
                                 );
         }
         
-		m_bunnyMesh.submit(0, m_programColorLighting, bunnyMtx, BGFX_STATE_DEFAULT);
+		m_bunnyMesh.submit(0
+                           , m_programColorLighting
+                           , bunnyMtx
+                           , sxb::s_renderStates[sxb::RenderState::StencilReflection_DrawScene]
+                           , m_texColor
+                           , m_uniforms
+                           );
         
         // Columns.
         for (uint8_t ii = 0; ii < 4; ++ii)
@@ -603,9 +528,12 @@ void stencil::update(const uint64_t & frame_)
             m_columnMesh.submit(0
                                 , m_programColorLighting
                                 , columnMtx[ii]
-                                , BGFX_STATE_DEFAULT
+                                , sxb::s_renderStates[sxb::RenderState::StencilReflection_DrawScene]
+                                , m_texColor
+                                , m_uniforms
                                 );
         }
+        
 
 		bgfx::frame();
 	}

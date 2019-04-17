@@ -121,20 +121,20 @@ void Mesh::submit(MeshState _state[], uint8_t _numPasses, const float* _mtx, uin
 }
 
 
-void Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::UniformHandle _uniform) const
+void Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::UniformHandle _uniform, Uniforms &uxu_) const
 {
     bgfx::TextureHandle texture = BGFX_INVALID_HANDLE;
-    submit(_id, _program, _mtx, _renderState, texture, _uniform);
+    submit(_id, _program, _mtx, _renderState, texture, _uniform, uxu_);
 }
 
-void Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::TextureHandle _texture, const bgfx::UniformHandle &_uniform) const
+void Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::TextureHandle _texture, const bgfx::UniformHandle &_uniform, Uniforms &uxu_) const
 {
     for (GroupArray::const_iterator it = m_groups.begin(), itEnd = m_groups.end(); it != itEnd; ++it)
     {
         const Group& group = *it;
         
         // Set uniforms
-//        _uniform.submitPerDrawUniforms();
+        uxu_.submitPerDrawUniforms();
         
         // Set model matrix for rendering.
         bgfx::setTransform(_mtx);
