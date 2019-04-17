@@ -80,7 +80,16 @@
 //
 //    bgfx::touch(0);
 //    bgfx::frame();
-    
+    NSString * bundlePath = [[ NSBundle mainBundle] pathForResource: @ "Settings" ofType :@ "bundle"];
+    if (bundlePath)
+    {
+        NSLog(bundlePath);
+    }
+    else
+    {
+        NSLog("----failed----");
+    }
+    //NSBundle *resourceBundle = [NSBundle bundleWithPath:bundlePath];
     return YES;
 }
 

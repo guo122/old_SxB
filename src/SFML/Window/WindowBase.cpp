@@ -307,9 +307,9 @@ WindowHandle WindowBase::getSystemHandle() const
     return m_impl ? m_impl->getSystemHandle() : 0;
 }
     
-WindowHandle WindowBase::getMetalHandle() const
+WindowHandle WindowBase::getWindowHandle() const
 {
-    return m_impl ? m_impl->getMetalHandle() : 0;
+    return m_impl ? m_impl->getWindowHandle() : 0;
 }
     
 ////////////////////////////////////////////////////////////

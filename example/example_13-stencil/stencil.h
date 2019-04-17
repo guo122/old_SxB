@@ -8,7 +8,7 @@
 #include <bgfx/bgfx.h>
 #include <bgfx/bgfx_utils.h>
 
-#include <sxbTop/defines.h>
+#include <sxbCommon/defines.h>
 #include <sxbCommon/Mesh.h>
 
 class stencil
@@ -33,9 +33,27 @@ private:
 	uint32_t m_debug;
 	uint32_t m_reset;
 
-	sxb::Mesh m_bunnyMesh;
+    sxb::Mesh m_bunnyMesh;
+    sxb::Mesh m_columnMesh;
+    sxb::Mesh m_cubeMesh;
+    sxb::Mesh m_hplaneMesh;
+    sxb::Mesh m_vplaneMesh;
 
-	bgfx::ProgramHandle m_program;
+    bgfx::ProgramHandle m_programTextureLighting;
+    bgfx::ProgramHandle m_programColorLighting;
+    bgfx::ProgramHandle m_programColorTexture;
+    bgfx::ProgramHandle m_programColorBlack;
+    bgfx::ProgramHandle m_programTexture;
+    
+    bgfx::TextureHandle m_figureTex;
+    bgfx::TextureHandle m_flareTex;
+    bgfx::TextureHandle m_fieldstoneTex;
+    
+    double m_residentMem;
+    double m_virtualMem;
+    
+    bgfx::UniformHandle m_texColor;
+//    ClearValues m_clearValues;
 };
 
 #endif // STENCIL_H_B874E9B544F90998EF3FC1D95074912E

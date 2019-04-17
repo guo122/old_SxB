@@ -8,11 +8,23 @@ set(INCROOT ${CMAKE_ROOT_DIR}/include/sxbCommon)
 set(SRCROOT ${CMAKE_ROOT_DIR}/src/sxbCommon)
 
 set(DIR_SRCS 
+			${INCROOT}/Config.h
+			${INCROOT}/defines.h
 			${INCROOT}/utils.h
 			${SRCROOT}/utils.cpp
 			${INCROOT}/Mesh.h
 			${SRCROOT}/Mesh.cpp
 )
+
+if(SXB_OS_IOS)
+	set(DIR_SRCS ${DIR_SRCS}
+		${SRCROOT}/utils_p.mm
+	)
+else()
+	set(DIR_SRCS ${DIR_SRCS}
+		${SRCROOT}/utils_p.cpp
+	)
+endif()
 			
 set(ID_COMPRESS_SRCS 
 					${CMAKE_ROOT_DIR}/3rdparty/ib-compress/indexbuffercompression.cpp

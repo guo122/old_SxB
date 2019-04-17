@@ -28,7 +28,8 @@ class FileReader : public bx::FileReader
 public:
 	virtual bool open(const bx::FilePath& _filePath, bx::Error* _err) override
 	{
-        s_currentDir.set(RUNTIME_DIR);
+        
+        s_currentDir.set(Utils::getRuntimeDirectory().c_str());
 		String filePath(s_currentDir);
 		filePath.append(_filePath);
 		return super::open(filePath.getPtr(), _err);
@@ -42,7 +43,7 @@ class FileWriter : public bx::FileWriter
 public:
 	virtual bool open(const bx::FilePath& _filePath, bool _append, bx::Error* _err) override
 	{
-        s_currentDir.set(RUNTIME_DIR);
+        s_currentDir.set(Utils::getRuntimeDirectory().c_str());
 		String filePath(s_currentDir);
 		filePath.append(_filePath);
 		return super::open(filePath.getPtr(), _append, _err);
@@ -86,19 +87,23 @@ bool Utils::loadShader(const char *FILENAME, bgfx::ShaderHandle & sh_)
 {
 	bool Result = false;
 
-	std::string shaderPath = "???";
-
-	switch (::bgfx::getRendererType()) {
-	case ::bgfx::RendererType::Noop:
-	case ::bgfx::RendererType::Direct3D9:  shaderPath = RUNTIME_SHADERS_DIR"dx9/";   break;
-	case ::bgfx::RendererType::Direct3D11:
-	case ::bgfx::RendererType::Direct3D12: shaderPath = RUNTIME_SHADERS_DIR"dx11/";  break;
-	case ::bgfx::RendererType::Gnm:        shaderPath = RUNTIME_SHADERS_DIR"pssl/";  break;
-	case ::bgfx::RendererType::Metal:      shaderPath = RUNTIME_SHADERS_DIR"metal/"; break;
-	case ::bgfx::RendererType::OpenGL:     shaderPath = RUNTIME_SHADERS_DIR"glsl/";  break;
-	case ::bgfx::RendererType::OpenGLES:   shaderPath = RUNTIME_SHADERS_DIR"essl/";  break;
-	case ::bgfx::RendererType::Vulkan:     shaderPath = RUNTIME_SHADERS_DIR"spirv/"; break;
-	}
+	std::string shaderPath = getRuntimeDirectory();
+    
+#if defined(SXB_SYSTEM_IOS)
+    shaderPath += "/shaders/";
+#else
+    switch (::bgfx::getRendererType()) {
+        case ::bgfx::RendererType::Noop:
+        case ::bgfx::RendererType::Direct3D9:  shaderPath += "/shaders/dx9/";   break;
+        case ::bgfx::RendererType::Direct3D11:
+        case ::bgfx::RendererType::Direct3D12: shaderPath += "/shaders/dx11/";  break;
+        case ::bgfx::RendererType::Gnm:        shaderPath += "/shaders/pssl/";  break;
+        case ::bgfx::RendererType::Metal:      shaderPath += "/shaders/metal/"; break;
+        case ::bgfx::RendererType::OpenGL:     shaderPath += "/shaders/glsl/";  break;
+        case ::bgfx::RendererType::OpenGLES:   shaderPath += "/shaders/essl/";  break;
+        case ::bgfx::RendererType::Vulkan:     shaderPath += "/shaders/spirv/"; break;
+    }
+#endif
 
 	const ::bgfx::Memory *mem = loadMem(shaderPath.c_str(), FILENAME);
 
@@ -146,7 +151,7 @@ bool Utils::loadTexture(const char* name_, bgfx::TextureHandle & th_, uint64_t f
 	uint32_t size = 0;
 	void * data = nullptr;
 	
-	if (load(RUNTIME_DIR, name_, data, size))
+	if (load(getRuntimeDirectory().c_str(), name_, data, size))
 	{
 		bimg::ImageContainer* imageContainer = bimg::imageParse(g_allocator, data, size);
 

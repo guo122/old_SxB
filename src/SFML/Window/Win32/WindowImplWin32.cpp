@@ -288,6 +288,10 @@ WindowHandle WindowImplWin32::getSystemHandle() const
     return m_handle;
 }
 
+WindowHandle WindowImplWin32::getWindowHandle() const
+{
+	return m_handle;
+}
 
 ////////////////////////////////////////////////////////////
 void WindowImplWin32::processEvents()

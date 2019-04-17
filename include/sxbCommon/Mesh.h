@@ -7,9 +7,148 @@
 #include <tinystl/string.h>
 namespace stl = tinystl;
 
-#include "sxbTop/defines.h"
+#include "sxbCommon/defines.h"
 
 SXB_NAMESPACE_BEGIN
+
+struct RenderState
+{
+    enum Enum
+    {
+        StencilReflection_CraftStencil = 0,
+        StencilReflection_DrawReflected,
+        StencilReflection_BlendPlane,
+        StencilReflection_DrawScene,
+        
+        ProjectionShadows_DrawAmbient,
+        ProjectionShadows_CraftStencil,
+        ProjectionShadows_DrawDiffuse,
+        
+        Custom_BlendLightTexture,
+        Custom_DrawPlaneBottom,
+        
+        Count
+    };
+    
+    uint64_t m_state;
+    uint32_t m_blendFactorRgba;
+    uint32_t m_fstencil;
+    uint32_t m_bstencil;
+};
+
+static RenderState s_renderStates[RenderState::Count] =
+{
+    { // StencilReflection_CraftStencil
+        BGFX_STATE_WRITE_RGB
+        | BGFX_STATE_WRITE_Z
+        | BGFX_STATE_DEPTH_TEST_LESS
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_TEST_ALWAYS         // pass always
+        | BGFX_STENCIL_FUNC_REF(1)         // value = 1
+        | BGFX_STENCIL_FUNC_RMASK(0xff)
+        | BGFX_STENCIL_OP_FAIL_S_REPLACE
+        | BGFX_STENCIL_OP_FAIL_Z_REPLACE
+        | BGFX_STENCIL_OP_PASS_Z_REPLACE   // store the value
+        , BGFX_STENCIL_NONE
+    },
+    { // StencilReflection_DrawReflected
+        BGFX_STATE_WRITE_RGB
+        | BGFX_STATE_WRITE_A
+        | BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_ALPHA, BGFX_STATE_BLEND_INV_SRC_ALPHA)
+        | BGFX_STATE_WRITE_Z
+        | BGFX_STATE_DEPTH_TEST_LESS
+        | BGFX_STATE_CULL_CW    //reflection matrix has inverted normals. using CCW instead of CW.
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_TEST_EQUAL
+        | BGFX_STENCIL_FUNC_REF(1)
+        | BGFX_STENCIL_FUNC_RMASK(1)
+        | BGFX_STENCIL_OP_FAIL_S_KEEP
+        | BGFX_STENCIL_OP_FAIL_Z_KEEP
+        | BGFX_STENCIL_OP_PASS_Z_KEEP
+        , BGFX_STENCIL_NONE
+    },
+    { // StencilReflection_BlendPlane
+        BGFX_STATE_WRITE_RGB
+        | BGFX_STATE_WRITE_Z
+        | BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_ONE, BGFX_STATE_BLEND_SRC_COLOR)
+        | BGFX_STATE_DEPTH_TEST_LESS
+        | BGFX_STATE_CULL_CCW
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_NONE
+        , BGFX_STENCIL_NONE
+    },
+    { // StencilReflection_DrawScene
+        BGFX_STATE_WRITE_RGB
+        | BGFX_STATE_WRITE_Z
+        | BGFX_STATE_DEPTH_TEST_LESS
+        | BGFX_STATE_CULL_CCW
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_NONE
+        , BGFX_STENCIL_NONE
+    },
+    { // ProjectionShadows_DrawAmbient
+        BGFX_STATE_WRITE_RGB
+        | BGFX_STATE_WRITE_Z // write depth !
+        | BGFX_STATE_DEPTH_TEST_LESS
+        | BGFX_STATE_CULL_CCW
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_NONE
+        , BGFX_STENCIL_NONE
+    },
+    { // ProjectionShadows_CraftStencil
+        BGFX_STATE_DEPTH_TEST_LESS
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_TEST_ALWAYS         // pass always
+        | BGFX_STENCIL_FUNC_REF(1)         // value = 1
+        | BGFX_STENCIL_FUNC_RMASK(0xff)
+        | BGFX_STENCIL_OP_FAIL_S_KEEP
+        | BGFX_STENCIL_OP_FAIL_Z_KEEP
+        | BGFX_STENCIL_OP_PASS_Z_REPLACE   // store the value
+        , BGFX_STENCIL_NONE
+    },
+    { // ProjectionShadows_DrawDiffuse
+        BGFX_STATE_WRITE_RGB
+        | BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_ONE, BGFX_STATE_BLEND_ONE)
+        | BGFX_STATE_DEPTH_TEST_EQUAL
+        | BGFX_STATE_CULL_CCW
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_TEST_NOTEQUAL
+        | BGFX_STENCIL_FUNC_REF(1)
+        | BGFX_STENCIL_FUNC_RMASK(1)
+        | BGFX_STENCIL_OP_FAIL_S_KEEP
+        | BGFX_STENCIL_OP_FAIL_Z_KEEP
+        | BGFX_STENCIL_OP_PASS_Z_KEEP
+        , BGFX_STENCIL_NONE
+    },
+    { // Custom_BlendLightTexture
+        BGFX_STATE_WRITE_RGB
+        | BGFX_STATE_WRITE_A
+        | BGFX_STATE_WRITE_Z
+        | BGFX_STATE_DEPTH_TEST_LESS
+        | BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_COLOR, BGFX_STATE_BLEND_INV_SRC_COLOR)
+        | BGFX_STATE_CULL_CCW
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_NONE
+        , BGFX_STENCIL_NONE
+    },
+    { // Custom_DrawPlaneBottom
+        BGFX_STATE_WRITE_RGB
+        | BGFX_STATE_CULL_CW
+        | BGFX_STATE_MSAA
+        , UINT32_MAX
+        , BGFX_STENCIL_NONE
+        , BGFX_STENCIL_NONE
+    },
+};
+
 
 ///
 struct MeshState
@@ -106,6 +245,10 @@ public:
 	void submit(::bgfx::ViewId _id, ::bgfx::ProgramHandle _program, const float* _mtx, uint64_t _state) const;
 
 	void submit(MeshState _state[], uint8_t _numPasses, const float* _mtx, uint16_t _numMatrices) const;
+    
+    void submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::UniformHandle _uniform) const;
+    
+    void submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::TextureHandle _texture, const bgfx::UniformHandle &_uniform) const;
 
 private:
 	bool loadImpl(bx::ReaderSeekerI* _reader);

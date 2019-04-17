@@ -120,6 +120,39 @@ void Mesh::submit(MeshState _state[], uint8_t _numPasses, const float* _mtx, uin
 	}
 }
 
+
+void Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::UniformHandle _uniform) const
+{
+    bgfx::TextureHandle texture = BGFX_INVALID_HANDLE;
+    submit(_id, _program, _mtx, _renderState, texture, _uniform);
+}
+
+void Mesh::submit(bgfx::ViewId _id, bgfx::ProgramHandle _program, float* _mtx, const RenderState& _renderState, bgfx::TextureHandle _texture, const bgfx::UniformHandle &_uniform) const
+{
+    for (GroupArray::const_iterator it = m_groups.begin(), itEnd = m_groups.end(); it != itEnd; ++it)
+    {
+        const Group& group = *it;
+        
+        // Set uniforms
+//        _uniform.submitPerDrawUniforms();
+        
+        // Set model matrix for rendering.
+        bgfx::setTransform(_mtx);
+        bgfx::setIndexBuffer(group.m_ibh);
+        bgfx::setVertexBuffer(0, group.m_vbh);
+        
+        // Set texture
+        bgfx::setTexture(0, _uniform, _texture);
+        
+        // Apply render state
+        bgfx::setStencil(_renderState.m_fstencil, _renderState.m_bstencil);
+        bgfx::setState(_renderState.m_state, _renderState.m_blendFactorRgba);
+        
+        // Submit
+        bgfx::submit(_id, _program);
+    }
+}
+
 bool Mesh::loadImpl(bx::ReaderSeekerI* _reader)
 {
 	bool Result = true;

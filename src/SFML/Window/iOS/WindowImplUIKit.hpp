@@ -83,7 +83,7 @@ public:
     ////////////////////////////////////////////////////////////
     virtual WindowHandle getSystemHandle() const;
     
-    virtual WindowHandle getMetalHandle() const;
+    virtual WindowHandle getWindowHandle() const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the position of the window

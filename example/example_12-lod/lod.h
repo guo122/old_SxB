@@ -7,7 +7,7 @@
 #include <bgfx/bgfx.h>
 #include <bgfx/bgfx_utils.h>
 
-#include <sxbTop/defines.h>
+#include <sxbCommon/defines.h>
 #include <sxbCommon/Mesh.h>
 
 struct KnightPos

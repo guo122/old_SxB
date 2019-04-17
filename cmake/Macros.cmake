@@ -26,7 +26,7 @@ macro(sxb_add_library target)
 	
 	SET(LIBRARY_OUTPUT_PATH ${LIB_PATH})
 
-    if (THIS_SHARED)
+	if (THIS_SHARED)
         add_library(${target} SHARED ${THIS_SOURCES})
     else()
         add_library(${target} ${THIS_SOURCES})
@@ -57,12 +57,36 @@ macro(sxb_add_executable target)
     cmake_parse_arguments(THIS "" "" "FOLDER;SOURCES" ${ARGN})
 	
 	SET(EXECUTABLE_OUTPUT_PATH ${BIN_PATH})
-	
-	add_executable(${target} ${THIS_SOURCES})
+
+	if(SXB_OS_IOS)
+		set(BUNDLE_SRCS
+			${CMAKE_ROOT_DIR}/ios/Assets.xcassets
+			${CMAKE_ROOT_DIR}/ios/runtime.bundle
+		)
+		add_executable(${target} ${THIS_SOURCES} ${BUNDLE_SRCS})
+		set_target_properties(
+			${target}
+    		PROPERTIES
+    		MACOSX_BUNDLE YES 
+			MACOSX_BUNDLE_INFO_PLIST "${CMAKE_ROOT_DIR}/ios/Info.plist"
+    		RESOURCE "${BUNDLE_SRCS}"
+		)
+		set_target_properties(
+			${target}
+			PROPERTIES 
+			XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
+			XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage"
+			XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
+			XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1"
+		)
+	else()
+		add_executable(${target} ${THIS_SOURCES})
+	endif()
 
 	if (THIS_FOLDER)
 		set_target_properties(${target} PROPERTIES FOLDER ${THIS_FOLDER})
 	endif()
+
 endmacro()
 
 function(sfml_add_external)

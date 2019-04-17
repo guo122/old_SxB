@@ -128,7 +128,7 @@ WindowHandle WindowImplUIKit::getSystemHandle() const
     return (__bridge WindowHandle)m_window;
 }
 
-WindowHandle WindowImplUIKit::getMetalHandle() const
+WindowHandle WindowImplUIKit::getWindowHandle() const
 {
     return (__bridge WindowHandle)m_metalLayer;
 }

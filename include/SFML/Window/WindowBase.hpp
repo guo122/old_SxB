@@ -393,7 +393,7 @@ public:
     ////////////////////////////////////////////////////////////
     WindowHandle getSystemHandle() const;
     
-    WindowHandle getMetalHandle() const;
+    WindowHandle getWindowHandle() const;
 
 protected:
 

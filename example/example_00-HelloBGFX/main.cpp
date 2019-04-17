@@ -5,13 +5,17 @@
 
 #include "cube.h"
 
+#if defined(SXB_SYSTEM_IOS)
+#include <SFML/Main.hpp>
+#endif
+
 int main(int argc, char *argv[])
  {
      // Create the main window
      sf::WindowBase window(sf::VideoMode(WNDW_WIDTH, WNDW_HEIGHT), "SFML window");
 
 	 Cube exampleCube;
-	 exampleCube.init(window.getSystemHandle());
+	 exampleCube.init(window.getWindowHandle());
 
 	 uint64_t counter = 0;
 

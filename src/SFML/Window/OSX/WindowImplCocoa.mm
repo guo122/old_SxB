@@ -407,7 +407,7 @@ WindowHandle WindowImplCocoa::getSystemHandle() const
     return [m_delegate getSystemHandle];
 }
     
-WindowHandle WindowImplCocoa::getMetalHandle() const
+WindowHandle WindowImplCocoa::getWindowHandle() const
 {
     return [m_delegate getSystemHandle];
 }

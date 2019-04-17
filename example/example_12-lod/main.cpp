@@ -1,20 +1,23 @@
 
+
+
 #include <SFML/Config.hpp>
 #include <SFML/Window/WindowBase.hpp>
 #include <SFML/Window/Event.hpp>
-#include <bgfx/platform.h>
-#include <bx/bx.h>
-#include <bx/math.h>
 
 #include <sxbCommon/utils.h>
 #include "lod.h"
+
+#if defined(SXB_SYSTEM_IOS)
+    #include <SFML/Main.hpp>
+#endif
 
 int main(int argc, char *argv[])
  {
      // Create the main window
      sf::WindowBase window(sf::VideoMode(WNDW_WIDTH, WNDW_HEIGHT), "SFML window");
 	 lod exampleLod;
-	 exampleLod.init(window.getSystemHandle());
+	 exampleLod.init(window.getWindowHandle());
 
 	 uint64_t count = 0;
 
