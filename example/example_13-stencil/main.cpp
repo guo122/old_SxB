@@ -29,9 +29,9 @@ int main(int argc, char *argv[])
              // Close window: exit
              if (event.type == sf::Event::Closed)
                  window.close();
-             else if (event.type == sf::Event::TouchBegan ||
-                      event.type == sf::Event::TouchMoved ||
-                      event.type == sf::Event::TouchEnded)
+             else if (event.type == sf::Event::TouchBegan && event.touch.finger == 0)
+                 exampleStencil.touchBegin(event.touch.x, event.touch.y);
+             else if (event.type == sf::Event::TouchMoved && event.touch.finger == 0)
                  exampleStencil.setCursor(event.touch.x, event.touch.y);
              else if (event.type == sf::Event::MouseButtonPressed)
                  exampleStencil.setCursor(event.mouseMove.x, event.mouseMove.y);

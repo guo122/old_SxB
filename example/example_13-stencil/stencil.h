@@ -11,6 +11,14 @@
 #include <sxbCommon/defines.h>
 #include <sxbCommon/Mesh.h>
 
+struct v2
+{
+    v2():key(false),x(0),y(0){}
+    bool key;
+    int x;
+    int y;
+};
+
 class stencil
 {
 public:
@@ -20,6 +28,9 @@ public:
     , m_cursorY(0)
     , m_deltaX(0)
     , m_deltaY(0)
+    , m_sceneTime(0.0)
+    , m_at(0.0)
+    , m_eye(0.0)
     {}
     
 	~stencil()
@@ -31,6 +42,8 @@ public:
 	bool init(void* nwh_);
 
 	void update(const uint64_t & frame_ = 0);
+    
+    void touchBegin(const int &x_, const int &y_) {m_cursorX = x_, m_cursorY = y_;}
     
     void setCursor(const int &x_, const int &y_)
     {
@@ -52,12 +65,14 @@ private:
     sxb::Mesh m_cubeMesh;
     sxb::Mesh m_hplaneMesh;
     sxb::Mesh m_vplaneMesh;
+    sxb::Mesh m_coordMesh;
 
     bgfx::ProgramHandle m_programTextureLighting;
     bgfx::ProgramHandle m_programColorLighting;
     bgfx::ProgramHandle m_programColorTexture;
     bgfx::ProgramHandle m_programColorBlack;
     bgfx::ProgramHandle m_programTexture;
+    bgfx::ProgramHandle m_programCube;
     
     bgfx::TextureHandle m_figureTex;
     bgfx::TextureHandle m_flareTex;
@@ -82,6 +97,10 @@ private:
     int     m_deltaY;
     
     sxb::Uniforms m_uniforms;
+    double m_sceneTime;
+    
+    bx::Vec3    m_at;
+    bx::Vec3    m_eye;
 //    ClearValues m_clearValues;
 };
 

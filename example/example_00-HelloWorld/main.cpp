@@ -19,6 +19,16 @@
 #define CUR_WIDTH       1136
 #define CUR_HEIGHT      640
 
+#define MAX_FINGER      5
+
+struct v2
+{
+    v2():key(false),x(0),y(0){}
+    bool key;
+    int x;
+    int y;
+};
+
 // Please set platform data window to a CAMetalLayer
 int main(int argc, char *argv[])
 {
@@ -42,11 +52,9 @@ int main(int argc, char *argv[])
     bgfx::setViewRect(0, 0, 0, CUR_WIDTH, CUR_HEIGHT);
     
     uint64_t count = 0;
-    int mouse_x =  0;
-    int mouse_y = 0;
+    v2 touch[MAX_FINGER];
     
-    int resize_width = 0;
-    int resize_height = 0;
+    v2 resize;
     
     double residentMem = 0;
     double virtualMem = 0;
@@ -61,18 +69,32 @@ int main(int argc, char *argv[])
             // Close window: exit
             if (event.type == sf::Event::Closed)
                 window.close();
-            else if (event.type == sf::Event::TouchMoved ||
-                     event.type == sf::Event::TouchBegan ||
-                     event.type == sf::Event::TouchEnded)
-                mouse_x = event.touch.x, mouse_y = event.touch.y;
+            else if (event.type == sf::Event::TouchBegan)
+            {
+                if (event.touch.finger < MAX_FINGER)
+                    touch[event.touch.finger].key = true;
+            }
+            else if (event.type == sf::Event::TouchMoved)
+            {
+                if (event.touch.finger < MAX_FINGER)
+                {
+                    touch[event.touch.finger].x = event.touch.x;
+                    touch[event.touch.finger].y = event.touch.y;
+                }
+            }
+            else if (event.type == sf::Event::TouchEnded)
+            {
+                if (event.touch.finger < MAX_FINGER)
+                    touch[event.touch.finger].key = false;
+            }
             else if (event.type == sf::Event::Resized)
-                resize_width = event.size.width, resize_height = event.size.height;
+                resize.x = event.size.width, resize.y = event.size.height;
         }
         
         sxb::Utils::getMem(residentMem, virtualMem);
         
-        resize_width = window.getSize().x;
-        resize_height = window.getSize().y;
+        resize.x = window.getSize().x;
+        resize.y = window.getSize().y;
         
         bgfx::touch(0);
         
@@ -94,11 +116,18 @@ int main(int argc, char *argv[])
         bgfx::dbgTextPrintf(0, 5, 0x0f, "                                    ");
         bgfx::dbgTextPrintf(0, 7, 0x0f, "                                    ");
         bgfx::dbgTextPrintf(0, 9, 0x0f, "                                    ");
-        bgfx::dbgTextPrintf(0, 11, 0x0f, "                                    ");
+        
         bgfx::dbgTextPrintf(0, 5, 0x0f, "%d", count);
-        bgfx::dbgTextPrintf(0, 7, 0x0f, "mouse: (%d, %d)", mouse_x, mouse_y);
-        bgfx::dbgTextPrintf(0, 9, 0x0f, "resize: (%d, %d)", resize_width, resize_height);
-        bgfx::dbgTextPrintf(0, 11, 0x0f, "mem(resident,virtual): (%.3fm, %.3fm)", residentMem, virtualMem);
+        bgfx::dbgTextPrintf(0, 7, 0x0f, "resize: (%d, %d)", resize.x, resize.y);
+        bgfx::dbgTextPrintf(0, 9, 0x0f, "mem(resident,virtual): (%.3fm, %.3fm)", residentMem, virtualMem);
+        
+        for (int i = 0; i < MAX_FINGER; ++i) {
+            bgfx::dbgTextPrintf(0, 11 + i, 0x0f, "                                    ");
+            if (touch[i].key)
+                bgfx::dbgTextPrintf(0, 11 + i, 0x0f, "\x1b[14;mtouch%d: (%d, %d)\x1b[0m", i, touch[i].x, touch[i].y);
+            else
+                bgfx::dbgTextPrintf(0, 11 + i, 0x0f, "touch%d: (%d, %d)", i, touch[i].x, touch[i].y);
+        }
         
         const bgfx::Stats* stats = bgfx::getStats();
         bgfx::dbgTextPrintf(0, 2, 0x0f, "Backbuffer %dW x %dH in pixels, debug text %dW x %dH in characters."

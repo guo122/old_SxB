@@ -38,8 +38,7 @@ bgfx::VertexDecl PosColorVertex::ms_decl;
 
 static PosColorVertex s_cubeVertices[] =
 {
-	{-1.0f,  1.0f,  1.0f, 0xff0000ff },
-	{ 1.0f,  1.0f,  1.0f, 0xff0000ff },
+	{-1.0f,  1.0f,  1.0f, 0xff0000ff },	{ 1.0f,  1.0f,  1.0f, 0xff0000ff },
 	{-1.0f, -1.0f,  1.0f, 0xff0000ff },
 	{ 1.0f, -1.0f,  1.0f, 0xff0000ff },
 	{-1.0f,  1.0f, -1.0f, 0xff0000ff },

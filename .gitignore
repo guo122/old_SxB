@@ -6,6 +6,7 @@ build
 build-ios
 build-macos
 build-win
+build-android
 bin
 lib
 pack

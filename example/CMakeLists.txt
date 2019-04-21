@@ -43,6 +43,8 @@ endif()
 	
 add_subdirectory("example_00-HelloBGFX")
 add_subdirectory("example_00-HelloWorld")
+add_subdirectory("example_11-bob")
+add_subdirectory("example_11-coc")
 add_subdirectory("example_12-lod")
 add_subdirectory("example_13-stencil")
 add_subdirectory("example_33-pom")
