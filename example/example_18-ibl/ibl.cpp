@@ -274,7 +274,7 @@ void ibl::update(const uint64_t & frame_)
             bgfx::setTexture(0, s_texCube,    m_lightProbes[m_currentLightProbe].m_tex);
             bgfx::setTexture(1, s_texCubeIrr, m_lightProbes[m_currentLightProbe].m_texIrr);
             m_uniforms.submit();
-            m_meshBunny.submit(1, m_programMesh, mtx, BGFX_STATE_DEFAULT);
+            m_meshBunny.submit(1, m_programMesh, mtx, BGFX_STATE_MASK);
 //            meshSubmit(m_meshBunny, 1, m_programMesh, mtx);
         }
         else
@@ -308,7 +308,7 @@ void ibl::update(const uint64_t & frame_)
                     
                     bgfx::setTexture(0, s_texCube,    m_lightProbes[m_currentLightProbe].m_tex);
                     bgfx::setTexture(1, s_texCubeIrr, m_lightProbes[m_currentLightProbe].m_texIrr);
-                    m_meshOrb.submit(1, m_programMesh, mtx, BGFX_STATE_DEFAULT);
+                    m_meshOrb.submit(1, m_programMesh, mtx, BGFX_STATE_MASK);
 //                    meshSubmit(m_meshOrb, 1, m_programMesh, mtx);
                 }
             }
