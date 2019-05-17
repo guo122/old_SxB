@@ -43,11 +43,18 @@ public:
 	
 	static void imageReleaseCb(void* ptr_, void* userData_);
     
+    static void* load(bx::FileReaderI* _reader, bx::AllocatorI* _allocator, const char* _filePath, uint32_t* _size);
+    
+    static bgfx::TextureHandle loadTexture(const char* _name, uint64_t _flags = BGFX_TEXTURE_NONE|BGFX_SAMPLER_NONE, uint8_t _skip = 0, bgfx::TextureInfo* _info = NULL, bimg::Orientation::Enum* _orientation = NULL);
+    
 public:
     // different platform
     static const std::string & getRuntimeDirectory();
     
     static bool getMem(double &residentMem_, double &virtualMem_);
+    
+protected:
+    static bgfx::TextureHandle loadTextureImpl(bx::FileReaderI* _reader, const char* _filePath, uint64_t _flags, uint8_t _skip, bgfx::TextureInfo* _info, bimg::Orientation::Enum* _orientation);
     
 private:
 	Utils() {};
