@@ -180,8 +180,8 @@ void ibl::update(const uint64_t & frame_)
         bgfx::dbgTextPrintf(0, 5, 0x0f, "%d", frame_);
 //        bgfx::dbgTextPrintf(0, 7, 0x0f, "mem(resident,virtual): (%.3fm, %.3fm)", m_residentMem, m_virtualMem);
 //        bgfx::dbgTextPrintf(0, 9, 0x0f, "eye: (%.3f, %.3f, %.3f)", m_eye.x, m_eye.y, m_eye.z);
-        bgfx::dbgTextPrintf(0, 11, 0x0f, "touch: (%i, %i)", m_touch_x, m_touch_y );
-        bgfx::dbgTextPrintf(0, 13, 0x0f, "del: (%i, %i)", m_delta_x, m_delta_y );
+//        bgfx::dbgTextPrintf(0, 11, 0x0f, "touch: (%i, %i)", m_touch_x, m_touch_y );
+//        bgfx::dbgTextPrintf(0, 13, 0x0f, "del: (%i, %i)", m_delta_x, m_delta_y );
         
         // Camera.
 //        const bool mouseOverGui = ImGui::MouseOverArea();
@@ -205,7 +205,22 @@ void ibl::update(const uint64_t & frame_)
 //                m_camera.dolly(float(m_mouse.m_scroll)*0.05f);
 //            }
 //        }
-        m_camera.orbit(-(float)m_delta_x / 300.0, (float)m_delta_y / 300.0);
+        if (m_touch[2].press)
+        {
+            // middle
+            m_settings.m_envRotDest += (float)m_touch[2].deltaX / 300.0;
+        }
+        else if (m_touch[1].press)
+        {
+            // right
+            m_camera.dolly((float)m_touch[1].deltaX / 300.0 + (float)m_touch[1].deltaY / 300.0);
+        }
+        else
+        {
+            // left
+            m_camera.orbit(-(float)m_touch[0].deltaX / 300.0, (float)m_touch[0].deltaY / 300.0);
+        }
+
         m_camera.update(deltaTimeSec);
         bx::memCopy(m_uniforms.m_cameraPos, &m_camera.m_pos.curr.x, 3*sizeof(float) );
         

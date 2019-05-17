@@ -345,6 +345,19 @@ struct Settings
     int32_t m_meshSelection;
 };
 
+#pragma mark  -
+
+#define maxFinger   3
+
+struct m2
+{
+    bool press { false };
+    int x { 0 };
+    int y { 0 };
+    int deltaX { 0 };
+    int deltaY { 0 };
+};
+
 #pragma mark -
 
 class ibl
@@ -364,24 +377,38 @@ public:
 
 	void update(const uint64_t & frame_ = 0);
     
-    void touchBegin(const int &x_, const int &y_)
+    void touchBegin(const int &finger_, const int &x_, const int &y_)
     {
-        m_touch_x = x_;
-        m_touch_y = y_;
+        if ( finger_ < maxFinger)
+        {
+            m_touch[finger_].press = true;
+            m_touch[finger_].x = x_;
+            m_touch[finger_].y = y_;
+        }
     }
     
-    void touchMove(const int &x_, const int &y_)
+    void touchMove(const int &finger_, const int &x_, const int &y_)
     {
-        m_delta_x = x_ - m_touch_x;
-        m_delta_y = y_ - m_touch_y;
-        m_touch_x = x_;
-        m_touch_y = y_;
+        if ( finger_ < maxFinger)
+        {
+            m_touch[finger_].press = true;
+            m_touch[finger_].deltaX = x_ - m_touch[finger_].x;
+            m_touch[finger_].deltaY = y_ - m_touch[finger_].y;
+            m_touch[finger_].x = x_;
+            m_touch[finger_].y = y_;
+        }
     }
     
-    void touchEnd(const int &x_, const int &y_)
+    void touchEnd(const int &finger_, const int &x_, const int &y_)
     {
-        m_delta_x = 0;
-        m_delta_y = 0;
+        if ( finger_ < maxFinger)
+        {
+            m_touch[finger_].press = false;
+            m_touch[finger_].deltaX = 0;
+            m_touch[finger_].deltaY = 0;
+            m_touch[finger_].x = 0;
+            m_touch[finger_].y = 0;
+        }
     }
     
 private:
@@ -392,11 +419,7 @@ private:
 	uint32_t m_debug;
 	uint32_t m_reset;
     
-    int     m_touch_x {0};
-    int     m_touch_y {0};
-    
-    int     m_delta_x {0};
-    int     m_delta_y {0};
+    m2      m_touch[maxFinger];
 
     Uniforms m_uniforms;
     

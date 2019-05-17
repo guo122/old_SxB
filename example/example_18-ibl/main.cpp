@@ -28,12 +28,12 @@ int main(int argc, char *argv[])
              // Close window: exit
              if (event.type == sf::Event::Closed)
                  window.close();
-             else if (event.type == sf::Event::TouchBegan && event.touch.finger == 0)
-                 exampleIBL.touchBegin(event.touch.x, event.touch.y);
-             else if (event.type == sf::Event::TouchMoved && event.touch.finger == 0)
-                 exampleIBL.touchMove(event.touch.x, event.touch.y);
-             else if (event.type == sf::Event::TouchEnded && event.touch.finger == 0)
-                 exampleIBL.touchEnd(event.touch.x, event.touch.y);
+             else if (event.type == sf::Event::TouchBegan)
+                 exampleIBL.touchBegin(event.touch.finger, event.touch.x, event.touch.y);
+             else if (event.type == sf::Event::TouchMoved)
+                 exampleIBL.touchMove(event.touch.finger, event.touch.x, event.touch.y);
+             else if (event.type == sf::Event::TouchEnded)
+                 exampleIBL.touchEnd(event.touch.finger, event.touch.x, event.touch.y);
          }
 
 		 exampleIBL.update(count);
